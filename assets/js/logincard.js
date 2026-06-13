@@ -1,23 +1,30 @@
-document
-.getElementById("loginForm")
-.addEventListener("submit", function(e){
+document.addEventListener("DOMContentLoaded", () => {
 
-    e.preventDefault();
+    const form = document.getElementById("loginForm");
 
-    let username =
-        document.getElementById("username").value;
+    form.addEventListener("submit", (e) => {
 
-    let password =
-        document.getElementById("password").value;
+        e.preventDefault();
 
-    if(username === "" || password === "")
-    {
-        alert("Please enter login details");
-        return;
-    }
+        const username =
+            document.getElementById("username").value.trim();
 
-    alert("Login Successful");
+        const password =
+            document.getElementById("password").value.trim();
 
-    // Dashboard Redirect
-    // window.location.href = "dashboard.html";
+        if(!username || !password){
+            alert("Please enter login details");
+            return;
+        }
+
+        alert("Login Successful");
+
+        // Dashboard Redirect
+        // window.location.href = "dashboard.html";
+    });
+
 });
+
+function registerAccount(){
+    alert("Register page coming soon");
+}
