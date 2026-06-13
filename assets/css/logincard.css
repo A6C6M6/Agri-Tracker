@@ -1,114 +1,69 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+:root {
+    --primary-green: #2E7D32;
+    --secondary-green: #4CAF50;
+    --bg-color: #F4F7F4;
+    --card-bg: #FFFFFF;
+    --error-color: #D32F2F;
+    --text-main: #212121;
+    --text-muted: #546E7A;
 }
 
-body{
-    min-height:100vh;
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
-    background-image:url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1920");
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text-main);
 }
 
-.overlay{
-    width:100%;
-    min-height:100vh;
+.agri-login-card-wrapper { width: 100%; max-width: 420px; }
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background:rgba(255,255,255,0.15);
+.agri-login-card-container {
+    background: var(--card-bg);
+    padding: 48px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    animation: fadeIn 0.6s ease-out;
 }
 
-.login-card{
-    width:380px;
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    background:rgba(255,255,255,0.95);
+.agri-login-card-header { text-align: center; margin-bottom: 35px; }
+.agri-login-card-logo { width: 80px; height: 80px; margin: 0 auto 20px; background: #f8f9fa; border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.agri-login-card-logo.placeholder { border: 2px solid var(--primary-green); }
+.agri-login-card-logo img { width: 100%; height: 100%; object-fit: cover; }
+.agri-login-card-title { font-size: 1.75rem; color: var(--primary-green); font-weight: 700; letter-spacing: -0.5px; }
+.agri-login-card-subtitle { font-size: 0.95rem; color: var(--text-muted); margin-top: 5px; font-weight: 500; }
 
-    padding:30px;
+.agri-login-card-field { margin-bottom: 22px; position: relative; }
+.agri-login-card-field label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: #333; }
+.agri-login-card-input, input[type="text"], input[type="password"] {
+    width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease;
+}
+.agri-login-card-input:focus { outline: none; border-color: var(--primary-green); box-shadow: 0 0 0 4px rgba(46,125,50,0.1); }
+.agri-login-card-error { color: var(--error-color); font-size: 0.75rem; margin-top: 6px; display: block; min-height: 15px; font-weight: 500; }
 
-    border-radius:18px;
-
-    text-align:center;
-
-    box-shadow:0 10px 30px rgba(0,0,0,.25);
+.agri-login-card-password-wrapper { position: relative; }
+.agri-login-card-password-toggle {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--primary-green); cursor: pointer; font-size: 0.85rem; font-weight: 700;
 }
 
-.login-card h1{
-    color:#2e7d32;
-    margin-bottom:10px;
+.agri-login-card-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; font-size: 0.9rem; }
+.agri-login-card-button {
+    width: 100%; padding: 14px; background: var(--primary-green); color: white; border: none; border-radius: 8px;
+    cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; position: relative;
 }
+.agri-login-card-button:hover { background: var(--secondary-green); transform: translateY(-1px); }
+.agri-login-card-button:disabled { background: #bdbdbd; cursor: not-allowed; }
+.btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin-left: 10px; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.login-card p{
-    color:#666;
-    margin-bottom:25px;
-    font-size:14px;
-}
-
-.login-card input{
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
-
-    border:1px solid #ddd;
-    border-radius:8px;
-
-    outline:none;
-}
-
-.login-card input:focus{
-    border-color:#28a745;
-}
-
-.login-btn{
-    width:100%;
-    padding:12px;
-
-    border:none;
-    border-radius:8px;
-
-    background:#28a745;
-    color:#fff;
-
-    font-size:15px;
-    cursor:pointer;
-
-    margin-bottom:10px;
-}
-
-.login-btn:hover{
-    background:#218838;
-}
-
-.register-btn{
-    width:100%;
-    padding:12px;
-
-    border:none;
-    border-radius:8px;
-
-    background:#0d6efd;
-    color:#fff;
-
-    font-size:15px;
-    cursor:pointer;
-}
-
-.register-btn:hover{
-    background:#0b5ed7;
-}
-
-@media(max-width:480px){
-
-    .login-card{
-        width:90%;
-        padding:20px;
-    }
-
-}
+.agri-login-card-link { background: none; border: none; color: var(--primary-green); cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+.agri-login-card-link:hover { text-decoration: underline; }
+.agri-login-card-register { text-align: center; margin-top: 20px; }

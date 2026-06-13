@@ -1,55 +1,56 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AgriTracker Login</title>
-
-<link rel="stylesheet" href="./assets/css/logincard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Agri Tracker</title>
+    <link rel="stylesheet" href="assets/css/logincard.css">
 </head>
-
 <body>
+    <div class="agri-login-card-wrapper">
+        <div class="agri-login-card-container">
+            <header class="agri-login-card-header">
+                <div class="agri-login-card-logo">
+                    <img src="assets/image/agri-logo.png" alt="Agri Tracker Logo" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')">
+                </div>
+                <h1 class="agri-login-card-title">Agri Tracker</h1>
+                <p class="agri-login-card-subtitle">Smart Agriculture Management System</p>
+            </header>
 
-<div class="overlay">
+            <form class="agri-login-card-form" id="agriLoginForm" novalidate>
+                <div class="agri-login-card-field">
+                    <label for="loginId">Login ID</label>
+                    <input type="text" id="loginId" name="loginId" placeholder="Email / Mobile Number / Username" required>
+                    <span class="agri-login-card-error" id="loginIdError"></span>
+                </div>
 
-    <div class="login-card">
+                <div class="agri-login-card-field">
+                    <label for="password">Password</label>
+                    <div class="agri-login-card-password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        <button type="button" class="agri-login-card-password-toggle" id="passwordToggle" aria-label="Toggle password visibility">Show</button>
+                    </div>
+                    <span class="agri-login-card-error" id="passwordError"></span>
+                </div>
 
-        <h1>🌾 AgriTracker</h1>
+                <div class="agri-login-card-options">
+                    <label class="agri-login-card-checkbox">
+                        <input type="checkbox" name="remember"> Remember Me
+                    </label>
+                    <button type="button" class="agri-login-card-link" id="forgotPasswordLink">Forgot Password?</button>
+                </div>
 
-        <p>Smart Agriculture Management System</p>
+                <button type="submit" class="agri-login-card-button" id="loginSubmitBtn">
+                    <span class="btn-text">Login</span>
+                    <span class="btn-spinner"></span>
+                </button>
 
-        <form id="loginForm">
-
-            <input
-                type="text"
-                id="username"
-                placeholder="Email / Mobile / Login ID"
-                required
-            >
-
-            <input
-                type="password"
-                id="password"
-                placeholder="Password / OTP"
-                required
-            >
-
-            <button type="submit" class="login-btn">
-                Login
-            </button>
-
-            <button type="button" class="register-btn" onclick="registerAccount()">
-                Register New Account
-            </button>
-
-        </form>
-
+                <div class="agri-login-card-register">
+                    <button type="button" class="agri-login-card-link" id="registerLink">Register New Account</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-</div>
-
-<script src="./assets/js/logincard.js"></script>
-
+    <script src="assets/js/logincard.js"></script>
 </body>
 </html>
