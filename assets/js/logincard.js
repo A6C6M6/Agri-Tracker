@@ -1,34 +1,37 @@
+// logincard.js-ലെ ഈ ഭാഗം ശ്രദ്ധിക്കുക
 async function agriLoginCardHandleLogin(e) {
-    e.preventDefault();
+    e.preventDefault(); // ഇതാണ് ഏറ്റവും പ്രധാനം! ഇത് പേജ് റീലോഡ് ആകുന്നത് തടയും.
+    
     if (!agriLoginCardValidateForm()) return;
 
     // UI മാറ്റുന്നു
     submitBtn.disabled = true;
     submitBtn.querySelector('.btn-text').textContent = "Authenticating...";
-    submitBtn.querySelector('.btn-spinner').style.display = "inline-block";
+    // Spinner ഉണ്ടെങ്കിൽ അത് കാണിക്കാൻ
+    if(submitBtn.querySelector('.btn-spinner')) {
+        submitBtn.querySelector('.btn-spinner').style.display = "inline-block";
+    }
 
     try {
-        // Supabase ലോഗിൻ
+        // Supabase ഉപയോഗിച്ചുള്ള ലോഗിൻ
         const { data, error } = await supabase.auth.signInWithPassword({
-            email: loginId.value.trim(), // ഇവിടെ നിങ്ങളുടെ loginId എന്നത് ഇമെയിൽ ആണെന്ന് കരുതുന്നു
+            email: loginId.value.trim(), 
             password: password.value.trim(),
         });
 
-        if (error) {
-            throw error; // error ഉണ്ടെങ്കിൽ catch-ലേക്ക് പോകും
-        }
+        if (error) throw error;
 
-        // ലോഗിൻ വിജയിച്ചാൽ
-        alert("Login Successful!");
-        window.location.href = "dashboard.html"; // ഡാഷ്‌ബോർഡിലേക്ക് മാറ്റുന്നു
+        // വിജയിച്ചാൽ ഡാഷ്‌ബോർഡിലേക്ക്
+        window.location.href = "dashboard.html";
 
     } catch (err) {
-        // ലോഗിൻ പരാജയപ്പെട്ടാൽ
         alert("Login Failed: " + err.message);
         
-        // ബട്ടൺ പഴയതുപോലെ ആക്കുന്നു
+        // ബട്ടൺ തിരികെ പഴയ രീതിയിൽ ആക്കുന്നു
         submitBtn.disabled = false;
         submitBtn.querySelector('.btn-text').textContent = "Login";
-        submitBtn.querySelector('.btn-spinner').style.display = "none";
+        if(submitBtn.querySelector('.btn-spinner')) {
+            submitBtn.querySelector('.btn-spinner').style.display = "none";
+        }
     }
 }
