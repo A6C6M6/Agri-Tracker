@@ -1,8 +1,15 @@
 (function() {
-    // Supabase Initialization
-    const supabaseUrl = 'https://icdppzjhqpskmtertrbv.supabase.co';
-    const supabaseKey = 'sb_publishable_4wk7hLvO7ZYE5Xo2j-K1Iw_ja4Pu5RZ';
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    // 1. സുപ്പബേസ് ക്ലയന്റ് ഇവിടെ ഗ്ലോബൽ ആയി ഡിക്ലയർ ചെയ്യുക
+    let supabase;
+
+    // 2. Supabase ലോഡ് ആയോ എന്ന് ഉറപ്പുവരുത്താൻ window.supabase ഉപകരിക്കും
+    function initSupabase() {
+        if (window.supabase) {
+            supabase = window.supabase.createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_ANON_KEY');
+        } else {
+            console.error("Supabase script not loaded yet!");
+        }
+    }
 
     const loginForm = document.getElementById('agriLoginForm');
     const loginId = document.getElementById('loginId');
@@ -34,6 +41,11 @@
         e.preventDefault();
         if (!agriLoginCardValidateForm()) return;
 
+        // ലോഗിൻ ചെയ്യുന്നതിന് മുൻപ് Supabase ഉണ്ടോ എന്ന് ഉറപ്പുവരുത്തുക
+        if (!supabase) {
+            initSupabase();
+        }
+
         submitBtn.disabled = true;
         submitBtn.querySelector('.btn-text').textContent = "Authenticating...";
         
@@ -48,11 +60,14 @@
             submitBtn.querySelector('.btn-text').textContent = "Login";
         } else {
             alert("Login Successful!");
-            window.location.href = "dashboard.html"; // ലോഗിന് ശേഷം പോകേണ്ട പേജ്
+            window.location.href = "index.html"; 
         }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+        // Supabase ലോഡ് ആയിക്കഴിഞ്ഞാൽ മാത്രം ഇനിഷ്യലൈസ് ചെയ്യുക
+        initSupabase(); 
+        
         loginForm.addEventListener('submit', agriLoginCardHandleLogin);
         
         passwordToggle.addEventListener('click', () => {
