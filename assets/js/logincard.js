@@ -1,5 +1,5 @@
 (function() {
-    const supabase = window.supabase.createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_ANON_KEY');
+    const supabase = window.supabase.createClient('https://icdppzjhqpskmtertrbv.supabase.co', 'sb_publishable_4wk7hLvO7ZYE5Xo2j-K1Iw_ja4Pu5RZ');
     
     const loginForm = document.getElementById('agriLoginForm');
     const loginId = document.getElementById('loginId');
