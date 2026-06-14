@@ -12,10 +12,12 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    /* ഇവിടെയാണ് ബാക്ക്ഗ്രൗണ്ട് ഇമേജ് പാത്ത് നൽകിയിരിക്കുന്നത് */
-    background: linear-gradient(rgba(244, 247, 244, 0.85), rgba(244, 247, 244, 0.85)), url('../image/agritracker_Login_BackGround2.jpg');
+    /* Updated background settings to use an image */
+    background-image: url('../image/agritracker_Login_BackGround2.jpg');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,6 +25,7 @@ body {
     padding: 20px;
     color: var(--text-main);
 }
+
 .agri-login-card-wrapper { width: 100%; max-width: 420px; }
 
 .agri-login-card-container {
