@@ -1,7 +1,7 @@
 (function() {
     // Supabase Initialization
-    const supabaseUrl = 'YOUR_SUPABASE_URL';
-    const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+    const supabaseUrl = 'https://icdppzjhqpskmtertrbv.supabase.co';
+    const supabaseKey = 'sb_publishable_4wk7hLvO7ZYE5Xo2j-K1Iw_ja4Pu5RZ';
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
     const loginForm = document.getElementById('agriLoginForm');
