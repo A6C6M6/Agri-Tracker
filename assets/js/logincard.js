@@ -5,7 +5,7 @@
     // 2. Supabase ലോഡ് ആയോ എന്ന് ഉറപ്പുവരുത്താൻ window.supabase ഉപകരിക്കും
     function initSupabase() {
         if (window.supabase) {
-            supabase = window.supabase.createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_ANON_KEY');
+            supabase = window.supabase.createClient('https://icdppzjhqpskmtertrbv.supabase.co', 'sb_publishable_4wk7hLvO7ZYE5Xo2j-K1Iw_ja4Pu5RZ');
         } else {
             console.error("Supabase script not loaded yet!");
         }
@@ -60,7 +60,7 @@
             submitBtn.querySelector('.btn-text').textContent = "Login";
         } else {
             alert("Login Successful!");
-            window.location.href = "index.html"; 
+            window.location.href = "dashboard.html"; 
         }
     }
 
