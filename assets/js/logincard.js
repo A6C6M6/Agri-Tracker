@@ -1,71 +1,64 @@
 (function() {
+    // Supabase Initialization
+    const supabaseUrl = 'YOUR_SUPABASE_URL';
+    const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
     const loginForm = document.getElementById('agriLoginForm');
     const loginId = document.getElementById('loginId');
     const password = document.getElementById('password');
     const passwordToggle = document.getElementById('passwordToggle');
     const submitBtn = document.getElementById('loginSubmitBtn');
 
-    function agriLoginCardValidateLoginId() {
+    // Validation Functions
+    function agriLoginCardValidateForm() {
+        let isValid = true;
         if (!loginId.value.trim()) {
-            document.getElementById('loginIdError').textContent = "Please enter your Login ID.";
-            return false;
+            document.getElementById('loginIdError').textContent = "Please enter your Email.";
+            isValid = false;
+        } else {
+            document.getElementById('loginIdError').textContent = "";
         }
-        document.getElementById('loginIdError').textContent = "";
-        return true;
-    }
-
-    function agriLoginCardValidatePassword() {
+        
         if (!password.value.trim()) {
             document.getElementById('passwordError').textContent = "Please enter your Password.";
-            return false;
+            isValid = false;
+        } else {
+            document.getElementById('passwordError').textContent = "";
         }
-        document.getElementById('passwordError').textContent = "";
-        return true;
+        return isValid;
     }
 
-    function agriLoginCardValidateForm() {
-        const isIdValid = agriLoginCardValidateLoginId();
-        const isPassValid = agriLoginCardValidatePassword();
-        return isIdValid && isPassValid;
-    }
-
-    function agriLoginCardTogglePassword() {
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-        passwordToggle.textContent = type === 'password' ? 'Show' : 'Hide';
-    }
-
-    function agriLoginCardHandleLogin(e) {
+    // Supabase Login Handler
+    async function agriLoginCardHandleLogin(e) {
         e.preventDefault();
         if (!agriLoginCardValidateForm()) return;
 
         submitBtn.disabled = true;
         submitBtn.querySelector('.btn-text').textContent = "Authenticating...";
-        submitBtn.querySelector('.btn-spinner').style.display = "inline-block";
+        
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: loginId.value,
+            password: password.value,
+        });
 
-        setTimeout(() => {
-            // TODO:
-            // Replace with actual authentication API integration
-
-            window.location.href = "index.html";
-        }, 1500);
-    }
-
-    function agriLoginCardShowMessage(msg) {
-        alert(msg);
+        if (error) {
+            alert("Login Failed: " + error.message);
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.btn-text').textContent = "Login";
+        } else {
+            alert("Login Successful!");
+            window.location.href = "index.html"; // ലോഗിന് ശേഷം പോകേണ്ട പേജ്
+        }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
         loginForm.addEventListener('submit', agriLoginCardHandleLogin);
-        passwordToggle.addEventListener('click', agriLoginCardTogglePassword);
         
-        document.getElementById('forgotPasswordLink').addEventListener('click', () => 
-            agriLoginCardShowMessage("Password recovery module will be integrated soon."));
-            
-        document.getElementById('registerLink').addEventListener('click', () => 
-            agriLoginCardShowMessage("Registration module will be integrated soon."));
-
-        loginId.addEventListener('blur', agriLoginCardValidateLoginId);
-        password.addEventListener('blur', agriLoginCardValidatePassword);
+        passwordToggle.addEventListener('click', () => {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            passwordToggle.textContent = type === 'password' ? 'Show' : 'Hide';
+        });
     });
 })();
