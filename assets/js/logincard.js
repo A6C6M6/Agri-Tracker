@@ -48,7 +48,7 @@
             submitBtn.querySelector('.btn-text').textContent = "Login";
         } else {
             alert("Login Successful!");
-            window.location.href = "index.html"; // ലോഗിന് ശേഷം പോകേണ്ട പേജ്
+            window.location.href = "dashboard.html"; // ലോഗിന് ശേഷം പോകേണ്ട പേജ്
         }
     }
 
