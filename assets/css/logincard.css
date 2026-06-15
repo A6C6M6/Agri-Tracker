@@ -280,3 +280,119 @@ input[type="password"]:focus {
         transform: rotate(360deg);
     }
 }
+
+/* =====================================
+   SAFE UI ENHANCEMENT OVERRIDES
+   (Existing CSS-ന്റെ താഴെ add ചെയ്യുക)
+===================================== */
+
+/* Card Glass Effect */
+.agri-login-card-container{
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.4);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08),
+        0 20px 60px rgba(0,0,0,0.08);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.agri-login-card-container:hover{
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.10),
+        0 25px 70px rgba(0,0,0,0.12);
+}
+
+/* Logo */
+.agri-login-card-logo{
+    box-shadow:
+        0 8px 20px rgba(46,125,50,.15);
+}
+
+/* Title */
+.agri-login-card-title{
+    text-shadow:
+        0 2px 8px rgba(46,125,50,.08);
+}
+
+/* EMAIL INPUT FIX */
+input[type="email"]{
+    width:100%;
+    padding:14px 16px;
+
+    border:2px solid var(--border-color);
+    border-radius:8px;
+
+    font-size:1rem;
+
+    transition:all .3s ease;
+}
+
+input[type="email"]:focus{
+    outline:none;
+
+    border-color:var(--primary-green);
+
+    box-shadow:
+        0 0 0 4px rgba(46,125,50,.10);
+}
+
+/* Input Hover */
+input[type="email"]:hover,
+input[type="text"]:hover,
+input[type="password"]:hover{
+    border-color:var(--secondary-green);
+}
+
+/* Password Toggle */
+.agri-login-card-password-toggle{
+    padding:4px 8px;
+    border-radius:6px;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+.agri-login-card-password-toggle:hover{
+    background:rgba(46,125,50,.08);
+}
+
+/* Button Upgrade */
+.agri-login-card-button{
+    background:
+        linear-gradient(
+            135deg,
+            #2E7D32,
+            #43A047
+        );
+
+    box-shadow:
+        0 8px 20px rgba(46,125,50,.20);
+}
+
+.agri-login-card-button:hover{
+    box-shadow:
+        0 12px 25px rgba(46,125,50,.30);
+}
+
+/* Mobile */
+@media (max-width:480px){
+
+    .agri-login-card-container{
+        padding:32px 24px;
+    }
+
+    .agri-login-card-title{
+        font-size:1.5rem;
+    }
+
+}
