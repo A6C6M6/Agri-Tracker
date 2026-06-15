@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-```
+
 try {
 
     // User Session Check
@@ -35,6 +35,6 @@ try {
     window.location.href = "logincard.html";
 
 }
-```
+
 
 });
