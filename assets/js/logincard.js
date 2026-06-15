@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-```
+
 const form = document.getElementById("agriLoginForm");
 
 // Form ഇല്ലെങ്കിൽ exit
@@ -83,6 +83,6 @@ form.addEventListener("submit", async (e) => {
     }
 
 });
-```
+
 
 });
