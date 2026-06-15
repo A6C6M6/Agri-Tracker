@@ -1,464 +1,305 @@
-/* =========================
-   CSS VARIABLES
-========================= */
 :root {
     --primary-green: #2E7D32;
     --secondary-green: #4CAF50;
     --bg-color: #F4F7F4;
-    --card-bg: rgba(255,255,255,0.92);
+    --card-bg: #FFFFFF;
     --error-color: #D32F2F;
     --text-main: #212121;
     --text-muted: #546E7A;
-    --border-color: #E0E0E0;
 }
 
-/* =========================
-   GLOBAL RESET
-========================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
-/* =========================
-   BODY
-========================= */
 body {
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif;
-
-    background:
-        url('../image/agritracker_Login_BackGround2.jpg')
-        center center / cover
-        no-repeat fixed;
-
-    min-height: 100vh;
-    padding: 20px;
-
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Updated background settings to use an image */
+    background-image: url('../image/agritracker_Login_BackGround2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    min-height: 100vh;
+    padding: 20px;
     color: var(--text-main);
-
-    position: relative;
 }
 
-/* Dark overlay */
+.agri-login-card-wrapper { width: 100%; max-width: 420px; }
 
-body::before{
-    content:"";
-
-    position:fixed;
-    inset:0;
-
-    background:
-        rgba(0,0,0,.18);
-
-    pointer-events:none;
+.agri-login-card-container {
+    background: var(--card-bg);
+    padding: 48px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    animation: fadeIn 0.6s ease-out;
 }
 
-/* =========================
-   LOGIN CARD WRAPPER
-========================= */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.agri-login-card-wrapper{
-    width:100%;
-    max-width:480px;
-    position:relative;
-    z-index:1;
+.agri-login-card-header { text-align: center; margin-bottom: 35px; }
+.agri-login-card-logo { width: 80px; height: 80px; margin: 0 auto 20px; background: #f8f9fa; border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.agri-login-card-logo.placeholder { border: 2px solid var(--primary-green); }
+.agri-login-card-logo img { width: 100%; height: 100%; object-fit: cover; }
+.agri-login-card-title { font-size: 1.75rem; color: var(--primary-green); font-weight: 700; letter-spacing: -0.5px; }
+.agri-login-card-subtitle { font-size: 0.95rem; color: var(--text-muted); margin-top: 5px; font-weight: 500; }
+
+.agri-login-card-field { margin-bottom: 22px; position: relative; }
+.agri-login-card-field label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: #333; }
+.agri-login-card-input, input[type="text"], input[type="password"] {
+    width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease;
+}
+.agri-login-card-input:focus { outline: none; border-color: var(--primary-green); box-shadow: 0 0 0 4px rgba(46,125,50,0.1); }
+.agri-login-card-error { color: var(--error-color); font-size: 0.75rem; margin-top: 6px; display: block; min-height: 15px; font-weight: 500; }
+
+.agri-login-card-password-wrapper { position: relative; }
+.agri-login-card-password-toggle {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--primary-green); cursor: pointer; font-size: 0.85rem; font-weight: 700;
 }
 
-/* =========================
-   LOGIN CARD
-========================= */
+.agri-login-card-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; font-size: 0.9rem; }
+.agri-login-card-button {
+    width: 100%; padding: 14px; background: var(--primary-green); color: white; border: none; border-radius: 8px;
+    cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; position: relative;
+}
+.agri-login-card-button:hover { background: var(--secondary-green); transform: translateY(-1px); }
+.agri-login-card-button:disabled { background: #bdbdbd; cursor: not-allowed; }
+.btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin-left: 10px; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.agri-login-card-container{
+.agri-login-card-link { background: none; border: none; color: var(--primary-green); cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+.agri-login-card-link:hover { text-decoration: underline; }
+.agri-login-card-register { text-align: center; margin-top: 20px; }
 
-    background:var(--card-bg);
 
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
+/* ==========================================
+   PREMIUM BACKGROUND OVERLAY
+========================================== */
 
-    padding:48px;
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.25);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+}
 
-    border-radius:24px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.45);
+/* ==========================================
+   PREMIUM GLASS LOGIN CARD
+========================================== */
+
+.agri-login-card-container {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255,255,255,0.35);
 
     box-shadow:
-        0 15px 35px rgba(0,0,0,.12),
-        0 30px 80px rgba(0,0,0,.10);
-
-    animation:fadeIn .6s ease-out;
+        0 10px 25px rgba(0,0,0,0.08),
+        0 20px 50px rgba(0,0,0,0.12);
 
     transition:
-        transform .3s ease,
-        box-shadow .3s ease;
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
-.agri-login-card-container:hover{
-
-    transform:
-        translateY(-4px);
-
+.agri-login-card-container:hover {
+    transform: translateY(-4px);
     box-shadow:
-        0 20px 40px rgba(0,0,0,.14),
-        0 40px 90px rgba(0,0,0,.12);
+        0 15px 35px rgba(0,0,0,0.10),
+        0 30px 60px rgba(0,0,0,0.16);
 }
 
-/* =========================
-   HEADER
-========================= */
 
-.agri-login-card-header{
-    text-align:center;
-    margin-bottom:35px;
-}
+/* ==========================================
+   PREMIUM LOGO
+========================================== */
 
-.agri-login-card-logo{
-
-    width:90px;
-    height:90px;
-
-    margin:0 auto 20px;
-
-    background:#fff;
-
-    border-radius:50%;
-
-    overflow:hidden;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
+.agri-login-card-logo {
     box-shadow:
-        0 10px 25px rgba(46,125,50,.18);
+        0 8px 18px rgba(76,175,80,0.18);
+    transition: all 0.3s ease;
 }
 
-.agri-login-card-logo.placeholder{
-    border:2px solid var(--primary-green);
+.agri-login-card-logo:hover {
+    transform: scale(1.05);
 }
 
-.agri-login-card-logo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+
+/* ==========================================
+   TITLE IMPROVEMENTS
+========================================== */
+
+.agri-login-card-title {
+    font-size: 2rem;
+    letter-spacing: -0.8px;
 }
 
-.agri-login-card-title{
-
-    font-size:2rem;
-    font-weight:700;
-
-    color:var(--primary-green);
-
-    letter-spacing:-0.5px;
+.agri-login-card-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
-.agri-login-card-subtitle{
 
-    margin-top:8px;
-
-    font-size:.95rem;
-
-    color:var(--text-muted);
-
-    line-height:1.5;
-}
-
-/* =========================
-   FORM FIELDS
-========================= */
-
-.agri-login-card-field{
-    margin-bottom:22px;
-    position:relative;
-}
-
-.agri-login-card-field label{
-
-    display:block;
-
-    margin-bottom:8px;
-
-    font-size:.85rem;
-    font-weight:600;
-
-    color:#333;
-}
-
-/* EMAIL FIX INCLUDED */
+/* ==========================================
+   INPUT ENHANCEMENTS
+========================================== */
 
 input[type="email"],
 input[type="text"],
-input[type="password"]{
+input[type="password"] {
 
-    width:100%;
+    background: rgba(255,255,255,0.9);
 
-    padding:14px 16px;
-
-    border:
-        2px solid
-        var(--border-color);
-
-    border-radius:12px;
-
-    font-size:1rem;
-
-    background:
-        rgba(255,255,255,.95);
+    border: 1px solid #d9e2d9;
 
     transition:
-        all .3s ease;
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.2s ease;
 }
 
 input[type="email"]:hover,
 input[type="text"]:hover,
-input[type="password"]:hover{
+input[type="password"]:hover {
 
-    border-color:
-        var(--secondary-green);
+    border-color: #66bb6a;
 }
 
 input[type="email"]:focus,
 input[type="text"]:focus,
-input[type="password"]:focus{
+input[type="password"]:focus {
 
-    outline:none;
+    outline: none;
 
-    border-color:
-        var(--primary-green);
+    border-color: #2E7D32;
 
     box-shadow:
-        0 0 0 5px
-        rgba(46,125,50,.12);
+        0 0 0 4px rgba(46,125,50,0.12),
+        0 8px 20px rgba(46,125,50,0.12);
+
+    transform: translateY(-1px);
 }
 
-.agri-login-card-error{
 
-    display:block;
+/* ==========================================
+   PASSWORD BUTTON
+========================================== */
 
-    min-height:15px;
+.agri-login-card-password-toggle {
 
-    margin-top:6px;
-
-    font-size:.75rem;
-
-    font-weight:500;
-
-    color:var(--error-color);
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
 }
 
-/* =========================
-   PASSWORD FIELD
-========================= */
+.agri-login-card-password-toggle:hover {
 
-.agri-login-card-password-wrapper{
-    position:relative;
+    color: #4CAF50;
+    transform: translateY(-50%) scale(1.08);
 }
 
-.agri-login-card-password-toggle{
 
-    position:absolute;
+/* ==========================================
+   PREMIUM LOGIN BUTTON
+========================================== */
 
-    top:50%;
-    right:14px;
-
-    transform:translateY(-50%);
-
-    background:none;
-
-    border:none;
-
-    cursor:pointer;
-
-    font-size:.85rem;
-    font-weight:700;
-
-    color:var(--primary-green);
-
-    padding:6px 10px;
-
-    border-radius:8px;
-
-    transition:.25s ease;
-}
-
-.agri-login-card-password-toggle:hover{
-
-    background:
-        rgba(46,125,50,.08);
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-.agri-login-card-button{
-
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:12px;
+.agri-login-card-button {
 
     background:
         linear-gradient(
             135deg,
             #2E7D32,
-            #4CAF50
+            #43A047
         );
 
-    color:#fff;
-
-    cursor:pointer;
-
-    position:relative;
-
-    font-size:1rem;
-    font-weight:700;
+    box-shadow:
+        0 8px 20px rgba(46,125,50,0.25);
 
     transition:
-        all .3s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.agri-login-card-button:hover {
+
+    transform: translateY(-2px);
 
     box-shadow:
-        0 10px 25px rgba(46,125,50,.25);
+        0 12px 30px rgba(46,125,50,0.35);
 }
 
-.agri-login-card-button:hover{
+.agri-login-card-button:active {
 
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 15px 35px rgba(46,125,50,.35);
+    transform: translateY(1px);
 }
 
-.agri-login-card-button:disabled{
 
-    background:#BDBDBD;
+/* ==========================================
+   REGISTER LINK
+========================================== */
 
-    cursor:not-allowed;
+.agri-login-card-register a,
+.agri-login-card-link {
 
-    box-shadow:none;
+    transition:
+        color 0.3s ease;
 }
 
-/* =========================
-   SPINNER
-========================= */
+.agri-login-card-register a:hover,
+.agri-login-card-link:hover {
 
-.btn-spinner{
-
-    display:none;
-
-    width:18px;
-    height:18px;
-
-    margin-left:10px;
-
-    border:2px solid #fff;
-    border-top:2px solid transparent;
-
-    border-radius:50%;
-
-    animation:
-        spin .8s linear infinite;
+    color: #43A047;
 }
 
-/* =========================
-   LINKS
-========================= */
 
-.agri-login-card-link{
+/* ==========================================
+   MOBILE OPTIMIZATION
+========================================== */
 
-    background:none;
+@media (max-width: 480px) {
 
-    border:none;
+    .agri-login-card-container {
 
-    color:var(--primary-green);
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
 
-    text-decoration:none;
+    .agri-login-card-title {
 
-    cursor:pointer;
+        font-size: 1.7rem;
+    }
 
-    font-size:.9rem;
-    font-weight:600;
+    .agri-login-card-logo {
+
+        width: 70px;
+        height: 70px;
+    }
 }
 
-.agri-login-card-link:hover{
-    text-decoration:underline;
+/* Error state */
+.agri-login-card-input.error,
+input.error {
+    border-color: var(--error-color) !important;
+    box-shadow: 0 0 0 3px rgba(211,47,47,0.12);
 }
 
-/* =========================
-   REGISTER SECTION
-========================= */
-
-.agri-login-card-register{
-    margin-top:20px;
-    text-align:center;
+/* Accessibility */
+.agri-login-card-button:focus-visible,
+.agri-login-card-link:focus-visible,
+.agri-login-card-password-toggle:focus-visible {
+    outline: 3px solid rgba(76,175,80,0.4);
+    outline-offset: 2px;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width:480px){
-
+/* Mobile performance */
+@media (max-width:768px){
     body{
-        padding:15px;
-    }
-
-    .agri-login-card-container{
-        padding:32px 24px;
-        border-radius:20px;
-    }
-
-    .agri-login-card-title{
-        font-size:1.6rem;
-    }
-
-    .agri-login-card-logo{
-        width:80px;
-        height:80px;
-    }
-}
-
-/* =========================
-   ANIMATIONS
-========================= */
-
-@keyframes fadeIn{
-
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes spin{
-
-    to{
-        transform:rotate(360deg);
+        background-attachment: scroll;
     }
 }

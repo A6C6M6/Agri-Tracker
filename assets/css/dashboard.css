@@ -1,18 +1,40 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .active-nav {
     background-color: #dcfce7;
     color: #15803d;
     border-right: 4px solid #22c55e;
+    font-weight: 600;
 }
 
 .toast {
     animation: slideIn 0.3s ease-out;
 }
 
+#sidebar {
+    min-height: 100vh;
+}
+
+#nav-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #334155;
+    transition: all 0.2s ease;
+}
+
+#nav-menu a:hover {
+    background: #f1f5f9;
+}
+
 @keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }

@@ -1,88 +1,161 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const loginForm = document.getElementById("agriLoginForm");
+    const loginId = document.getElementById("loginId");
+    const password = document.getElementById("password");
 
-const form = document.getElementById("agriLoginForm");
+    const loginIdError = document.getElementById("loginIdError");
+    const passwordError = document.getElementById("passwordError");
 
-// Form ഇല്ലെങ്കിൽ exit
-if (!form) return;
+    const passwordToggle = document.getElementById("passwordToggle");
 
-const loginId = document.getElementById("loginId");
-const password = document.getElementById("password");
-const submitBtn = document.getElementById("loginSubmitBtn");
-const passwordToggle = document.getElementById("passwordToggle");
+    const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+    const btnText = loginSubmitBtn.querySelector(".btn-text");
+    const btnSpinner = loginSubmitBtn.querySelector(".btn-spinner");
 
-// Password Show / Hide
-if (passwordToggle && password) {
+    const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+    const registerLink = document.getElementById("registerLink");
+
+    /* ==========================================
+       VALIDATION FUNCTIONS
+    ========================================== */
+
+    function agriLoginCardValidateLoginId() {
+
+        const value = loginId.value.trim();
+
+        if (value === "") {
+
+            loginIdError.textContent = "Login ID is required.";
+            loginId.classList.add("error");
+
+            return false;
+        }
+
+        loginIdError.textContent = "";
+        loginId.classList.remove("error");
+
+        return true;
+    }
+
+    function agriLoginCardValidatePassword() {
+
+        const value = password.value.trim();
+
+        if (value === "") {
+
+            passwordError.textContent = "Password is required.";
+            password.classList.add("error");
+
+            return false;
+        }
+
+        passwordError.textContent = "";
+        password.classList.remove("error");
+
+        return true;
+    }
+
+    function agriLoginCardValidateForm() {
+
+        const isLoginIdValid =
+            agriLoginCardValidateLoginId();
+
+        const isPasswordValid =
+            agriLoginCardValidatePassword();
+
+        return (
+            isLoginIdValid &&
+            isPasswordValid
+        );
+    }
+
+    /* ==========================================
+       BLUR VALIDATION
+    ========================================== */
+
+    loginId.addEventListener(
+        "blur",
+        agriLoginCardValidateLoginId
+    );
+
+    password.addEventListener(
+        "blur",
+        agriLoginCardValidatePassword
+    );
+
+    /* ==========================================
+       PASSWORD TOGGLE
+    ========================================== */
+
     passwordToggle.addEventListener("click", () => {
 
         if (password.type === "password") {
+
             password.type = "text";
             passwordToggle.textContent = "Hide";
+
         } else {
+
             password.type = "password";
             passwordToggle.textContent = "Show";
         }
 
     });
-}
 
-// Login Handler
-form.addEventListener("submit", async (e) => {
+    /* ==========================================
+       LOGIN SUBMIT
+    ========================================== */
 
-    e.preventDefault();
+    loginForm.addEventListener("submit", (event) => {
 
-    const email = loginId?.value.trim();
-    const pass = password?.value.trim();
+        event.preventDefault();
 
-    if (!email || !pass) {
-        alert("Please enter Email and Password");
-        return;
-    }
+        const isValid =
+            agriLoginCardValidateForm();
 
-    const btnText = submitBtn?.querySelector(".btn-text");
-    const spinner = submitBtn?.querySelector(".btn-spinner");
-
-    try {
-
-        submitBtn.disabled = true;
-
-        if (btnText) {
-            btnText.textContent = "Authenticating...";
+        if (!isValid) {
+            return;
         }
 
-        if (spinner) {
-            spinner.style.display = "inline-block";
-        }
+        loginSubmitBtn.disabled = true;
 
-        const { error } =
-            await window.supabaseClient.auth.signInWithPassword({
-                email,
-                password: pass
-            });
+        btnText.textContent = "Authenticating...";
+        btnSpinner.style.display = "inline-block";
 
-        if (error) throw error;
+        setTimeout(() => {
 
-        // Redirect Page
-        const REDIRECT_PAGE = "dashboard.html";
-        window.location.href = REDIRECT_PAGE;
-
-    } catch (err) {
-
-        alert("Login Failed: " + err.message);
-
-        submitBtn.disabled = false;
-
-        if (btnText) {
             btnText.textContent = "Login";
-        }
+            btnSpinner.style.display = "none";
 
-        if (spinner) {
-            spinner.style.display = "none";
-        }
+            window.location.href = "dashboard.html";
 
-    }
+        }, 1500);
 
-});
+    });
 
+    /* ==========================================
+       FORGOT PASSWORD
+    ========================================== */
+
+    forgotPasswordLink.addEventListener("click", () => {
+
+        alert(
+            "Password recovery module will be integrated soon."
+        );
+
+    });
+
+    /* ==========================================
+       REGISTER
+    ========================================== */
+
+    registerLink.addEventListener("click", () => {
+
+        alert(
+            "Registration module will be integrated soon."
+        );
+
+    });
 
 });
