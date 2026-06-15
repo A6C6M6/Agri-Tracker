@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Agri Tracker</title>
+
+    <link rel="stylesheet" href="assets/css/register.css">
+</head>
+
+<body>
+
+    <div class="agri-register-card-wrapper">
+
+        <div class="agri-register-card-container">
+
+            <!-- Logo -->
+            <div class="agri-register-card-logo">
+                <img src="assets/logo/agritracker_Login_emblem.png"
+                     alt="Agri Tracker Logo">
+            </div>
+
+            <!-- Title -->
+            <h1 class="agri-register-card-title">
+                Agri Tracker
+            </h1>
+
+            <p class="agri-register-card-subtitle">
+                Create New Account
+            </p>
+
+            <!-- Registration Form -->
+            <form id="registerForm">
+
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text"
+                           id="fullName"
+                           placeholder="Enter Full Name"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email ID</label>
+                    <input type="email"
+                           id="email"
+                           placeholder="Enter Email Address">
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile Number *</label>
+                    <input type="text"
+                           id="mobile"
+                           placeholder="Enter Mobile Number"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Unique Number</label>
+                    <input type="text"
+                           id="uniqueNumber"
+                           placeholder="Enter Unique Number">
+                </div>
+
+                <div class="form-group">
+                    <label>User ID</label>
+                    <input type="text"
+                           id="userId"
+                           placeholder="Create User ID">
+                </div>
+
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password"
+                           id="password"
+                           placeholder="Enter Password"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password *</label>
+                    <input type="password"
+                           id="confirmPassword"
+                           placeholder="Confirm Password"
+                           required>
+                </div>
+
+                <button type="submit" class="register-btn">
+                    Register New Account
+                </button>
+
+                <div class="login-link">
+                    Already have an account?
+                    <a href="logincard.html">
+                        Login Here
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="assets/js/supabase-config.js"></script>
+    <script src="assets/js/register.js"></script>
+
+</body>
+</html>
