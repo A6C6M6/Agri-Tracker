@@ -1,64 +1,68 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="ml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Agri Tracker</title>
+    <title>Agri Tracker | Enterprise Dashboard</title>
 
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-
+    <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
-<body class="bg-gray-100">
 
+<body class="bg-slate-50">
 
-<div class="p-6">
+    <div id="app" class="flex min-h-screen">
 
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-6">
+        <aside id="sidebar"
+               class="w-64 bg-white border-r border-slate-200 p-4">
 
-        <h1 class="text-2xl font-bold text-green-700">
-            Dashboard
-        </h1>
+            <h2 class="text-xl font-bold text-green-700 mb-6">
+                Agri Tracker
+            </h2>
 
-        <button
-            id="logoutBtn"
-            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
-            Logout
-        </button>
+            <div id="nav-menu"></div>
+
+        </aside>
+
+        <main class="flex-1">
+
+            <header id="top-header"
+                    class="sticky top-0 z-10 bg-white border-b border-slate-200 p-4">
+
+                <h1 class="text-2xl font-semibold">
+                    Dashboard
+                </h1>
+
+            </header>
+
+            <section id="page-content" class="p-6">
+
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h2 class="text-xl font-bold mb-2">
+                        Welcome to Agri Tracker
+                    </h2>
+
+                    <p class="text-slate-600">
+                        Enterprise Agriculture Management Dashboard
+                    </p>
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
-    <!-- Dashboard Card -->
-    <div class="p-4 bg-white rounded shadow">
-        <h2 class="text-lg font-semibold">
-            Total Crops: 128
-        </h2>
+    <div id="toast-container"
+         class="fixed top-5 right-5 z-50 space-y-2">
     </div>
 
-    <!-- Navigation Area -->
-    <div id="nav-menu" class="mt-4 space-y-2"></div>
-
-    <!-- Toast Container -->
-    <div
-        id="toast-container"
-        class="fixed top-4 right-4 z-50">
-    </div>
-
-</div>
-
-<!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- Supabase Configuration -->
-<script src="assets/js/supabase-config.js"></script>
-
-<!-- Dashboard Script -->
-<script src="assets/js/dashboard.js"></script>
-
+    <script src="assets/js/router.js"></script>
+    <script src="assets/js/dashboard.js"></script>
 
 </body>
 </html>

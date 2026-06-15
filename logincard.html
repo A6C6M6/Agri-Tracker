@@ -1,96 +1,174 @@
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Agri Tracker</title>
 
-
-<link rel="stylesheet" href="assets/css/logincard.css">
-
-
+    <link rel="stylesheet" href="assets/css/logincard.css">
 </head>
+
 <body>
 
+    <div class="agri-login-card-wrapper">
 
-<div class="agri-login-card-wrapper">
-    <div class="agri-login-card-container">
+        <div class="agri-login-card-container">
 
-        <header class="agri-login-card-header">
-            <div class="agri-login-card-logo">
-                <img
-                    src="assets/logo/agritracker_Login_emblem.png"
-                    alt="Agri Tracker Logo"
-                    onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')">
-            </div>
+            <header class="agri-login-card-header">
 
-            <h1 class="agri-login-card-title">Agri Tracker</h1>
+                <div class="agri-login-card-logo">
 
-            <p class="agri-login-card-subtitle">
-                Smart Agriculture Management System
-            </p>
-        </header>
+                    <img
+                        src="assets/logo/agritracker_Login_emblem.png"
+                        alt="Agri Tracker Logo"
+                        onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')"
+                    >
 
-        <form id="agriLoginForm" novalidate>
+                </div>
 
-            <div class="agri-login-card-field">
-                <label for="loginId">Email</label>
+                <h1 class="agri-login-card-title">
+                    Agri Tracker
+                </h1>
 
-                <input
-                    type="email"
-                    id="loginId"
-                    name="loginId"
-                    placeholder="Enter Email Address"
-                    required>
-            </div>
+                <p class="agri-login-card-subtitle">
+                    Smart Agriculture Management System
+                </p>
 
-            <div class="agri-login-card-field">
-                <label for="password">Password</label>
+            </header>
 
-                <div class="agri-login-card-password-wrapper">
+            <form
+                class="agri-login-card-form"
+                id="agriLoginForm"
+                novalidate
+            >
+
+                <!-- Login ID -->
+
+                <div class="agri-login-card-field">
+
+                    <label for="loginId">
+                        Login ID
+                    </label>
 
                     <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Enter Password"
-                        required>
+                        type="text"
+                        id="loginId"
+                        name="loginId"
+                        class="agri-login-card-input"
+                        placeholder="Email / Mobile Number / Username"
+                        autocomplete="username"
+                        required
+                    >
+
+                    <span
+                        class="agri-login-card-error"
+                        id="loginIdError"
+                        aria-live="polite"
+                    ></span>
+
+                </div>
+
+                <!-- Password -->
+
+                <div class="agri-login-card-field">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="agri-login-card-password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="agri-login-card-input"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="agri-login-card-password-toggle"
+                            id="passwordToggle"
+                            aria-label="Toggle password visibility"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <span
+                        class="agri-login-card-error"
+                        id="passwordError"
+                        aria-live="polite"
+                    ></span>
+
+                </div>
+
+                <!-- Options -->
+
+                <div class="agri-login-card-options">
+
+                    <label class="agri-login-card-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="remember"
+                        >
+
+                        Remember Me
+
+                    </label>
 
                     <button
                         type="button"
-                        id="passwordToggle"
-                        class="agri-login-card-password-toggle">
-                        Show
+                        class="agri-login-card-link"
+                        id="forgotPasswordLink"
+                    >
+                        Forgot Password?
                     </button>
 
                 </div>
-            </div>
 
-            <button
-                type="submit"
-                id="loginSubmitBtn"
-                class="agri-login-card-button">
+                <!-- Login Button -->
 
-                <span class="btn-text">Login</span>
-                <span class="btn-spinner"></span>
+                <button
+                    type="submit"
+                    class="agri-login-card-button"
+                    id="loginSubmitBtn"
+                >
 
-            </button>
+                    <span class="btn-text">
+                        Login
+                    </span>
 
-        </form>
+                    <span class="btn-spinner"></span>
+
+                </button>
+
+                <!-- Register -->
+
+                <div class="agri-login-card-register">
+
+                    <button
+                        type="button"
+                        class="agri-login-card-link"
+                        id="registerLink"
+                    >
+                        Register New Account
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
-</div>
 
-<!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- Supabase Config -->
-<script src="assets/js/supabase-config.js"></script>
-
-<!-- Login Script -->
-<script src="assets/js/logincard.js"></script>
-
+    <script src="assets/js/logincard.js"></script>
 
 </body>
 </html>
