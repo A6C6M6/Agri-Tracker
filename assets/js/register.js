@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // ==========================================
 
             const { data: existingMobile } =
-                await supabase
+                await window.supabaseClient
                     .from("users")
                     .select("mobile")
                     .eq("mobile", mobile);
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // ==========================================
 
             const { error } =
-                await supabase
+                await window.supabaseClient
                     .from("users")
                     .insert([
                         {
