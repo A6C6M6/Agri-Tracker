@@ -1,23 +1,64 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Agri Tracker</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+```
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+```
+
 </head>
 <body class="bg-gray-100">
-    <div class="p-6">
-        <h1 class="text-2xl font-bold">Dashboard</h1>
 
-        <div class="mt-4 p-4 bg-white rounded shadow">
-            Total Crops: 128
-        </div>
+```
+<div class="p-6">
 
-        <div id="nav-menu" class="mt-4 space-y-2"></div>
-        <div id="toast-container" class="fixed top-4 right-4 z-50"></div>
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+
+        <h1 class="text-2xl font-bold text-green-700">
+            Dashboard
+        </h1>
+
+        <button
+            id="logoutBtn"
+            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+            Logout
+        </button>
+
     </div>
 
-    <script src="assets/js/dashboard.js"></script>
+    <!-- Dashboard Card -->
+    <div class="p-4 bg-white rounded shadow">
+        <h2 class="text-lg font-semibold">
+            Total Crops: 128
+        </h2>
+    </div>
+
+    <!-- Navigation Area -->
+    <div id="nav-menu" class="mt-4 space-y-2"></div>
+
+    <!-- Toast Container -->
+    <div
+        id="toast-container"
+        class="fixed top-4 right-4 z-50">
+    </div>
+
+</div>
+
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Supabase Configuration -->
+<script src="assets/js/supabase-config.js"></script>
+
+<!-- Dashboard Script -->
+<script src="assets/js/dashboard.js"></script>
+```
+
 </body>
 </html>
