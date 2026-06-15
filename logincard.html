@@ -1,21 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Login | Agri Tracker</title>
 
-    <link rel="stylesheet" href="assets/css/logincard.css">
+
+<link rel="stylesheet" href="assets/css/logincard.css">
+
+
 </head>
 <body>
 
-<div class="agri-login-card-wrapper">
 
+<div class="agri-login-card-wrapper">
     <div class="agri-login-card-container">
 
         <header class="agri-login-card-header">
-
             <div class="agri-login-card-logo">
                 <img
                     src="assets/logo/agritracker_Login_emblem.png"
@@ -23,50 +25,28 @@
                     onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')">
             </div>
 
-            <h1 class="agri-login-card-title">
-                Agri Tracker
-            </h1>
+            <h1 class="agri-login-card-title">Agri Tracker</h1>
 
             <p class="agri-login-card-subtitle">
                 Smart Agriculture Management System
             </p>
-
         </header>
 
-        <form
-            class="agri-login-card-form"
-            id="agriLoginForm"
-            novalidate>
-
-            <!-- Login ID -->
+        <form id="agriLoginForm" novalidate>
 
             <div class="agri-login-card-field">
-
-                <label for="loginId">
-                    Login ID
-                </label>
+                <label for="loginId">Email</label>
 
                 <input
-                    type="text"
+                    type="email"
                     id="loginId"
                     name="loginId"
-                    placeholder="Email / Mobile Number / Username"
+                    placeholder="Enter Email Address"
                     required>
-
-                <span
-                    class="agri-login-card-error"
-                    id="loginIdError">
-                </span>
-
             </div>
 
-            <!-- Password -->
-
             <div class="agri-login-card-field">
-
-                <label for="password">
-                    Password
-                </label>
+                <label for="password">Password</label>
 
                 <div class="agri-login-card-password-wrapper">
 
@@ -80,87 +60,26 @@
                     <button
                         type="button"
                         id="passwordToggle"
-                        class="agri-login-card-password-toggle"
-                        aria-label="Toggle password visibility">
-
+                        class="agri-login-card-password-toggle">
                         Show
-
                     </button>
 
                 </div>
-
-                <span
-                    class="agri-login-card-error"
-                    id="passwordError">
-                </span>
-
             </div>
-
-            <!-- Remember & Forgot -->
-
-            <div class="agri-login-card-options">
-
-                <label class="agri-login-card-checkbox">
-
-                    <input
-                        type="checkbox"
-                        id="rememberMe"
-                        name="remember">
-
-                    Remember Me
-
-                </label>
-
-                <button
-                    type="button"
-                    id="forgotPasswordLink"
-                    class="agri-login-card-link">
-
-                    Forgot Password?
-
-                </button>
-
-            </div>
-
-            <!-- Login Button -->
 
             <button
                 type="submit"
                 id="loginSubmitBtn"
                 class="agri-login-card-button">
 
-                <span class="btn-text">
-                    Login
-                </span>
-
-                <span class="btn-spinner">
-                </span>
+                <span class="btn-text">Login</span>
+                <span class="btn-spinner"></span>
 
             </button>
-
-            <!-- Register -->
-
-            <div class="agri-login-card-register">
-
-                <span>
-                    Don't have an account?
-                </span>
-
-                <button
-                    type="button"
-                    id="registerLink"
-                    class="agri-login-card-link">
-
-                    Register New Account
-
-                </button>
-
-            </div>
 
         </form>
 
     </div>
-
 </div>
 
 <!-- Supabase SDK -->
@@ -171,6 +90,7 @@
 
 <!-- Login Script -->
 <script src="assets/js/logincard.js"></script>
+
 
 </body>
 </html>
