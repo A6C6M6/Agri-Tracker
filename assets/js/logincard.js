@@ -45,7 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log("Login Success", data);
 
-            window.location.href = "dashboard.html";
+            const REDIRECT_PAGE = "dashboard.html";
+               window.location.href = REDIRECT_PAGE;
 
         } catch (err) {
 
