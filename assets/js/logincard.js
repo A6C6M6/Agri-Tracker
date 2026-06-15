@@ -1,70 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-```
-const form = document.getElementById("agriLoginForm");
-const loginId = document.getElementById("loginId");
-const password = document.getElementById("password");
-const submitBtn = document.getElementById("loginSubmitBtn");
-const passwordToggle = document.getElementById("passwordToggle");
+    const form = document.getElementById("agriLoginForm");
+    const loginId = document.getElementById("loginId");
+    const password = document.getElementById("password");
+    const submitBtn = document.getElementById("loginSubmitBtn");
+    const passwordToggle = document.getElementById("passwordToggle");
 
-passwordToggle.addEventListener("click", () => {
-
-    if (password.type === "password") {
-        password.type = "text";
-        passwordToggle.textContent = "Hide";
-    } else {
-        password.type = "password";
-        passwordToggle.textContent = "Show";
+    if (passwordToggle) {
+        passwordToggle.addEventListener("click", () => {
+            if (password.type === "password") {
+                password.type = "text";
+                passwordToggle.textContent = "Hide";
+            } else {
+                password.type = "password";
+                passwordToggle.textContent = "Show";
+            }
+        });
     }
 
-});
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-form.addEventListener("submit", async (e) => {
+        const email = loginId.value.trim();
+        const pass = password.value.trim();
 
-    e.preventDefault();
+        if (!email || !pass) {
+            alert("Please enter Email and Password");
+            return;
+        }
 
-    const email = loginId.value.trim();
-    const pass = password.value.trim();
+        try {
+            submitBtn.disabled = true;
 
-    if (!email || !pass) {
-        alert("Please enter Email and Password");
-        return;
-    }
+            const btnText = submitBtn.querySelector(".btn-text");
+            if (btnText) btnText.textContent = "Authenticating...";
 
-    submitBtn.disabled = true;
+            const { data, error } =
+                await window.supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: pass
+                });
 
-    const btnText = submitBtn.querySelector(".btn-text");
-    const spinner = submitBtn.querySelector(".btn-spinner");
+            if (error) throw error;
 
-    btnText.textContent = "Authenticating...";
-    spinner.style.display = "inline-block";
+            console.log("Login Success", data);
 
-    try {
+            window.location.href = "dashboard.html";
 
-        const { data, error } =
-            await supabase.auth.signInWithPassword({
-                email: email,
-                password: pass
-            });
+        } catch (err) {
 
-        if (error) throw error;
+            console.error(err);
+            alert("Login Failed: " + err.message);
 
-        console.log("Login Success", data);
+            submitBtn.disabled = false;
 
-        window.location.href = "dashboard.html";
-
-    } catch (err) {
-
-        console.error(err);
-
-        alert("Login Failed: " + err.message);
-
-        submitBtn.disabled = false;
-        btnText.textContent = "Login";
-        spinner.style.display = "none";
-    }
-
-});
-```
+            const btnText = submitBtn.querySelector(".btn-text");
+            if (btnText) btnText.textContent = "Login";
+        }
+    });
 
 });
