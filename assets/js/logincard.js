@@ -159,3 +159,87 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+// ==========================================
+// LOGIN FIELD VALIDATION
+// ==========================================
+
+const loginId =
+document.getElementById("loginId");
+
+const password =
+document.getElementById("password");
+
+const loginIdError =
+document.getElementById("loginIdError");
+
+const passwordError =
+document.getElementById("passwordError");
+
+// Blur Validation
+
+loginId.addEventListener("blur", () => {
+
+```
+if (!loginId.value.trim()) {
+
+    loginIdError.textContent =
+        "Login ID is required";
+
+} else {
+
+    loginIdError.textContent = "";
+}
+```
+
+});
+
+password.addEventListener("blur", () => {
+
+```
+if (!password.value.trim()) {
+
+    passwordError.textContent =
+        "Password is required";
+
+} else {
+
+    passwordError.textContent = "";
+}
+```
+
+});
+
+// Password Toggle
+
+const passwordToggle =
+document.getElementById("passwordToggle");
+
+passwordToggle.addEventListener("click", () => {
+
+```
+const isHidden =
+    password.type === "password";
+
+password.type =
+    isHidden ? "text" : "password";
+
+passwordToggle.textContent =
+    isHidden ? "Hide" : "Show";
+```
+
+});
+
+// Forgot Password
+
+document
+.getElementById("forgotPasswordLink")
+.addEventListener("click", () => {
+
+```
+alert(
+    "Password recovery module will be integrated soon."
+);
+```
+
+});
