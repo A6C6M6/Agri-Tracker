@@ -69,7 +69,8 @@ body {
 .btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin-left: 10px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.agri-login-card-link { background: none; border: none; color: var(--primary-green); cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+.agri-login-card-link { background: none; border: none; color: var(--primary-green); cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; display: block;
+    text-align: center;}
 .agri-login-card-link:hover { text-decoration: underline; }
 .agri-login-card-register { text-align: center; margin-top: 20px; }
 
