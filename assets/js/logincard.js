@@ -152,9 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     registerLink.addEventListener("click", () => {
 
-        alert(
-            "Registration module will be integrated soon."
-        );
+    window.location.href = "register.html";
+
+});
 
     });
 
