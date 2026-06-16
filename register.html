@@ -2,18 +2,41 @@
 <html lang="en">
 
 <head>
+
+    <!-- ===================================================== -->
+    <!-- ?? YELLOW SECTION -->
+    <!-- Typography & Page Metadata -->
+    <!-- ===================================================== -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Register | Agri Tracker</title>
 
+    <!-- ===================================================== -->
+    <!-- ?? PURPLE SECTION -->
+    <!-- External CSS Files -->
+    <!-- ===================================================== -->
+
     <link rel="stylesheet" href="assets/css/register.css">
+
 </head>
 
 <body>
 
+    <!-- ===================================================== -->
+    <!-- ?? BLUE SECTION -->
+    <!-- Layout & Card Structure -->
+    <!-- ===================================================== -->
+
     <div class="agri-register-card-wrapper">
 
         <div class="agri-register-card-container">
+
+            <!-- ===================================================== -->
+            <!-- ?? YELLOW SECTION -->
+            <!-- Logo & Heading -->
+            <!-- ===================================================== -->
 
             <!-- Logo -->
             <div class="agri-register-card-logo">
@@ -30,68 +53,85 @@
                 Create New Account
             </p>
 
-            <!-- Registration Form -->
+            <!-- ===================================================== -->
+            <!-- ? WHITE SECTION -->
+            <!-- Registration Form Inputs -->
+            <!-- ===================================================== -->
+
             <form id="registerForm">
 
+                <!-- Full Name -->
                 <div class="form-group">
                     <label>Full Name *</label>
+
                     <input type="text"
                            id="fullName"
                            placeholder="Enter Full Name"
                            required>
                 </div>
 
+                <!-- Email -->
                 <div class="form-group">
                     <label>Email ID</label>
+
                     <input type="email"
                            id="email"
                            placeholder="Enter Email Address">
                 </div>
 
+                <!-- Mobile Number -->
                 <div class="form-group">
                     <label>Mobile Number *</label>
+
                     <input type="text"
                            id="mobile"
                            placeholder="Enter Mobile Number"
                            required>
                 </div>
 
-                <div class="form-group">
-                    <label>Unique Number</label>
-                    <input type="text"
-                           id="uniqueNumber"
-                           placeholder="Enter Unique Number">
-                </div>
-
-                <div class="form-group">
-                    <label>User ID</label>
-                    <input type="text"
-                           id="userId"
-                           placeholder="Create User ID">
-                </div>
-
+                <!-- Password -->
                 <div class="form-group">
                     <label>Password *</label>
+
                     <input type="password"
                            id="password"
                            placeholder="Enter Password"
                            required>
                 </div>
 
+                <!-- Confirm Password -->
                 <div class="form-group">
                     <label>Confirm Password *</label>
+
                     <input type="password"
                            id="confirmPassword"
                            placeholder="Confirm Password"
                            required>
                 </div>
 
-                <button type="submit" class="register-btn">
+                <!-- ===================================================== -->
+                <!-- ?? GREEN SECTION -->
+                <!-- Action Buttons -->
+                <!-- ===================================================== -->
+
+                <button type="submit"
+                        class="register-btn">
                     Register New Account
                 </button>
 
+                <!-- ===================================================== -->
+                <!-- ?? RED SECTION -->
+                <!-- Navigation & Redirect Links -->
+                <!-- ===================================================== -->
+
+                <!--
+                    Redirect Target:
+                    Login Here ? logincard.html
+                -->
+
                 <div class="login-link">
                     Already have an account?
+
                     <a href="logincard.html">
                         Login Here
                     </a>
@@ -103,11 +143,51 @@
 
     </div>
 
-    <!-- Supabase -->
+    <!-- ===================================================== -->
+    <!-- ?? PURPLE SECTION -->
+    <!-- API & External Services -->
+    <!-- ===================================================== -->
+
+    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- Supabase Configuration -->
     <script src="assets/js/supabase-config.js"></script>
+
+    <!-- Registration Logic -->
     <script src="assets/js/register.js"></script>
 
+    <!-- ===================================================== -->
+    <!-- ?? BROWN SECTION -->
+    <!-- Database Structure Documentation -->
+    <!-- ===================================================== -->
+
+    <!--
+        Database Logic Managed In:
+        assets/js/register.js
+
+        Expected Documentation:
+
+        Table Names
+        Column Names
+        Relationships
+        Data Flow
+    -->
+
+    <!-- ===================================================== -->
+    <!-- ? BLACK SECTION -->
+    <!-- Security & Validation Documentation -->
+    <!-- ===================================================== -->
+
+    <!--
+        Authentication
+        Authorization
+        Password Validation
+        Required Field Validation
+        Error Handling
+        Session Management
+    -->
+
 </body>
+
 </html>
