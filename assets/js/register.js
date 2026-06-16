@@ -1,19 +1,107 @@
-// ==========================================
-// AGRI TRACKER - REGISTER ACCOUNT
-// ==========================================
+/* =====================================================
+   ?? PURPLE SECTION
+   API & External Services
+===================================================== */
 
+/*
+Supabase Client:
+window.supabaseClient
+
+External Service:
+Supabase Database
+*/
+
+
+/* =====================================================
+   ?? BROWN SECTION
+   Database Structure
+===================================================== */
+
+/*
+Table Name:
+users
+
+Columns Used:
+full_name
+email
+mobile
+password
+status
+
+Data Flow:
+Register Form
+    ?
+Validation
+    ?
+Duplicate Mobile Check
+    ?
+Insert User
+    ?
+Success Redirect
+*/
+
+
+/* =====================================================
+   ? BLACK SECTION
+   Security & Validation
+===================================================== */
+
+/*
+Validation Rules:
+? Full Name Required
+? Mobile Number Required
+? Password Required
+? Password Match Required
+
+Error Handling:
+? Try Catch
+? Registration Error Alert
+? Duplicate Mobile Alert
+
+Authentication:
+Custom User Registration
+
+Authorization:
+Handled After Login
+*/
+
+
+/* =====================================================
+   ?? RED SECTION
+   Navigation & Redirects
+===================================================== */
+
+/*
+Success Redirect:
+logincard.html
+*/
+
+
+/* =====================================================
+   ?? FUNCTION SECTION
+===================================================== */
+
+/**
+ * Function Name : DOMContentLoaded
+ * Purpose       : Initialize Registration Page
+ */
 document.addEventListener("DOMContentLoaded", () => {
 
     const registerForm =
         document.getElementById("registerForm");
 
+    /**
+     * Function Name : Register Form Submit
+     * Purpose       : Validate & Register User
+     */
     registerForm.addEventListener("submit", async (e) => {
 
         e.preventDefault();
 
-        // ==========================================
-        // GET FORM VALUES
-        // ==========================================
+        /* =====================================================
+           ? WHITE SECTION
+           Input Value Collection
+        ===================================================== */
 
         const fullName =
             document.getElementById("fullName").value.trim();
@@ -24,21 +112,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const mobile =
             document.getElementById("mobile").value.trim();
 
-        const uniqueNumber =
-            document.getElementById("uniqueNumber").value.trim();
-
-        const userId =
-            document.getElementById("userId").value.trim();
-
         const password =
             document.getElementById("password").value;
 
         const confirmPassword =
             document.getElementById("confirmPassword").value;
 
-        // ==========================================
-        // VALIDATION
-        // ==========================================
+
+        /* =====================================================
+           ? BLACK SECTION
+           Validation Rules
+        ===================================================== */
 
         if (!fullName) {
             alert("Please enter Full Name");
@@ -62,9 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            // ==========================================
-            // CHECK DUPLICATE MOBILE
-            // ==========================================
+            /* =====================================================
+               ?? BROWN SECTION
+               Duplicate Mobile Check
+            ===================================================== */
 
             const { data: existingMobile } =
                 await window.supabaseClient
@@ -77,9 +162,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // ==========================================
-            // SAVE USER
-            // ==========================================
+
+            /* =====================================================
+               ?? PURPLE SECTION
+               Save User To Supabase
+            ===================================================== */
 
             const { error } =
                 await window.supabaseClient
@@ -89,8 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             full_name: fullName,
                             email: email || null,
                             mobile: mobile,
-                            unique_number: uniqueNumber || null,
-                            user_id: userId || null,
                             password: password,
                             status: "Active"
                         }
@@ -102,9 +187,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // ==========================================
-            // SUCCESS
-            // ==========================================
+
+            /* =====================================================
+               ?? RED SECTION
+               Success Redirect
+            ===================================================== */
 
             alert("Account Created Successfully");
 
