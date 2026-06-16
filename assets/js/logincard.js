@@ -1,245 +1,149 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const loginForm = document.getElementById("agriLoginForm");
-    const loginId = document.getElementById("loginId");
-    const password = document.getElementById("password");
 
-    const loginIdError = document.getElementById("loginIdError");
-    const passwordError = document.getElementById("passwordError");
+const loginForm = document.getElementById("agriLoginForm");
+const loginId = document.getElementById("loginId");
+const password = document.getElementById("password");
 
-    const passwordToggle = document.getElementById("passwordToggle");
+const loginIdError = document.getElementById("loginIdError");
+const passwordError = document.getElementById("passwordError");
 
-    const loginSubmitBtn = document.getElementById("loginSubmitBtn");
-    const btnText = loginSubmitBtn.querySelector(".btn-text");
-    const btnSpinner = loginSubmitBtn.querySelector(".btn-spinner");
+const passwordToggle = document.getElementById("passwordToggle");
 
-    const forgotPasswordLink = document.getElementById("forgotPasswordLink");
-    const registerLink = document.getElementById("registerLink");
+const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+const btnText = loginSubmitBtn.querySelector(".btn-text");
+const btnSpinner = loginSubmitBtn.querySelector(".btn-spinner");
 
-    /* ==========================================
-       VALIDATION FUNCTIONS
-    ========================================== */
+const forgotPasswordLink =
+    document.getElementById("forgotPasswordLink");
 
-    function agriLoginCardValidateLoginId() {
+const registerLink =
+    document.getElementById("registerLink");
 
-        const value = loginId.value.trim();
+function validateLoginId() {
 
-        if (value === "") {
+    const value = loginId.value.trim();
 
-            loginIdError.textContent = "Login ID is required.";
-            loginId.classList.add("error");
+    if (value === "") {
 
-            return false;
-        }
+        loginIdError.textContent =
+            "Login ID is required.";
 
-        loginIdError.textContent = "";
-        loginId.classList.remove("error");
+        loginId.classList.add("error");
 
-        return true;
+        return false;
     }
 
-    function agriLoginCardValidatePassword() {
+    loginIdError.textContent = "";
+    loginId.classList.remove("error");
 
-        const value = password.value.trim();
+    return true;
+}
 
-        if (value === "") {
+function validatePassword() {
 
-            passwordError.textContent = "Password is required.";
-            password.classList.add("error");
+    const value = password.value.trim();
 
-            return false;
-        }
+    if (value === "") {
 
-        passwordError.textContent = "";
-        password.classList.remove("error");
+        passwordError.textContent =
+            "Password is required.";
 
-        return true;
+        password.classList.add("error");
+
+        return false;
     }
 
-    function agriLoginCardValidateForm() {
+    passwordError.textContent = "";
+    password.classList.remove("error");
 
-        const isLoginIdValid =
-            agriLoginCardValidateLoginId();
+    return true;
+}
 
-        const isPasswordValid =
-            agriLoginCardValidatePassword();
+function validateForm() {
 
-        return (
-            isLoginIdValid &&
-            isPasswordValid
-        );
-    }
-
-    /* ==========================================
-       BLUR VALIDATION
-    ========================================== */
-
-    loginId.addEventListener(
-        "blur",
-        agriLoginCardValidateLoginId
+    return (
+        validateLoginId() &&
+        validatePassword()
     );
+}
 
-    password.addEventListener(
-        "blur",
-        agriLoginCardValidatePassword
-    );
+loginId.addEventListener(
+    "blur",
+    validateLoginId
+);
 
-    /* ==========================================
-       PASSWORD TOGGLE
-    ========================================== */
+password.addEventListener(
+    "blur",
+    validatePassword
+);
 
-    passwordToggle.addEventListener("click", () => {
+passwordToggle.addEventListener("click", () => {
 
-        if (password.type === "password") {
+    if (password.type === "password") {
 
-            password.type = "text";
-            passwordToggle.textContent = "Hide";
+        password.type = "text";
+        passwordToggle.textContent = "Hide";
 
-        } else {
+    } else {
 
-            password.type = "password";
-            passwordToggle.textContent = "Show";
-        }
+        password.type = "password";
+        passwordToggle.textContent = "Show";
+    }
 
-    });
+});
 
-    /* ==========================================
-       LOGIN SUBMIT
-    ========================================== */
+loginForm.addEventListener("submit", (event) => {
 
-    loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-        event.preventDefault();
+    if (!validateForm()) {
+        return;
+    }
 
-        const isValid =
-            agriLoginCardValidateForm();
+    loginSubmitBtn.disabled = true;
 
-        if (!isValid) {
-            return;
-        }
+    btnText.textContent =
+        "Authenticating...";
 
-        loginSubmitBtn.disabled = true;
+    btnSpinner.style.display =
+        "inline-block";
 
-        btnText.textContent = "Authenticating...";
-        btnSpinner.style.display = "inline-block";
+    setTimeout(() => {
 
-        setTimeout(() => {
+        btnText.textContent = "Login";
 
-            btnText.textContent = "Login";
-            btnSpinner.style.display = "none";
+        btnSpinner.style.display = "none";
 
-            window.location.href = "dashboard.html";
+        loginSubmitBtn.disabled = false;
 
-        }, 1500);
+        window.location.href =
+            "dashboard.html";
 
-    });
+    }, 1500);
 
-    /* ==========================================
-       FORGOT PASSWORD
-    ========================================== */
+});
 
-    forgotPasswordLink.addEventListener("click", () => {
+forgotPasswordLink.addEventListener(
+    "click",
+    () => {
 
         alert(
             "Password recovery module will be integrated soon."
         );
 
-    });
-
-    /* ==========================================
-       REGISTER
-    ========================================== */
-
-    registerLink.addEventListener("click", () => {
-
-        alert(
-            "Registration module will be integrated soon."
-        );
-
-    });
-
-});
-
-// ==========================================
-// LOGIN FIELD VALIDATION
-// ==========================================
-
-const loginId =
-document.getElementById("loginId");
-
-const password =
-document.getElementById("password");
-
-const loginIdError =
-document.getElementById("loginIdError");
-
-const passwordError =
-document.getElementById("passwordError");
-
-// Blur Validation
-
-loginId.addEventListener("blur", () => {
-
-```
-if (!loginId.value.trim()) {
-
-    loginIdError.textContent =
-        "Login ID is required";
-
-} else {
-
-    loginIdError.textContent = "";
-}
-```
-
-});
-
-password.addEventListener("blur", () => {
-
-```
-if (!password.value.trim()) {
-
-    passwordError.textContent =
-        "Password is required";
-
-} else {
-
-    passwordError.textContent = "";
-}
-```
-
-});
-
-// Password Toggle
-
-const passwordToggle =
-document.getElementById("passwordToggle");
-
-passwordToggle.addEventListener("click", () => {
-
-```
-const isHidden =
-    password.type === "password";
-
-password.type =
-    isHidden ? "text" : "password";
-
-passwordToggle.textContent =
-    isHidden ? "Hide" : "Show";
-```
-
-});
-
-// Forgot Password
-
-document
-.getElementById("forgotPasswordLink")
-.addEventListener("click", () => {
-
-```
-alert(
-    "Password recovery module will be integrated soon."
+    }
 );
-```
+
+registerLink.addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            "register.html";
+
+    }
+);
+
 
 });
