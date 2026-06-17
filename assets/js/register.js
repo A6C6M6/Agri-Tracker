@@ -1,212 +1,136 @@
-/* =====================================================
-   ?? PURPLE SECTION
-   API & External Services
-===================================================== */
+const form =
+document.getElementById("registerForm");
 
-/*
-Supabase Client:
-window.supabaseClient
+const messageBox =
+document.getElementById("formMessage");
 
-External Service:
-Supabase Database
-*/
+form.addEventListener(
+"submit",
+async function (event) {
 
+```
+event.preventDefault();
 
-/* =====================================================
-   ?? BROWN SECTION
-   Database Structure
-===================================================== */
+const fullName =
+document.getElementById("fullName")
+.value.trim();
 
-/*
-Table Name:
-users
+const email =
+document.getElementById("email")
+.value.trim();
 
-Columns Used:
-full_name
-email
-mobile
-password
-status
+const mobile =
+document.getElementById("mobile")
+.value.trim();
 
-Data Flow:
-Register Form
-    ?
-Validation
-    ?
-Duplicate Mobile Check
-    ?
-Insert User
-    ?
-Success Redirect
-*/
+const password =
+document.getElementById("password")
+.value;
 
+const confirmPassword =
+document.getElementById("confirmPassword")
+.value;
 
-/* =====================================================
-   ? BLACK SECTION
-   Security & Validation
-===================================================== */
+messageBox.textContent = "";
+messageBox.className = "form-message";
 
-/*
-Validation Rules:
-? Full Name Required
-? Mobile Number Required
-? Password Required
-? Password Match Required
+if (
+    !fullName ||
+    !mobile ||
+    !password ||
+    !confirmPassword
+) {
 
-Error Handling:
-? Try Catch
-? Registration Error Alert
-? Duplicate Mobile Alert
+    messageBox.textContent =
+    "Please fill all required fields.";
 
-Authentication:
-Custom User Registration
+    return;
+}
 
-Authorization:
-Handled After Login
-*/
+if (password !== confirmPassword) {
 
+    messageBox.textContent =
+    "Passwords do not match.";
 
-/* =====================================================
-   ?? RED SECTION
-   Navigation & Redirects
-===================================================== */
+    return;
+}
 
-/*
-Success Redirect:
-logincard.html
-*/
+try {
 
+    /* ---------------------------
+       STEP 1
+       Create Auth User
+    ---------------------------- */
 
-/* =====================================================
-   ?? FUNCTION SECTION
-===================================================== */
+    const {
+        data: authData,
+        error: authError
+    } =
+    await window.supabaseClient
+    .auth
+    .signUp({
 
-/**
- * Function Name : DOMContentLoaded
- * Purpose       : Initialize Registration Page
- */
-document.addEventListener("DOMContentLoaded", () => {
-
-    const registerForm =
-        document.getElementById("registerForm");
-
-    /**
-     * Function Name : Register Form Submit
-     * Purpose       : Validate & Register User
-     */
-    registerForm.addEventListener("submit", async (e) => {
-
-        e.preventDefault();
-
-        /* =====================================================
-           ? WHITE SECTION
-           Input Value Collection
-        ===================================================== */
-
-        const fullName =
-            document.getElementById("fullName").value.trim();
-
-        const email =
-            document.getElementById("email").value.trim();
-
-        const mobile =
-            document.getElementById("mobile").value.trim();
-
-        const password =
-            document.getElementById("password").value;
-
-        const confirmPassword =
-            document.getElementById("confirmPassword").value;
-
-
-        /* =====================================================
-           ? BLACK SECTION
-           Validation Rules
-        ===================================================== */
-
-        if (!fullName) {
-            alert("Please enter Full Name");
-            return;
-        }
-
-        if (!mobile) {
-            alert("Please enter Mobile Number");
-            return;
-        }
-
-        if (!password) {
-            alert("Please enter Password");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
-        }
-
-        try {
-
-            /* =====================================================
-               ?? BROWN SECTION
-               Duplicate Mobile Check
-            ===================================================== */
-
-            const { data: existingMobile } =
-                await window.supabaseClient
-                    .from("users")
-                    .select("mobile")
-                    .eq("mobile", mobile);
-
-            if (existingMobile && existingMobile.length > 0) {
-                alert("Mobile Number already registered");
-                return;
-            }
-
-
-            /* =====================================================
-               ?? PURPLE SECTION
-               Save User To Supabase
-            ===================================================== */
-
-            const { error } =
-                await window.supabaseClient
-                    .from("users")
-                    .insert([
-                        {
-                            full_name: fullName,
-                            email: email || null,
-                            mobile: mobile,
-                            password: password,
-                            status: "Active"
-                        }
-                    ]);
-
-            if (error) {
-                console.error(error);
-                alert("Registration Failed");
-                return;
-            }
-
-
-            /* =====================================================
-               ?? RED SECTION
-               Success Redirect
-            ===================================================== */
-
-            alert("Account Created Successfully");
-
-            window.location.href =
-                "logincard.html";
-
-        } catch (err) {
-
-            console.error(err);
-
-            alert(
-                "Something went wrong. Please try again."
-            );
-        }
+        email: email,
+        password: password
 
     });
+
+    if (authError) {
+
+        messageBox.textContent =
+        authError.message;
+
+        return;
+    }
+
+    /* ---------------------------
+       STEP 2
+       Save Additional Data
+    ---------------------------- */
+
+    const {
+        error: insertError
+    } =
+    await window.supabaseClient
+    .from("users")
+    .insert([
+
+        {
+            full_name: fullName,
+            email: email,
+            mobile: mobile
+        }
+
+    ]);
+
+    if (insertError) {
+
+        console.error(insertError);
+    }
+
+    messageBox.textContent =
+    "Registration successful. Please check your email.";
+
+    messageBox.style.color =
+    "green";
+
+    setTimeout(() => {
+
+        window.location.href =
+        "logincard.html";
+
+    }, 2000);
+
+}
+
+catch (error) {
+
+    console.error(error);
+
+    messageBox.textContent =
+    "Registration failed.";
+
+}
+```
 
 });
