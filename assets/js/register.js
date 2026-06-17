@@ -8,7 +8,7 @@ form.addEventListener(
 "submit",
 async function (event) {
 
-```
+
 event.preventDefault();
 
 const fullName =
@@ -131,6 +131,6 @@ catch (error) {
     "Registration failed.";
 
 }
-```
+
 
 });
