@@ -89,6 +89,7 @@ passwordToggle.addEventListener("click", () => {
 
         password.type = "password";
         passwordToggle.textContent = "Show";
+
     }
 
 });
@@ -124,16 +125,39 @@ loginForm.addEventListener("submit", (event) => {
 
 });
 
+/* ==========================================================
+   FORGOT PASSWORD CONFIGURATION
+   ========================================================== */
+
+const FORGOT_PASSWORD_URL = "forgot_password.html";
+
+/* ==========================================================
+   FORGOT PASSWORD EVENT
+   ========================================================== */
+
 forgotPasswordLink.addEventListener(
     "click",
     () => {
 
-        alert(
-            "Password recovery module will be integrated soon."
-        );
+        if (
+            FORGOT_PASSWORD_URL.trim() === ""
+        ) {
+
+            window.location.href =
+    "assets/image/agritracker_Login_BackGround.png";
+
+            return;
+        }
+
+        window.location.href =
+            FORGOT_PASSWORD_URL;
 
     }
 );
+
+/* ==========================================================
+   REGISTER EVENT
+   ========================================================== */
 
 registerLink.addEventListener(
     "click",
