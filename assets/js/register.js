@@ -3,7 +3,7 @@ const messageBox = document.getElementById("formMessage");
 
 form.addEventListener("submit", async (event) => {
 
-```
+
 event.preventDefault();
 
 const fullName =
@@ -87,6 +87,6 @@ try {
         "Registration failed.";
 
 }
-```
+
 
 });
