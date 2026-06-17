@@ -2,12 +2,12 @@ const SUPABASE_URL =
 "https://icdppzjhqpskmtertrbv.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"sb_secret_xYTNY";
+"sb_publishable_4wk7hLvO7ZYE5Xo2j-K1Iw_ja4Pu5RZ";
 
 const supabaseClient =
 supabase.createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
 document
@@ -16,7 +16,6 @@ document
 "click",
 async () => {
 
-```
     const email =
     document.getElementById(
         "email"
@@ -53,6 +52,5 @@ async () => {
     );
 
 }
-```
 
 );

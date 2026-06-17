@@ -2,12 +2,12 @@ const SUPABASE_URL =
 "https://icdppzjhqpskmtertrbv.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"sb_secret_xYTNYr";
+"sb_publishable_4wk7hLvO7ZYE5Xo2j-K1Iw_ja4Pu5RZ";
 
 const supabaseClient =
 supabase.createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
 document
@@ -16,7 +16,7 @@ document
 "click",
 async () => {
 
-```
+
     const newPassword =
     document.getElementById(
         "newPassword"
@@ -52,6 +52,6 @@ async () => {
         "logincard.html";
 
 }
-```
+
 
 );
