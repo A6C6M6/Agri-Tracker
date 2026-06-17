@@ -2,56 +2,68 @@ const SUPABASE_URL =
 "https://icdppzjhqpskmtertrbv.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"sb_publishable_4wk7hLvO7ZYE5Xo2j-K1Iw_ja4Pu5RZ";
+"YOUR_PUBLISHABLE_KEY";
 
 const supabaseClient =
 supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
 );
 
-document
-.getElementById("updateBtn")
-.addEventListener(
-"click",
-async () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-
-    const newPassword =
-    document.getElementById(
-        "newPassword"
-    ).value.trim();
-
-    if (!newPassword) {
-
-        alert(
-            "Please enter new password."
+        const updateBtn =
+        document.getElementById(
+            "updateBtn"
         );
 
-        return;
+        updateBtn.addEventListener(
+            "click",
+            async () => {
+
+                const newPassword =
+                document.getElementById(
+                    "newPassword"
+                ).value.trim();
+
+                if (!newPassword) {
+
+                    alert(
+                        "Please enter new password."
+                    );
+
+                    return;
+                }
+
+                const { error } =
+                await supabaseClient.auth
+                .updateUser({
+
+                    password:
+                    newPassword
+
+                });
+
+                if (error) {
+
+                    alert(
+                        error.message
+                    );
+
+                    return;
+                }
+
+                alert(
+                    "Password updated successfully."
+                );
+
+                window.location.href =
+                "logincard.html";
+
+            }
+        );
+
     }
-
-    const { error } =
-    await supabaseClient
-    .auth
-    .updateUser({
-        password: newPassword
-    });
-
-    if (error) {
-
-        alert(error.message);
-        return;
-    }
-
-    alert(
-        "Password updated successfully."
-    );
-
-    window.location.href =
-        "logincard.html";
-
-}
-
-
 );
