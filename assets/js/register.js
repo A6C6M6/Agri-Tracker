@@ -1,136 +1,92 @@
-const form =
-document.getElementById("registerForm");
+const form = document.getElementById("registerForm");
+const messageBox = document.getElementById("formMessage");
 
-const messageBox =
-document.getElementById("formMessage");
+form.addEventListener("submit", async (event) => {
 
-form.addEventListener(
-"submit",
-async function (event) {
-
-
+```
 event.preventDefault();
 
 const fullName =
-document.getElementById("fullName")
-.value.trim();
+    document.getElementById("fullName").value.trim();
 
 const email =
-document.getElementById("email")
-.value.trim();
+    document.getElementById("email").value.trim();
 
 const mobile =
-document.getElementById("mobile")
-.value.trim();
+    document.getElementById("mobile").value.trim();
 
 const password =
-document.getElementById("password")
-.value;
+    document.getElementById("password").value;
 
 const confirmPassword =
-document.getElementById("confirmPassword")
-.value;
+    document.getElementById("confirmPassword").value;
 
 messageBox.textContent = "";
-messageBox.className = "form-message";
 
 if (
     !fullName ||
+    !email ||
     !mobile ||
     !password ||
     !confirmPassword
 ) {
-
     messageBox.textContent =
-    "Please fill all required fields.";
-
+        "Please fill all fields.";
     return;
 }
 
 if (password !== confirmPassword) {
-
     messageBox.textContent =
-    "Passwords do not match.";
-
+        "Passwords do not match.";
     return;
 }
 
 try {
 
-    /* ---------------------------
-       STEP 1
-       Create Auth User
-    ---------------------------- */
+    console.log("Starting signup...");
 
-    const {
-        data: authData,
-        error: authError
-    } =
-    await window.supabaseClient
-    .auth
-    .signUp({
+    const { data, error } =
+        await window.supabaseClient.auth.signUp({
+            email: email,
+            password: password
+        });
 
-        email: email,
-        password: password
+    console.log("Signup Data:", data);
+    console.log("Signup Error:", error);
 
-    });
-
-    if (authError) {
-
+    if (error) {
         messageBox.textContent =
-        authError.message;
-
+            error.message;
         return;
     }
 
-    /* ---------------------------
-       STEP 2
-       Save Additional Data
-    ---------------------------- */
-
-    const {
-        error: insertError
-    } =
-    await window.supabaseClient
-    .from("users")
-    .insert([
-
-        {
-            full_name: fullName,
-            email: email,
-            mobile: mobile
-        }
-
-    ]);
+    const { error: insertError } =
+        await window.supabaseClient
+            .from("users")
+            .insert([
+                {
+                    full_name: fullName,
+                    email: email,
+                    mobile: mobile
+                }
+            ]);
 
     if (insertError) {
-
         console.error(insertError);
     }
 
+    messageBox.style.color = "green";
     messageBox.textContent =
-    "Registration successful. Please check your email.";
+        "Registration successful. Check your email.";
 
-    messageBox.style.color =
-    "green";
+} catch (err) {
 
-    setTimeout(() => {
-
-        window.location.href =
-        "logincard.html";
-
-    }, 2000);
-
-}
-
-catch (error) {
-
-    console.error(error);
+    console.error(err);
 
     messageBox.textContent =
-    "Registration failed.";
+        "Registration failed.";
 
 }
-
+```
 
 });
