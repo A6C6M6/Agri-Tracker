@@ -1,173 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Supabase Configuration - Update these values
+    const SUPABASE_URL = 'https://icdppzjhqpskmtertrbv.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_4wk7hLvO7ZYE5Xo2j-K1Iw_ja4Pu5RZ';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    const loginForm = document.getElementById("agriLoginForm");
+    const loginId = document.getElementById("loginId");
+    const password = document.getElementById("password");
+    const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+    
+    // UI Helpers
+    const toggleLoading = (isLoading) => {
+        loginSubmitBtn.disabled = isLoading;
+        loginSubmitBtn.querySelector('.btn-text').textContent = isLoading ? "Authenticating..." : "Login";
+        loginSubmitBtn.querySelector('.btn-spinner').style.display = isLoading ? "inline-block" : "none";
+    };
 
-const loginForm = document.getElementById("agriLoginForm");
-const loginId = document.getElementById("loginId");
-const password = document.getElementById("password");
+    // Password Toggle
+    document.getElementById("passwordToggle").addEventListener("click", (e) => {
+        const isPassword = password.type === "password";
+        password.type = isPassword ? "text" : "password";
+        e.target.textContent = isPassword ? "Hide" : "Show";
+    });
 
-const loginIdError = document.getElementById("loginIdError");
-const passwordError = document.getElementById("passwordError");
+    // Form Submission
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        
+        const email = loginId.value.trim();
+        const pass = password.value.trim();
 
-const passwordToggle = document.getElementById("passwordToggle");
-
-const loginSubmitBtn = document.getElementById("loginSubmitBtn");
-const btnText = loginSubmitBtn.querySelector(".btn-text");
-const btnSpinner = loginSubmitBtn.querySelector(".btn-spinner");
-
-const forgotPasswordLink =
-    document.getElementById("forgotPasswordLink");
-
-const registerLink =
-    document.getElementById("registerLink");
-
-function validateLoginId() {
-
-    const value = loginId.value.trim();
-
-    if (value === "") {
-
-        loginIdError.textContent =
-            "Login ID is required.";
-
-        loginId.classList.add("error");
-
-        return false;
-    }
-
-    loginIdError.textContent = "";
-    loginId.classList.remove("error");
-
-    return true;
-}
-
-function validatePassword() {
-
-    const value = password.value.trim();
-
-    if (value === "") {
-
-        passwordError.textContent =
-            "Password is required.";
-
-        password.classList.add("error");
-
-        return false;
-    }
-
-    passwordError.textContent = "";
-    password.classList.remove("error");
-
-    return true;
-}
-
-function validateForm() {
-
-    return (
-        validateLoginId() &&
-        validatePassword()
-    );
-}
-
-loginId.addEventListener(
-    "blur",
-    validateLoginId
-);
-
-password.addEventListener(
-    "blur",
-    validatePassword
-);
-
-passwordToggle.addEventListener("click", () => {
-
-    if (password.type === "password") {
-
-        password.type = "text";
-        passwordToggle.textContent = "Hide";
-
-    } else {
-
-        password.type = "password";
-        passwordToggle.textContent = "Show";
-
-    }
-
-});
-
-loginForm.addEventListener("submit", (event) => {
-
-    event.preventDefault();
-
-    if (!validateForm()) {
-        return;
-    }
-
-    loginSubmitBtn.disabled = true;
-
-    btnText.textContent =
-        "Authenticating...";
-
-    btnSpinner.style.display =
-        "inline-block";
-
-    setTimeout(() => {
-
-        btnText.textContent = "Login";
-
-        btnSpinner.style.display = "none";
-
-        loginSubmitBtn.disabled = false;
-
-        window.location.href =
-            "dashboard.html";
-
-    }, 1500);
-
-});
-
-/* ==========================================================
-   FORGOT PASSWORD CONFIGURATION
-   ========================================================== */
-
-const FORGOT_PASSWORD_URL = "forgot_password.html";
-
-/* ==========================================================
-   FORGOT PASSWORD EVENT
-   ========================================================== */
-
-forgotPasswordLink.addEventListener(
-    "click",
-    () => {
-
-        if (
-            FORGOT_PASSWORD_URL.trim() === ""
-        ) {
-
-            window.location.href =
-    "assets/image/agritracker_Login_BackGround.png";
-
+        if (!email || !pass) {
+            alert("Please fill in all fields.");
             return;
         }
 
-        window.location.href =
-            FORGOT_PASSWORD_URL;
+        toggleLoading(true);
 
-    }
-);
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: pass,
+            });
 
-/* ==========================================================
-   REGISTER EVENT
-   ========================================================== */
+            if (error) throw error;
+            window.location.href = "dashboard.html";
+        } catch (error) {
+            alert("Login Failed: " + error.message);
+        } finally {
+            toggleLoading(false);
+        }
+    });
 
-registerLink.addEventListener(
-    "click",
-    () => {
-
-        window.location.href =
-            "register.html";
-
-    }
-);
-
-
+    // Navigation
+    document.getElementById("forgotPasswordLink").addEventListener("click", () => window.location.href = "forgot_password.html");
+    document.getElementById("registerLink").addEventListener("click", () => window.location.href = "register.html");
 });
