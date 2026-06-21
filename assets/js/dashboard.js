@@ -83,3 +83,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+// ലോഗ് ഔട്ട് ബട്ടൺ പ്രവർത്തനം
+document.addEventListener("DOMContentLoaded", () => {
+    // ... നിലവിലുള്ള കോഡ് ...
+
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            // ലോഗിൻ പേജിലേക്ക് തിരിച്ചുവിടുന്നു
+            // നിങ്ങളുടെ ലോഗിൻ ഫയലിന്റെ പേര് login.html അല്ലെങ്കിൽ index.html എന്ന് മാറ്റുക
+            window.location.href = "logincard.html"; 
+        });
+    }
+});
