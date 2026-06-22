@@ -8,7 +8,7 @@ const moduleRoutes =
     overview: "dashboard.html",
 
     crops: "crops.html",
-    fields: "fields.html",
+   
     weather: "weather.html",
     activities: "activities.html",
 
@@ -101,7 +101,7 @@ const navItems = [
 
     { name: "📊 Overview", id: "overview", icon: "fa-chart-line" },
     { name: "🌾 Crops", id: "crops", icon: "fa-seedling" },
-    { name: "🗺️ Fields", id: "fields", icon: "fa-map" },
+   
     { name: "🌦️ Weather", id: "weather", icon: "fa-cloud-sun" },
     { name: "📅 Activities", id: "activities", icon: "fa-calendar" },
 
