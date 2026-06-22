@@ -8,7 +8,7 @@ window.APP_CONFIG = {
         overview: "dashboard.html",
 
         crops: "crops.html",
-        fields: "fields.html",
+       
         weather: "weather.html",
         activities: "activities.html",
 
