@@ -1,4 +1,4 @@
-﻿
+﻿html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,62 +7,108 @@
     <title>Agri Tracker | Dashboard</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
         }
 
-        body {
-            font-family: sans-serif;
-            display: flex;
-            height: 100vh;
+        body{
+            font-family:Arial, sans-serif;
+            display:flex;
+            height:100vh;
+            background:#f5f7fa;
         }
 
-        .sidebar {
-            width: 250px;
-            background: #f4f4f4;
-            padding: 20px;
-            border-right: 1px solid #ddd;
+        .sidebar{
+            width:260px;
+            background:#2e7d32;
+            color:white;
+            padding:20px;
+            overflow-y:auto;
         }
 
-        .sidebar h2 {
-            margin-bottom: 20px;
+        .sidebar h2{
+            margin-bottom:20px;
+            text-align:center;
         }
 
-        .sidebar ul {
-            list-style: none;
+        .sidebar ul{
+            list-style:none;
         }
 
-        .sidebar ul li {
-            padding: 10px 0;
-            cursor: pointer;
+        .sidebar ul li{
+            margin:8px 0;
         }
 
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+        .sidebar a{
+            color:white;
+            text-decoration:none;
+            display:block;
+            padding:10px;
+            border-radius:6px;
+            transition:0.3s;
         }
 
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
+        .sidebar a:hover{
+            background:rgba(255,255,255,0.15);
         }
 
-        .logout-btn {
-            background-color: #ff4d4d;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        .menu-title{
+            margin-top:15px;
+            margin-bottom:5px;
+            font-weight:bold;
+            color:#dcedc8;
         }
 
-        .logout-btn:hover {
-            background-color: #e60000;
+        .main-content{
+            flex:1;
+            display:flex;
+            flex-direction:column;
+        }
+
+        .header{
+            display:flex;
+            justify-content:flex-end;
+            align-items:center;
+            padding:15px 20px;
+            background:white;
+            border-bottom:1px solid #ddd;
+        }
+
+        .logout-btn{
+            background:#e53935;
+            color:white;
+            border:none;
+            padding:10px 15px;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        .logout-btn:hover{
+            background:#c62828;
+        }
+
+        .dashboard-body{
+            padding:25px;
+        }
+
+        .welcome-card{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .welcome-card h3{
+            margin-bottom:10px;
+            color:#2e7d32;
+        }
+
+        @media(max-width:768px){
+            .sidebar{
+                width:220px;
+            }
         }
     </style>
 </head>
@@ -70,12 +116,55 @@
 <body>
 
     <aside class="sidebar">
-        <h2>Agri Tracker</h2>
+
+        <h2>🌿 Agri Tracker</h2>
 
         <ul>
-            <li>Dashboard</li>
-            <li>Overview</li>
+
+            <li><a href="dashboard.html">📊 Overview</a></li>
+
+            <li><a href="crops.html">🌾 Crops</a></li>
+
+            <li><a href="fields.html">🗺️ Fields</a></li>
+
+            <li><a href="weather.html">🌦️ Weather</a></li>
+
+            <li><a href="activities.html">📅 Activities</a></li>
+
+            <li class="menu-title">💰 Finances</li>
+
+            <li><a href="#">Expenses</a></li>
+
+            <li><a href="#">Income</a></li>
+
+            <li><a href="#">Profit & Loss</a></li>
+
+            <li><a href="#">👨‍🌾 Farmers</a></li>
+
+            <li><a href="#">📦 Inventory</a></li>
+
+            <li><a href="#">🚜 Equipment</a></li>
+
+            <li><a href="#">🧪 Fertilizers</a></li>
+
+            <li><a href="#">💧 Irrigation</a></li>
+
+            <li><a href="#">🛒 Orders</a></li>
+
+            <li><a href="#">📈 Market Prices</a></li>
+
+            <li><a href="reports.html">📑 Reports</a></li>
+
+            <li><a href="#">🔔 Alerts</a></li>
+
+            <li><a href="#">👥 Users</a></li>
+
+            <li><a href="#">📞 Support</a></li>
+
+            <li><a href="settings.html">⚙️ Settings</a></li>
+
         </ul>
+
     </aside>
 
     <main class="main-content">
@@ -84,6 +173,19 @@
             <button class="logout-btn" onclick="logout()">
                 Logout
             </button>
+        </div>
+
+        <div class="dashboard-body">
+
+            <div class="welcome-card">
+                <h3>Welcome to Agri Tracker</h3>
+                <p>
+                    Dashboard is ready. Existing authentication,
+                    session validation, logout functionality and
+                    database behaviour remain unchanged.
+                </p>
+            </div>
+
         </div>
 
     </main>
