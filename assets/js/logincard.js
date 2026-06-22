@@ -102,8 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log(data);
 
                     window.location.replace(
-                        window.APP_CONFIG.REDIRECT_URL
-                    );
+    window.APP_CONFIG.DEFAULT_PAGE
+);
 
                 }
 
