@@ -8,12 +8,10 @@ window.APP_CONFIG = {
         overview: "dashboard.html",
 
         crops: "crops.html",
-       
-        weather: "weather.html",
+      
         activities: "activities.html",
 
-        fertilizers: "fertilizers.html",
-        irrigation: "irrigation.html",
+       
 
         reports: "reports.html",
 
@@ -23,14 +21,7 @@ window.APP_CONFIG = {
 
         settings: "settings.html",
 
-        farmers: "farmers.html",
-        inventory: "inventory.html",
-        equipment: "equipment.html",
-        marketPrices: "market-prices.html",
-        alerts: "alerts.html",
-        users: "users.html",
-        analytics: "analytics.html",
-        backup: "backup.html"
+       
 
     }
 
