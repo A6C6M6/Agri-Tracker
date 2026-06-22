@@ -1,26 +1,106 @@
-﻿#sidebar { min-height: 100vh; }
-
-#nav-menu a {
-    display: flex;
-    align-items: center;
-    padding: 14px 20px;
-    margin-bottom: 12px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #e2e8f0;
-    transition: all 0.3s ease;
-    font-weight: 500;
+css
+/* Sidebar Brand */
+.sidebar-title{
+    font-size:24px;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:25px;
+    color:#ffffff;
 }
 
-#nav-menu a:hover, #nav-menu a.active-nav {
-    background: #166534;
-    color: #ffffff;
-    border-left: 4px solid #4ade80;
+/* Menu Groups */
+.menu-section{
+    margin-top:20px;
+    margin-bottom:10px;
+    font-size:12px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:#bbf7d0;
 }
 
-.toast { animation: slideIn 0.3s ease-out; }
-
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+/* Colored Menu Items */
+.menu-overview{
+    background:#2563eb;
 }
+
+.menu-crops{
+    background:#16a34a;
+}
+
+.menu-fields{
+    background:#92400e;
+}
+
+.menu-weather{
+    background:#0284c7;
+}
+
+.menu-activities{
+    background:#7c3aed;
+}
+
+.menu-fertilizers{
+    background:#ea580c;
+}
+
+.menu-irrigation{
+    background:#0891b2;
+}
+
+.menu-reports{
+    background:#475569;
+}
+
+.menu-support{
+    background:#db2777;
+}
+
+.menu-payment{
+    background:#854d0e;
+}
+
+.menu-print{
+    background:#4338ca;
+}
+
+.menu-download{
+    background:#0f766e;
+}
+
+.menu-export{
+    background:#15803d;
+}
+
+.menu-settings{
+    background:#374151;
+}
+
+/* Future Modules */
+.future-module{
+    background:#1f2937;
+    opacity:0.9;
+}
+
+/* Dashboard Cards */
+.dashboard-card{
+    background:#ffffff;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-4px);
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+    #sidebar{
+        width:220px;
+    }
+
+}
+
