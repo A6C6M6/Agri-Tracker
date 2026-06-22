@@ -8,12 +8,10 @@ const moduleRoutes =
 
     crops: "crops.html",
    
-    weather: "weather.html",
+   
     activities: "activities.html",
 
-    fertilizers: "",
-    irrigation: "",
-
+    
     reports: "reports.html",
 
     support: "",
@@ -25,14 +23,7 @@ const moduleRoutes =
 
     settings: "settings.html",
 
-    farmers: "",
-    inventory: "",
-    equipment: "",
-    marketPrices: "",
-    alerts: "",
-    users: "",
-    analytics: "",
-    backup: ""
+    
 
 };
 
@@ -101,12 +92,10 @@ const navItems = [
     { name: "📊 Overview", id: "overview", icon: "fa-chart-line" },
     { name: "🌾 Crops", id: "crops", icon: "fa-seedling" },
    
-    { name: "🌦️ Weather", id: "weather", icon: "fa-cloud-sun" },
+   
     { name: "📅 Activities", id: "activities", icon: "fa-calendar" },
 
-    { name: "🧪 Fertilizers", id: "fertilizers", icon: "fa-flask" },
-    { name: "💧 Irrigation", id: "irrigation", icon: "fa-tint" },
-
+    
     { name: "📑 Reports", id: "reports", icon: "fa-file-alt" },
 
     { name: "🆘 Support", id: "support", icon: "fa-life-ring" },
@@ -121,14 +110,7 @@ const navItems = [
 
     { name: "⚙️ Settings", id: "settings", icon: "fa-cog" },
 
-    { name: "👨‍🌾 Farmers", id: "farmers", icon: "fa-user" },
-    { name: "📦 Inventory", id: "inventory", icon: "fa-box" },
-    { name: "🚜 Equipment", id: "equipment", icon: "fa-tractor" },
-    { name: "📈 Market Prices", id: "marketPrices", icon: "fa-chart-bar" },
-    { name: "🔔 Alerts", id: "alerts", icon: "fa-bell" },
-    { name: "👥 Users", id: "users", icon: "fa-users" },
-    { name: "📊 Analytics", id: "analytics", icon: "fa-chart-pie" },
-    { name: "☁ Backup", id: "backup", icon: "fa-cloud" }
+  
 
 ];
 
