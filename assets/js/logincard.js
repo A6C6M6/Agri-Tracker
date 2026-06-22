@@ -1,17 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Validate if SDK and Client are loaded
+    // Validate SDK
     if (!window.supabase) {
-        console.error("Supabase SDK is not loaded. Please check your CDN link.");
+        console.error("Supabase SDK is not loaded.");
         return;
     }
 
     if (!window.supabaseClient) {
-        console.error("Supabase Client is not initialized. Check supabase-config.js");
+        console.error("Supabase Client is not initialized.");
         return;
     }
 
-    // Use global client from supabase-config.js
     const supabase = window.supabaseClient;
 
     const loginForm = document.getElementById("agriLoginForm");
@@ -19,14 +18,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password");
     const loginSubmitBtn = document.getElementById("loginSubmitBtn");
 
-    // UI Helpers
+    // Loading UI
     const toggleLoading = (isLoading) => {
+
         if (!loginSubmitBtn) return;
 
         loginSubmitBtn.disabled = isLoading;
 
-        const btnText = loginSubmitBtn.querySelector(".btn-text");
-        const spinner = loginSubmitBtn.querySelector(".btn-spinner");
+        const btnText =
+            loginSubmitBtn.querySelector(".btn-text");
+
+        const spinner =
+            loginSubmitBtn.querySelector(".btn-spinner");
 
         if (btnText) {
             btnText.textContent = isLoading
@@ -42,11 +45,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Password Toggle
-    const passwordToggle = document.getElementById("passwordToggle");
+    const passwordToggle =
+        document.getElementById("passwordToggle");
 
     if (passwordToggle) {
+
         passwordToggle.addEventListener("click", (e) => {
-            const isPassword = password.type === "password";
+
+            const isPassword =
+                password.type === "password";
 
             password.type = isPassword
                 ? "text"
@@ -55,11 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
             e.target.textContent = isPassword
                 ? "Hide"
                 : "Show";
+
         });
+
     }
 
-    // Form Submission
+    // Login Submit
     if (loginForm) {
+
         loginForm.addEventListener("submit", async (event) => {
 
             event.preventDefault();
@@ -68,8 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const pass = password.value.trim();
 
             if (!email || !pass) {
+
                 alert("Please fill in all fields.");
                 return;
+
             }
 
             toggleLoading(true);
@@ -78,24 +90,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const { data, error } =
                     await supabase.auth.signInWithPassword({
-                        email: email,
+                        email,
                         password: pass
                     });
 
-                if (error) {
-                    throw error;
-                }
+                if (error) throw error;
 
                 if (data.session) {
-                    window.location.href = "dashboard.html";
+
+                    console.log("Login Success");
+                    console.log(data);
+
+                    window.location.replace(
+                        window.APP_CONFIG.REDIRECT_URL
+                    );
+
                 }
 
             } catch (error) {
 
-                console.error("Auth Error:", error.message);
+                console.error(
+                    "Login Error:",
+                    error.message
+                );
 
                 alert(
-                    "Invalid email or password. Please try again."
+                    "Invalid email or password."
                 );
 
             } finally {
@@ -105,25 +125,40 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         });
+
     }
 
-    // Navigation
+    // Forgot Password
     const forgotPasswordLink =
         document.getElementById("forgotPasswordLink");
 
+    if (forgotPasswordLink) {
+
+        forgotPasswordLink.addEventListener(
+            "click",
+            () => {
+                window.location.href =
+                    "forgot_password.html";
+            }
+        );
+
+    }
+
+    // Register
     const registerLink =
         document.getElementById("registerLink");
 
-    if (forgotPasswordLink) {
-        forgotPasswordLink.addEventListener("click", () => {
-            window.location.href = "forgot_password.html";
-        });
-    }
-
     if (registerLink) {
-        registerLink.addEventListener("click", () => {
-            window.location.href = "register.html";
-        });
+
+        registerLink.addEventListener(
+            "click",
+            () => {
+                window.location.href =
+                    "register.html";
+            }
+        );
+
     }
 
 });
+
