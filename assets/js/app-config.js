@@ -1,4 +1,3 @@
-
 window.APP_CONFIG = {
 
     DEFAULT_PAGE: "dashboard.html",
@@ -36,4 +35,3 @@ window.APP_CONFIG = {
     }
 
 };
-
