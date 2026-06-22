@@ -6,6 +6,7 @@ const moduleRoutes =
 
     dashboard: "dashboard.html",
     overview: "dashboard.html",
+
     crops: "crops.html",
     fields: "fields.html",
     weather: "weather.html",
@@ -15,6 +16,7 @@ const moduleRoutes =
     irrigation: "",
 
     reports: "reports.html",
+
     support: "",
     paymentHistory: "",
 
@@ -34,6 +36,66 @@ const moduleRoutes =
     backup: ""
 
 };
+
+
+/* ----------------------------------
+   Central Navigation Function
+---------------------------------- */
+
+function navigateTo(moduleName) {
+
+    const targetUrl =
+        moduleRoutes[moduleName];
+
+    if (!targetUrl) {
+
+        showToast(
+            "Module will be integrated soon"
+        );
+
+        return false;
+    }
+
+    window.location.href =
+        targetUrl;
+
+    return true;
+}
+
+
+/* ----------------------------------
+   Toast
+---------------------------------- */
+
+function showToast(message) {
+
+    const container =
+        document.getElementById("toast-container");
+
+    if (!container) {
+        alert(message);
+        return;
+    }
+
+    const toast =
+        document.createElement("div");
+
+    toast.className =
+        "bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg toast";
+
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+
+/* ----------------------------------
+   Navigation Items
+---------------------------------- */
 
 const navItems = [
 
@@ -72,31 +134,9 @@ const navItems = [
 ];
 
 
-
-function showToast(message) {
-
-    const container =
-        document.getElementById("toast-container");
-
-    if (!container) {
-        alert(message);
-        return;
-    }
-
-    const toast =
-        document.createElement("div");
-
-    toast.className =
-        "bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg toast";
-
-    toast.textContent = message;
-
-    container.appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-}
+/* ----------------------------------
+   Sidebar Menu Build
+---------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -127,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
             switch (item.id) {
 
                 case "print":
+
                     window.print();
                     return;
 
@@ -139,7 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const blob = new Blob(
                         [JSON.stringify(data, null, 2)],
-                        { type: "application/json" }
+                        {
+                            type: "application/json"
+                        }
                     );
 
                     const url =
@@ -153,25 +196,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     a.click();
 
                     URL.revokeObjectURL(url);
+
                     return;
 
                 case "exportData":
-                    showToast("Export module will be integrated soon");
+
+                    showToast(
+                        "Export module will be integrated soon"
+                    );
+
                     return;
 
-            }
+                default:
 
-            if (moduleRoutes[item.id]) {
+                    navigateTo(item.id);
 
-                window.location.href =
-                    moduleRoutes[item.id];
-
-            } else {
-
-                showToast(
-                    "Module will be integrated soon"
-                );
-
+                    return;
             }
 
         });
@@ -181,6 +221,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+/* ----------------------------------
+   Logout
+---------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
 
