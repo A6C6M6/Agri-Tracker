@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agri Tracker - Entry Page</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<title>Admin User Profile</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 
@@ -17,351 +19,132 @@
 }
 
 body{
-    background:#f4f7f6;
-}
-
-.container{
-    display:flex;
-    min-height:100vh;
-}
-
-/* Sidebar */
-
-.sidebar{
-    width:260px;
-    background:linear-gradient(180deg,#0d5c2f,#0a3f20);
-    color:white;
-    padding:20px 0;
-}
-
-.logo{
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.logo h2{
-    font-size:32px;
-}
-
-.logo p{
-    font-size:14px;
-    opacity:.8;
-}
-
-.menu{
-    list-style:none;
-}
-
-.menu li{
-    padding:18px 25px;
-    cursor:pointer;
-    display:flex;
-    gap:15px;
-    align-items:center;
-    transition:.3s;
-}
-
-.menu li:hover,
-.menu li.active{
-    background:#2f8f46;
-    border-radius:10px;
-    margin:0 10px;
-}
-
-/* Main */
-
-.main{
-    flex:1;
+    background:#f5f7fa;
+    padding:50px;
 }
 
 /* Header */
 
 .header{
-    background:white;
-    padding:20px 30px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    background:#fff;
+    padding:15px 30px;
+    border-radius:12px;
     box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
 }
 
-.header h1{
-    color:#0d5c2f;
-}
+/* User Section */
 
 .user{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:15px;
 }
 
-.user img{
-    width:45px;
-    height:45px;
+/* Notification */
+
+.notification{
+    position:relative;
+    font-size:22px;
+    color:#166534;
+    cursor:pointer;
+}
+
+.notification-count{
+    position:absolute;
+    top:-8px;
+    right:-8px;
+
+    background:#16a34a;
+    color:white;
+
+    width:18px;
+    height:18px;
+
     border-radius:50%;
-}
+    font-size:11px;
 
-/* Content */
-
-.content{
-    padding:30px;
-}
-
-.page-title{
-    margin-bottom:25px;
-}
-
-.page-title h2{
-    color:#222;
-    margin-bottom:8px;
-}
-
-.page-title p{
-    color:#666;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:white;
-    border-radius:15px;
-    padding:25px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-    border-bottom:4px solid #2f8f46;
-}
-
-.card-top{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
-
-.icon-box{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    background:#eef8ef;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:35px;
-    color:#2f8f46;
 }
 
-.card h3{
-    color:#166534;
-    margin-bottom:5px;
-}
+/* Avatar */
 
-.card p{
-    color:#666;
-    line-height:1.5;
-}
+.avatar{
+    width:55px;
+    height:55px;
 
-.actions{
-    margin-top:25px;
+    border-radius:50%;
+    background:#dff5e3;
+
     display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+
+    color:#1b7d36;
+    font-size:28px;
 }
 
-.btn{
-    border:none;
-    padding:10px 15px;
-    border-radius:8px;
-    cursor:pointer;
+/* User Info */
+
+.user-info strong{
+    color:#166534;
+    font-size:18px;
+}
+
+.user-info span{
+    color:#666;
     font-size:14px;
 }
 
-.add{
-    background:#2f8f46;
-    color:white;
-}
-
-.edit{
-    background:#0d6efd;
-    color:white;
-}
-
-.list{
-    background:#f1f5f9;
-}
-
-.footer{
-    text-align:center;
-    padding:20px;
-    color:#666;
+.dropdown{
+    color:#166534;
+    cursor:pointer;
+    font-size:18px;
 }
 
 </style>
 </head>
+
 <body>
 
-<div class="container">
+<div class="header">
 
-    <!-- Sidebar -->
+    <div class="user">
 
-    <aside class="sidebar">
+        <!-- Notification -->
 
-        <div class="logo">
-            <h2>🌱</h2>
-            <h3>Agri Tracker</h3>
-            <p>Smart Agriculture System</p>
+        <div class="notification">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-count">3</span>
         </div>
 
-        <ul class="menu">
-            <li><i class="fas fa-home"></i> Dashboard</li>
-            <li class="active"><i class="fas fa-pen-square"></i> Entry</li>
-            <li><i class="fas fa-chart-bar"></i> Reports</li>
-            <li><i class="fas fa-seedling"></i> Crops</li>
-            <li><i class="fas fa-cog"></i> Settings</li>
-        </ul>
+        <!-- Avatar -->
 
-    </aside>
-
-    <!-- Main -->
-
-    <div class="main">
-
-        <div class="header">
-            <h1>Entry Management</h1>
-
-            <div class="user">
-                <i class="fas fa-bell"></i>
-                <img src="https://i.pravatar.cc/100" alt="">
-                <div>
-                    <strong>Admin User</strong><br>
-                    Administrator
-                </div>
-            </div>
+        <div class="avatar">
+            <i class="fas fa-user"></i>
         </div>
 
-        <div class="content">
+        <!-- User Info -->
 
-            <div class="page-title">
-                <h2>Entry Dashboard</h2>
-                <p>Manage all agriculture entry records efficiently</p>
-            </div>
-
-            <div class="cards">
-
-                <!-- Farmer -->
-
-                <div class="card">
-
-                    <div class="card-top">
-                        <div class="icon-box">
-                            <i class="fas fa-user"></i>
-                        </div>
-
-                        <div>
-                            <h3>Farmer Entry</h3>
-                            <p>Add and manage farmer details</p>
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button class="btn add">+ Add Farmer</button>
-                        <button class="btn edit">Edit</button>
-                        <button class="btn list">List</button>
-                    </div>
-
-                </div>
-
-                <!-- Crop -->
-
-                <div class="card">
-
-                    <div class="card-top">
-                        <div class="icon-box">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-
-                        <div>
-                            <h3>Crop Entry</h3>
-                            <p>Add crop cultivation details</p>
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button class="btn add">+ Add Crop</button>
-                        <button class="btn edit">Edit</button>
-                        <button class="btn list">List</button>
-                    </div>
-
-                </div>
-
-                <!-- Land -->
-
-                <div class="card">
-
-                    <div class="card-top">
-                        <div class="icon-box">
-                            <i class="fas fa-map"></i>
-                        </div>
-
-                        <div>
-                            <h3>Land Entry</h3>
-                            <p>Manage land information</p>
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button class="btn add">+ Add Land</button>
-                        <button class="btn edit">Edit</button>
-                        <button class="btn list">List</button>
-                    </div>
-
-                </div>
-
-                <!-- Fertilizer -->
-
-                <div class="card">
-
-                    <div class="card-top">
-                        <div class="icon-box">
-                            <i class="fas fa-flask"></i>
-                        </div>
-
-                        <div>
-                            <h3>Fertilizer Entry</h3>
-                            <p>Add fertilizer usage details</p>
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button class="btn add">+ Add Fertilizer</button>
-                        <button class="btn edit">Edit</button>
-                        <button class="btn list">List</button>
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div class="user-info">
+            <strong>Admin User</strong><br>
+            <span>Administrator</span>
         </div>
 
-        <div class="footer">
-            © 2026 Agri Tracker. All Rights Reserved.
+        <!-- Dropdown -->
+
+        <div class="dropdown">
+            <i class="fas fa-chevron-down"></i>
         </div>
 
     </div>
 
 </div>
-
-<script>
-
-document.querySelectorAll(".btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-        alert(btn.innerText);
-    });
-});
-
-</script>
 
 </body>
 </html>
