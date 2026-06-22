@@ -1,232 +1,591 @@
-﻿
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agri Tracker | Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+<title>Agri Tracker | Dashboard</title>
 
-        body{
-            font-family:Arial, sans-serif;
-            display:flex;
-            height:100vh;
-            background:#f5f7fa;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        .sidebar{
-            width:260px;
-            background:#2e7d32;
-            color:white;
-            padding:20px;
-            overflow-y:auto;
-        }
+<style>
 
-        .sidebar h2{
-            margin-bottom:20px;
-            text-align:center;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .sidebar ul{
-            list-style:none;
-        }
+:root{
+    --primary:#146c2e;
+    --primary-dark:#0d5222;
+    --light:#f4f7fb;
+    --white:#ffffff;
+    --shadow:0 4px 20px rgba(0,0,0,.08);
+    --radius:18px;
+}
 
-        .sidebar ul li{
-            margin:8px 0;
-        }
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:var(--light);
+    display:flex;
+    min-height:100vh;
+}
 
-        .sidebar a{
-            color:white;
-            text-decoration:none;
-            display:block;
-            padding:10px;
-            border-radius:6px;
-            transition:0.3s;
-        }
+/* ======================
+   SIDEBAR
+====================== */
 
-        .sidebar a:hover{
-            background:rgba(255,255,255,0.15);
-        }
+.sidebar{
+    width:280px;
+    background:linear-gradient(
+        180deg,
+        #0f6d2e,
+        #0c5d27,
+        #08471d
+    );
+    color:#fff;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    box-shadow:4px 0 20px rgba(0,0,0,.12);
+}
 
-        .menu-title{
-            margin-top:15px;
-            margin-bottom:5px;
-            font-weight:bold;
-            color:#dcedc8;
-        }
+.logo-section{
+    padding:28px 22px;
+    border-bottom:1px solid rgba(255,255,255,.15);
+}
 
-        .main-content{
-            flex:1;
-            display:flex;
-            flex-direction:column;
-        }
+.logo-title{
+    font-size:34px;
+    font-weight:700;
+}
 
-        .header{
-            display:flex;
-            justify-content:flex-end;
-            align-items:center;
-            padding:15px 20px;
-            background:white;
-            border-bottom:1px solid #ddd;
-        }
+.logo-sub{
+    margin-top:6px;
+    font-size:14px;
+    opacity:.8;
+}
 
-        .logout-btn{
-            background:#e53935;
-            color:white;
-            border:none;
-            padding:10px 15px;
-            border-radius:5px;
-            cursor:pointer;
-        }
+.sidebar ul{
+    list-style:none;
+    padding:15px;
+}
 
-        .logout-btn:hover{
-            background:#c62828;
-        }
+.sidebar li{
+    margin-bottom:6px;
+}
 
-        .dashboard-body{
-            padding:25px;
-        }
+.sidebar a{
+    color:white;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    border-radius:14px;
+    transition:.3s;
+    font-size:15px;
+}
 
-        .welcome-card{
-            background:white;
-            padding:20px;
-            border-radius:10px;
-            box-shadow:0 2px 8px rgba(0,0,0,0.08);
-        }
+.sidebar a:hover{
+    background:rgba(255,255,255,.12);
+    transform:translateX(3px);
+}
 
-        .welcome-card h3{
-            margin-bottom:10px;
-            color:#2e7d32;
-        }
+.sidebar a.active{
+    background:rgba(255,255,255,.18);
+}
 
-        @media(max-width:768px){
-            .sidebar{
-                width:220px;
-            }
-        }
-    </style>
+.menu-title{
+    padding:15px 18px 10px;
+    font-size:13px;
+    text-transform:uppercase;
+    color:#c8f2d0;
+    letter-spacing:1px;
+    font-weight:600;
+}
+
+.sidebar-footer{
+    margin-top:auto;
+    padding:20px;
+    border-top:1px solid rgba(255,255,255,.15);
+}
+
+.user-card{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#fff;
+    color:#146c2e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.user-info h4{
+    font-size:15px;
+}
+
+.user-info p{
+    font-size:12px;
+    opacity:.8;
+}
+
+/* ======================
+   MAIN CONTENT
+====================== */
+
+.main-content{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+/* ======================
+   HEADER
+====================== */
+
+.header{
+    height:85px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.header-left i{
+    font-size:24px;
+    color:var(--primary);
+}
+
+.page-title{
+    font-size:34px;
+    font-weight:700;
+    color:#184c28;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.notification{
+    position:relative;
+    font-size:22px;
+    color:#146c2e;
+}
+
+.notification span{
+    position:absolute;
+    top:-8px;
+    right:-10px;
+    background:#2e7d32;
+    color:white;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    font-size:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.logout-btn{
+    background:#e53935;
+    border:none;
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.logout-btn:hover{
+    background:#c62828;
+}
+
+/* ======================
+   CONTENT AREA
+====================== */
+
+.dashboard-body{
+    padding:30px;
+}
+
+.welcome-card{
+    background:white;
+    border-radius:22px;
+    padding:30px;
+    box-shadow:var(--shadow);
+    margin-bottom:25px;
+}
+
+.welcome-card h3{
+    color:#146c2e;
+    font-size:28px;
+    margin-bottom:12px;
+}
+
+.welcome-card p{
+    color:#555;
+    line-height:1.7;
+}
+
+/* ======================
+   DASHBOARD CARDS
+====================== */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.stat-card{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:var(--shadow);
+    transition:.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-5px);
+}
+
+.stat-icon{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    margin-bottom:15px;
+    background:#e8f5e9;
+    color:#146c2e;
+}
+
+.stat-card h4{
+    color:#333;
+    margin-bottom:8px;
+}
+
+.stat-card p{
+    color:#777;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:230px;
+    }
+
+    .page-title{
+        font-size:24px;
+    }
+}
+
+@media(max-width:768px){
+
+    body{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        height:auto;
+    }
+
+    .header{
+        padding:15px;
+    }
+}
+
+</style>
+
 </head>
 
 <body>
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <h2>🌿 Agri Tracker</h2>
+<div class="logo-section">
+    <div class="logo-title">🌿 Agri Tracker</div>
+    <div class="logo-sub">
+        Smart Agriculture System
+    </div>
+</div>
 
-        <ul>
+<ul>
 
+<li><a class="active" href="dashboard.html"><i class="fas fa-chart-line"></i> Overview</a></li>
 
+<li><a href="crops.html"><i class="fas fa-seedling"></i> Crops</a></li>
 
-<li><a href="dashboard.html">📊 Overview</a></li>
+<li><a href="weather.html"><i class="fas fa-cloud-sun"></i> Weather</a></li>
 
-<li><a href="Entry.html">🌾 Entry</a></li>
+<li><a href="activities.html"><i class="fas fa-calendar"></i> Activities</a></li>
 
+<li><a href="#"><i class="fas fa-flask"></i> Fertilizers</a></li>
 
+<li><a href="#"><i class="fas fa-droplet"></i> Irrigation</a></li>
 
+<li><a href="reports.html"><i class="fas fa-file-lines"></i> Reports</a></li>
 
-<li><a href="activities.html">📅 Activities</a></li>
+<li><a href="#"><i class="fas fa-life-ring"></i> Support</a></li>
 
+<li><a href="#"><i class="fas fa-credit-card"></i> Payment History</a></li>
 
-<li><a href="reports.html">📑 Reports</a></li>
+<li><a href="#" onclick="window.print()"><i class="fas fa-print"></i> Print</a></li>
 
-<li><a href="#">🆘 Support</a></li>
+<li><a href="#" id="downloadJson"><i class="fas fa-download"></i> Download JSON</a></li>
 
-<li><a href="#">💳 Payment History</a></li>
+<li><a href="#" id="exportData"><i class="fas fa-upload"></i> Export Data</a></li>
 
-<li><a href="#" onclick="window.print()">🖨️ Print</a></li>
+<li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
 
-<li><a href="#" id="downloadJson">📥 Download JSON</a></li>
+<div class="menu-title">
+Future Modules
+</div>
 
-<li><a href="#" id="exportData">📤 Export Data</a></li>
+<li><a href="#"><i class="fas fa-user"></i> Farmers</a></li>
 
-<li><a href="settings.html">⚙️ Settings</a></li>
+<li><a href="#"><i class="fas fa-box"></i> Inventory</a></li>
 
+<li><a href="#"><i class="fas fa-tractor"></i> Equipment</a></li>
 
+<li><a href="#"><i class="fas fa-chart-column"></i> Market Prices</a></li>
 
+<li><a href="#"><i class="fas fa-bell"></i> Alerts</a></li>
 
+<li><a href="#"><i class="fas fa-users"></i> Users</a></li>
 
+<li><a href="#"><i class="fas fa-chart-pie"></i> Analytics</a></li>
 
-        </ul>
+<li><a href="#"><i class="fas fa-cloud"></i> Backup</a></li>
 
-    </aside>
+</ul>
 
-    <main class="main-content">
-
-        <div class="header">
-            <button class="logout-btn" onclick="logout()">
-                Logout
-            </button>
+<div class="sidebar-footer">
+    <div class="user-card">
+        <div class="user-avatar">
+            <i class="fas fa-user"></i>
         </div>
 
-        <div class="dashboard-body">
 
-            <div class="welcome-card">
-                <h3>Welcome to Agri Tracker</h3>
-                <p>
-                    Dashboard is ready. Existing authentication,
-                    session validation, logout functionality and
-                    database behaviour remain unchanged.
-                </p>
-            </div>
+    <div class="user-info">
+        <h4>Admin User</h4>
+        <p>Administrator</p>
+    </div>
+</div>
 
+
+</div>
+
+</aside>
+
+<main class="main-content">
+
+<div class="header">
+
+<div class="header-left">
+    <i class="fas fa-bars"></i>
+    <div class="page-title">
+        Dashboard
+    </div>
+</div>
+
+<div class="header-right">
+
+<div class="notification">
+    <i class="fas fa-bell"></i>
+    <span>3</span>
+</div>
+
+<button class="logout-btn"
+onclick="logout()">
+Logout </button>
+
+</div>
+
+</div>
+<div class="dashboard-body">
+
+
+<div class="welcome-card">
+
+    <h3>Welcome to Agri Tracker</h3>
+
+    <p>
+        Dashboard is ready. Existing authentication,
+        session validation, logout functionality and
+        database behaviour remain unchanged.
+    </p>
+
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-seedling"></i>
         </div>
 
-    </main>
+        <h4>Crop Management</h4>
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="assets/js/supabase-config.js"></script>
+        <p>
+            Manage crop records, schedules
+            and cultivation information.
+        </p>
+    </div>
 
-    <script>
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-cloud-sun"></i>
+        </div>
 
-        document.addEventListener("DOMContentLoaded", async () => {
+        <h4>Weather Updates</h4>
 
-            try {
+        <p>
+            Access weather forecasts and
+            seasonal information.
+        </p>
+    </div>
 
-                const {
-                    data: { session }
-                } = await window.supabaseClient.auth.getSession();
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-calendar-check"></i>
+        </div>
 
-                if (!session) {
-                    window.location.replace("logincard.html");
-                    return;
-                }
+        <h4>Activities</h4>
 
-                console.log("Logged In User:", session.user.email);
+        <p>
+            Track agricultural activities,
+            schedules and operations.
+        </p>
+    </div>
 
-            } catch (error) {
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-file-lines"></i>
+        </div>
 
-                console.error("Session Error:", error);
-                window.location.replace("logincard.html");
+        <h4>Reports</h4>
 
-            }
+        <p>
+            Generate and review reports
+            without affecting data flow.
+        </p>
+    </div>
 
-        });
+</div>
 
-        async function logout() {
 
-            try {
+</div>
 
-                await window.supabaseClient.auth.signOut();
+</main>
 
-            } catch (error) {
+<!-- Supabase -->
 
-                console.error("Logout Error:", error);
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-            }
+<script src="assets/js/supabase-config.js"></script>
 
-            window.location.replace("logincard.html");
+<script>
 
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+    try {
+
+        const {
+            data: { session }
+        } =
+        await window.supabaseClient
+        .auth
+        .getSession();
+
+        if (!session) {
+
+            window.location.replace(
+                "logincard.html"
+            );
+
+            return;
         }
 
-    </script>
+        console.log(
+            "Logged In User:",
+            session.user.email
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Session Error:",
+            error
+        );
+
+        window.location.replace(
+            "logincard.html"
+        );
+
+    }
+
+});
+
+async function logout(){
+
+    try{
+
+        await window
+        .supabaseClient
+        .auth
+        .signOut();
+
+    }
+    catch(error){
+
+        console.error(
+            "Logout Error:",
+            error
+        );
+
+    }
+
+    window.location.replace(
+        "logincard.html"
+    );
+
+}
+
+</script>
 
 </body>
 </html>
-
