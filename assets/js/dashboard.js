@@ -90,7 +90,7 @@ function showToast(message) {
 const navItems = [
 
     { name: "📊 Overview", id: "overview", icon: "fa-chart-line" },
-    { name: "🌾 Crops", id: "crops", icon: "fa-seedling" },
+    { name: "🌾 Entry", id: "Entry", icon: "fa-Entry" },
    
    
     { name: "📅 Activities", id: "activities", icon: "fa-calendar" },
