@@ -21,7 +21,7 @@
                 <div class="agri-login-card-field">
                     <label for="loginId">Login ID</label>
                     <input type="text" id="loginId" name="loginId" class="agri-login-card-input" placeholder="Email" autocomplete="email" required>
-                    <span class="agri-login-card-error" id="loginIdError" aria-live="polite"></span>
+                    <span class="agri-login-card-error" id="loginIdError"></span>
                 </div>
 
                 <div class="agri-login-card-field">
@@ -30,12 +30,17 @@
                         <input type="password" id="password" name="password" class="agri-login-card-input" placeholder="Password" autocomplete="current-password" required>
                         <button type="button" class="agri-login-card-password-toggle" id="passwordToggle">Show</button>
                     </div>
-                    <span class="agri-login-card-error" id="passwordError" aria-live="polite"></span>
+                    <span class="agri-login-card-error" id="passwordError"></span>
                 </div>
 
                 <div class="agri-login-card-options">
-                    <label class="agri-login-card-checkbox"><input type="checkbox" name="remember"> Remember Me</label>
-                    <button type="button" class="agri-login-card-link" id="forgotPasswordLink">Forgot Password?</button>
+                    <label class="agri-login-card-checkbox">
+                        <input type="checkbox" name="remember">
+                        Remember Me
+                    </label>
+                    <button type="button" class="agri-login-card-link" id="forgotPasswordLink">
+                        Forgot Password?
+                    </button>
                 </div>
 
                 <button type="submit" class="agri-login-card-button" id="loginSubmitBtn">
@@ -44,13 +49,20 @@
                 </button>
 
                 <div class="agri-login-card-register">
-                    <button type="button" class="agri-login-card-link" id="registerLink">Register New Account</button>
+                    <button type="button" class="agri-login-card-link" id="registerLink">
+                        Register New Account
+                    </button>
                 </div>
             </form>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-	<script src="assets/js/supabase-config.js"></script>
+
+    <script src="assets/js/app-config.js"></script>
+
+    <script src="assets/js/supabase-config.js"></script>
+
     <script src="assets/js/logincard.js"></script>
 </body>
 </html>
