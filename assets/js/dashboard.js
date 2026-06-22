@@ -1,22 +1,29 @@
 javascript
-const moduleRoutes = {
+/* app-config.js ൽ നിന്നുള്ള routes */
+
+const moduleRoutes =
+    window.APP_CONFIG?.MODULES || {
+
     dashboard: "dashboard.html",
     overview: "dashboard.html",
     crops: "crops.html",
     fields: "fields.html",
     weather: "weather.html",
     activities: "activities.html",
+
     fertilizers: "",
     irrigation: "",
+
     reports: "reports.html",
     support: "",
     paymentHistory: "",
+
     print: "",
     downloadJson: "",
     exportData: "",
+
     settings: "settings.html",
 
-    // Future Modules
     farmers: "",
     inventory: "",
     equipment: "",
@@ -25,22 +32,18 @@ const moduleRoutes = {
     users: "",
     analytics: "",
     backup: ""
+
 };
 
 const navItems = [
 
     { name: "📊 Overview", id: "overview", icon: "fa-chart-line" },
-
     { name: "🌾 Crops", id: "crops", icon: "fa-seedling" },
-
     { name: "🗺️ Fields", id: "fields", icon: "fa-map" },
-
     { name: "🌦️ Weather", id: "weather", icon: "fa-cloud-sun" },
-
     { name: "📅 Activities", id: "activities", icon: "fa-calendar" },
 
     { name: "🧪 Fertilizers", id: "fertilizers", icon: "fa-flask" },
-
     { name: "💧 Irrigation", id: "irrigation", icon: "fa-tint" },
 
     { name: "📑 Reports", id: "reports", icon: "fa-file-alt" },
@@ -57,25 +60,18 @@ const navItems = [
 
     { name: "⚙️ Settings", id: "settings", icon: "fa-cog" },
 
-    // Future Modules
-
     { name: "👨‍🌾 Farmers", id: "farmers", icon: "fa-user" },
-
     { name: "📦 Inventory", id: "inventory", icon: "fa-box" },
-
     { name: "🚜 Equipment", id: "equipment", icon: "fa-tractor" },
-
     { name: "📈 Market Prices", id: "marketPrices", icon: "fa-chart-bar" },
-
     { name: "🔔 Alerts", id: "alerts", icon: "fa-bell" },
-
     { name: "👥 Users", id: "users", icon: "fa-users" },
-
     { name: "📊 Analytics", id: "analytics", icon: "fa-chart-pie" },
-
     { name: "☁ Backup", id: "backup", icon: "fa-cloud" }
 
 ];
+
+
 
 function showToast(message) {
 
