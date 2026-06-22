@@ -1,4 +1,3 @@
-javascript
 /*
 ==================================================
 router.js
@@ -9,8 +8,6 @@ Purpose:
 - Read routes from APP_CONFIG.MODULES
 - Centralize navigation logic
 - Keep existing functionality unchanged
-- No changes to Business Logic
-- No changes to API / Database behavior
 ==================================================
 */
 
@@ -18,45 +15,21 @@ Purpose:
 
     "use strict";
 
-    /**
-     * Get all configured module routes
-     */
     function getModules() {
-
-        return (
-            window.APP_CONFIG?.MODULES || {}
-        );
-
+        return window.APP_CONFIG?.MODULES || {};
     }
 
-    /**
-     * Get route URL by module name
-     */
     function getRoute(moduleName) {
-
-        const modules =
-            getModules();
-
-        return modules[moduleName] || null;
-
+        return getModules()[moduleName] || null;
     }
 
-    /**
-     * Check if module exists
-     */
     function hasRoute(moduleName) {
-
         return !!getRoute(moduleName);
-
     }
 
-    /**
-     * Navigate to module page
-     */
     function navigate(moduleName) {
 
-        const route =
-            getRoute(moduleName);
+        const route = getRoute(moduleName);
 
         if (!route) {
 
@@ -65,19 +38,13 @@ Purpose:
             );
 
             return false;
-
         }
 
-        window.location.href =
-            route;
+        window.location.href = route;
 
         return true;
-
     }
 
-    /**
-     * Get default page
-     */
     function getDefaultPage() {
 
         return (
@@ -87,23 +54,13 @@ Purpose:
 
     }
 
-    /**
-     * Navigate to default page
-     */
     function goHome() {
-
-        window.location.href =
-            getDefaultPage();
-
+        window.location.href = getDefaultPage();
     }
 
-    /**
-     * Current page filename
-     */
     function getCurrentPage() {
 
-        const path =
-            window.location.pathname;
+        const path = window.location.pathname;
 
         return path.substring(
             path.lastIndexOf("/") + 1
@@ -111,27 +68,17 @@ Purpose:
 
     }
 
-    /**
-     * Check active page
-     */
     function isCurrentPage(moduleName) {
 
-        const route =
-            getRoute(moduleName);
+        const route = getRoute(moduleName);
 
         if (!route) {
             return false;
         }
 
-        return (
-            getCurrentPage() === route
-        );
-
+        return getCurrentPage() === route;
     }
 
-    /**
-     * Get all routes
-     */
     function getAllRoutes() {
 
         return {
@@ -140,27 +87,16 @@ Purpose:
 
     }
 
-    /**
-     * Public API
-     */
     window.AppRouter = {
 
         navigate,
-
         getRoute,
-
         hasRoute,
-
         getModules,
-
         getAllRoutes,
-
         getDefaultPage,
-
         getCurrentPage,
-
         isCurrentPage,
-
         goHome
 
     };
