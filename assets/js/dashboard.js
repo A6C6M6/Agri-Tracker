@@ -1,4 +1,3 @@
-javascript
 /* app-config.js ൽ നിന്നുള്ള routes */
 
 const moduleRoutes =
