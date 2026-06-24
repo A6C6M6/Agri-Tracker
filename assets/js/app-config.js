@@ -5,8 +5,8 @@ window.APP_CONFIG = {
     MODULES: {
 
         dashboard: "dashboard.html",
+        
         overview: "dashboard.html",
-
         Entry: "Entry.html",
         activities: "activities.html",
         reports: "reports.html",
