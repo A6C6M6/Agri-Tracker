@@ -8,21 +8,11 @@ window.APP_CONFIG = {
         overview: "dashboard.html",
 
         Entry: "Entry.html",
-      
         activities: "activities.html",
-
-       
-
         reports: "reports.html",
-
         support: "support.html",
-
         paymentHistory: "payment-history.html",
-
         settings: "settings.html",
-
-       
-
-    }
+             }
 
 };
