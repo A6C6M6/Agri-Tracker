@@ -1,53 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - Agri Tracker</title>
+    <title>Agri Tracker | settings</title>
 
-    <script src="assets/js/app-config.js"></script>
-    <script src="assets/js/router.js"></script>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            text-align: center;
-        }
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
 
-        .card {
-            max-width: 600px;
-            margin: auto;
-            padding: 30px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        }
+    body{
+        font-family:Arial,sans-serif;
+        background:#f5f5f5;
+    }
 
-        button {
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-    </style>
+    .header{
+        background:#2e7d32;
+        color:white;
+        padding:15px 20px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    .logout-btn{
+        background:#d32f2f;
+        color:white;
+        border:none;
+        padding:10px 15px;
+        border-radius:5px;
+        cursor:pointer;
+    }
+
+    .logout-btn:hover{
+        background:#b71c1c;
+    }
+
+    .container{
+        padding:20px;
+    }
+
+    .report-card{
+        background:white;
+        padding:20px;
+        border-radius:10px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom:20px;
+    }
+
+    h2{
+        margin-bottom:10px;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+    }
+
+    table th,
+    table td{
+        border:1px solid #ddd;
+        padding:10px;
+        text-align:left;
+    }
+
+    table th{
+        background:#e8f5e9;
+    }
+</style>
+
+
 </head>
-
 <body>
 
-    <div class="card">
 
-        <h1>⚙️ Settings Page</h1>
+<div class="header">
+    <h1>Agri Tracker Reports</h1>
 
+    <button
+        class="logout-btn"
+        onclick="window.location.href='logincard.html'">
+        Logout
+    </button>
+</div>
+
+<div class="container">
+
+    <div class="report-card">
+        <h2>Reports Dashboard</h2>
         <p>
-            Settings Module Loaded Successfully
+            Welcome to the Reports Section.
+            This page can display farm reports,
+            crop statistics, production summaries,
+            and analytics.
         </p>
+    </div>
 
-        <button onclick="AppRouter.navigate('dashboard')">
-            Back To Dashboard
-        </button>
+    <div class="report-card">
+        <h2>Sample Report</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Crop</th>
+                    <th>Area (Acres)</th>
+                    <th>Production (Kg)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Rice</td>
+                    <td>12</td>
+                    <td>4500</td>
+                </tr>
+
+                <tr>
+                    <td>Banana</td>
+                    <td>8</td>
+                    <td>3200</td>
+                </tr>
+
+                <tr>
+                    <td>Vegetables</td>
+                    <td>5</td>
+                    <td>1800</td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 
+</div>
+
+
 </body>
-
 </html>
-

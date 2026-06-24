@@ -1,150 +1,143 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri Tracker | Reports</title>
 
-<title>Admin User Profile</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
+    body{
+        font-family:Arial,sans-serif;
+        background:#f5f5f5;
+    }
 
-body{
-    background:#f5f7fa;
-    padding:50px;
-}
+    .header{
+        background:#2e7d32;
+        color:white;
+        padding:15px 20px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
 
-/* Header */
+    .logout-btn{
+        background:#d32f2f;
+        color:white;
+        border:none;
+        padding:10px 15px;
+        border-radius:5px;
+        cursor:pointer;
+    }
 
-.header{
-    background:#fff;
-    padding:15px 30px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    .logout-btn:hover{
+        background:#b71c1c;
+    }
 
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-}
+    .container{
+        padding:20px;
+    }
 
-/* User Section */
+    .report-card{
+        background:white;
+        padding:20px;
+        border-radius:10px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom:20px;
+    }
 
-.user{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
+    h2{
+        margin-bottom:10px;
+    }
 
-/* Notification */
+    table{
+        width:100%;
+        border-collapse:collapse;
+    }
 
-.notification{
-    position:relative;
-    font-size:22px;
-    color:#166534;
-    cursor:pointer;
-}
+    table th,
+    table td{
+        border:1px solid #ddd;
+        padding:10px;
+        text-align:left;
+    }
 
-.notification-count{
-    position:absolute;
-    top:-8px;
-    right:-8px;
-
-    background:#16a34a;
-    color:white;
-
-    width:18px;
-    height:18px;
-
-    border-radius:50%;
-    font-size:11px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-/* Avatar */
-
-.avatar{
-    width:55px;
-    height:55px;
-
-    border-radius:50%;
-    background:#dff5e3;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:#1b7d36;
-    font-size:28px;
-}
-
-/* User Info */
-
-.user-info strong{
-    color:#166534;
-    font-size:18px;
-}
-
-.user-info span{
-    color:#666;
-    font-size:14px;
-}
-
-.dropdown{
-    color:#166534;
-    cursor:pointer;
-    font-size:18px;
-}
-
+    table th{
+        background:#e8f5e9;
+    }
 </style>
-</head>
 
+
+</head>
 <body>
 
+
 <div class="header">
+    <h1>Agri Tracker Reports</h1>
 
-    <div class="user">
+    <button
+        class="logout-btn"
+        onclick="window.location.href='logincard.html'">
+        Logout
+    </button>
+</div>
 
-        <!-- Notification -->
+<div class="container">
 
-        <div class="notification">
-            <i class="fa-regular fa-bell"></i>
-            <span class="notification-count">3</span>
-        </div>
+    <div class="report-card">
+        <h2>Reports Dashboard</h2>
+        <p>
+            Welcome to the Reports Section.
+            This page can display farm reports,
+            crop statistics, production summaries,
+            and analytics.
+        </p>
+    </div>
 
-        <!-- Avatar -->
+    <div class="report-card">
+        <h2>Sample Report</h2>
 
-        <div class="avatar">
-            <i class="fas fa-user"></i>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Crop</th>
+                    <th>Area (Acres)</th>
+                    <th>Production (Kg)</th>
+                </tr>
+            </thead>
 
-        <!-- User Info -->
+            <tbody>
+                <tr>
+                    <td>Rice</td>
+                    <td>12</td>
+                    <td>4500</td>
+                </tr>
 
-        <div class="user-info">
-            <strong>Admin User</strong><br>
-            <span>Administrator</span>
-        </div>
+                <tr>
+                    <td>Banana</td>
+                    <td>8</td>
+                    <td>3200</td>
+                </tr>
 
-        <!-- Dropdown -->
-
-        <div class="dropdown">
-            <i class="fas fa-chevron-down"></i>
-        </div>
+                <tr>
+                    <td>Vegetables</td>
+                    <td>5</td>
+                    <td>1800</td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 
 </div>
+
 
 </body>
 </html>
