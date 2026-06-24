@@ -1,139 +1,342 @@
-/* ===== PAGE LAYOUT ===== */
-body{
-    margin:0;
-    padding:0;
-    overflow:hidden;
-    font-family:'Segoe UI',sans-serif;
-    background:#f4f6f9;
+/* =========================
+RESET
+========================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-/* ===== SIDEBAR ===== */
-.sidebar{
-    width:160px;
-    height:100vh;
-    background:#006400;
-    position:fixed;
-    left:0;
-    top:0;
-    overflow:hidden;
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f4f6f9;
+overflow:hidden;
 }
+
+/* =========================
+LAYOUT
+========================= */
+
+.wrapper{
+display:flex;
+height:100vh;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+width:160px;
+background:#006400;
+color:#fff;
+height:100vh;
+position:fixed;
+left:0;
+top:0;
+}
+
+.logo{
+height:70px;
+display:flex;
+align-items:center;
+gap:10px;
+padding:20px;
+font-size:24px;
+font-weight:700;
+border-bottom:1px solid rgba(255,255,255,.15);
+}
+
+.logo i{
+font-size:28px;
+}
+
+.menu{
+list-style:none;
+padding:15px 10px;
+}
+
+.menu li a{
+display:flex;
+align-items:center;
+gap:10px;
+padding:14px 15px;
+color:#fff;
+text-decoration:none;
+border-radius:10px;
+font-size:15px;
+}
+
+.menu li.active a{
+background:rgba(255,255,255,.15);
+}
+
+/* =========================
+MAIN CONTENT
+========================= */
 
 .main-content{
-    margin-left:160px;
-    padding:15px 20px;
-    height:100vh;
-    overflow:hidden;
+margin-left:160px;
+width:calc(100% - 160px);
+height:100vh;
+overflow:hidden;
 }
 
-/* Remove subtitle */
-.page-subtitle,
-.settings-subtitle,
-.page-description{
-    display:none !important;
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+height:70px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+border-bottom:1px solid #e5e7eb;
 }
 
-/* ===== PAGE TITLE ===== */
+.topbar .left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.topbar h2{
+font-size:18px;
+color:#0b6e28;
+}
+
+#toggleBtn{
+border:none;
+background:none;
+font-size:22px;
+cursor:pointer;
+}
+
+.right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.notification{
+position:relative;
+font-size:20px;
+color:#0b6e28;
+}
+
+.notification span{
+position:absolute;
+top:-8px;
+right:-10px;
+background:#16a34a;
+color:#fff;
+width:18px;
+height:18px;
+border-radius:50%;
+font-size:11px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.logout-btn{
+background:#ef4444;
+color:#fff;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
+
+/* =========================
+PAGE TITLE
+========================= */
+
 .page-title{
-    font-size:36px;
-    font-weight:700;
-    margin-bottom:15px;
-    color:#1b1b1b;
+padding:20px 20px 10px;
 }
 
-/* ===== CARD GRID ===== */
-.settings-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
+.page-title h1{
+font-size:38px;
+color:#1f2937;
 }
 
-/* ===== CARD ===== */
+/* =========================
+CARD GRID
+========================= */
+
+.card-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+padding:0 20px 20px;
+}
+
+/* =========================
+CARD
+========================= */
+
 .setting-card{
-    background:#fff;
-    border-radius:18px;
-    padding:18px;
-    min-height:190px;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-    transition:.3s;
+background:#fff;
+border-radius:18px;
+padding:20px;
+min-height:220px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+transition:.3s;
 }
 
 .setting-card:hover{
-    transform:translateY(-3px);
+transform:translateY(-3px);
 }
 
-.setting-card h3{
-    font-size:24px;
-    color:#006400;
-    margin-bottom:8px;
+.setting-card hr{
+border:none;
+border-top:1px solid #e5e7eb;
+margin:15px 0;
 }
 
-.setting-card p{
-    font-size:14px;
-    line-height:1.4;
-    min-height:40px;
-    margin-bottom:12px;
+/* =========================
+CARD TOP
+========================= */
+
+.card-top{
+display:flex;
+gap:15px;
+align-items:flex-start;
 }
 
-/* ===== ICON ===== */
-.card-icon{
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    margin-bottom:12px;
+.card-top h3{
+color:#0b6e28;
+font-size:26px;
+margin-bottom:8px;
 }
 
-/* ===== BUTTON SECTION ===== */
-.card-actions{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:6px;
-    flex-wrap:nowrap;
-    margin-top:15px;
+.card-top p{
+color:#555;
+font-size:14px;
+line-height:1.5;
 }
 
-.card-actions .btn{
-    flex:1;
-    padding:8px 6px;
-    font-size:13px;
-    font-weight:600;
-    border-radius:8px;
-    text-align:center;
-    white-space:nowrap;
+/* =========================
+ICONS
+========================= */
+
+.icon{
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+flex-shrink:0;
 }
 
-/* ===== HEADER ===== */
-.top-header{
-    height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background:#fff;
-    border-bottom:1px solid #ddd;
-    margin-bottom:15px;
+.green{
+background:#eaf7ea;
+color:#0b8f36;
 }
 
-/* ===== RESPONSIVE ===== */
+.yellow{
+background:#fff4d8;
+color:#d9a400;
+}
+
+.blue{
+background:#eaf1ff;
+color:#3b82f6;
+}
+
+.purple{
+background:#f3e8ff;
+color:#8b5cf6;
+}
+
+.orange{
+background:#fff1df;
+color:#f97316;
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.actions{
+display:flex;
+gap:8px;
+}
+
+.btn{
+flex:1;
+border-radius:8px;
+padding:9px 6px;
+font-size:13px;
+font-weight:600;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.green-btn{
+background:#edf8ed;
+color:#0b6e28;
+border:1px solid #b9ddb9;
+}
+
+.blue-btn{
+background:#eef5ff;
+color:#2563eb;
+border:1px solid #bfd3ff;
+}
+
+.btn:hover{
+opacity:.9;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
 @media(max-width:1200px){
-    .settings-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+
+.card-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
 }
 
 @media(max-width:768px){
-    .settings-grid{
-        grid-template-columns:1fr;
-    }
 
-    body{
-        overflow:auto;
-    }
+.sidebar{
+width:70px;
+}
 
-    .main-content{
-        overflow:auto;
-    }
+.logo span,
+.menu li a span{
+display:none;
+}
+
+.main-content{
+margin-left:70px;
+width:calc(100% - 70px);
+}
+
+.card-grid{
+grid-template-columns:1fr;
+}
+
+body{
+overflow:auto;
+}
+
+.main-content{
+overflow:auto;
+}
+
 }
