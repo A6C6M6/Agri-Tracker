@@ -7,23 +7,15 @@ const moduleRoutes =
     overview: "dashboard.html",
 
    Entry: "Entry.html",
-   
-   
-    activities: "activities.html",
-
-    
+   activities: "activities.html",
     reports: "reports.html",
-
     support: "",
     paymentHistory: "",
-
     print: "",
     downloadJson: "",
     exportData: "",
-
     settings: "settings.html",
 
-    
 
 };
 
@@ -91,23 +83,10 @@ const navItems = [
 
     { name: "📊 Overview", id: "overview", icon: "fa-chart-line" },
     { name: "🌾 Entry", id: "Entry", icon: "fa-Entry" },
-   
-   
     { name: "📅 Activities", id: "activities", icon: "fa-calendar" },
-
-    
     { name: "📑 Reports", id: "reports", icon: "fa-file-alt" },
-
     { name: "🆘 Support", id: "support", icon: "fa-life-ring" },
-
     { name: "💳 Payment History", id: "paymentHistory", icon: "fa-credit-card" },
-
-    { name: "🖨️ Print", id: "print", icon: "fa-print" },
-
-    { name: "📥 Download JSON", id: "downloadJson", icon: "fa-download" },
-
-    { name: "📤 Export Data", id: "exportData", icon: "fa-upload" },
-
     { name: "⚙️ Settings", id: "settings", icon: "fa-cog" },
 
   
