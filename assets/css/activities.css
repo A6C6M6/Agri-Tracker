@@ -180,7 +180,7 @@ padding:0 20px 20px;
 CARD
 ========================= */
 
-.setting-card{
+.activities-card{
 background:#fff;
 border-radius:18px;
 padding:20px;
@@ -192,11 +192,11 @@ justify-content:space-between;
 transition:.3s;
 }
 
-.setting-card:hover{
+.activities-card:hover{
 transform:translateY(-3px);
 }
 
-.setting-card hr{
+.activities-card hr{
 border:none;
 border-top:1px solid #e5e7eb;
 margin:15px 0;
