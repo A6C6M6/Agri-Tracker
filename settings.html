@@ -1,24 +1,22 @@
+html
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Application Settings</title>
 
 <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<link rel="stylesheet" href="assets/css/settings.css">
-
+<link rel="stylesheet"
+href="assets/css/settings.css">
 
 </head>
 
 <body>
-
 
 <div class="wrapper">
 
@@ -31,12 +29,14 @@
         </div>
 
         <ul class="menu">
+
             <li class="active">
                 <a href="#">
                     <i class="fa-solid fa-gear"></i>
                     <span>Settings</span>
                 </a>
             </li>
+
         </ul>
 
     </aside>
@@ -48,6 +48,7 @@
         <header class="topbar">
 
             <div class="left">
+
                 <button id="toggleBtn">
                     <i class="fa-solid fa-bars"></i>
                 </button>
@@ -56,6 +57,7 @@
                     <i class="fa-solid fa-gear"></i>
                     Application Settings
                 </h2>
+
             </div>
 
             <div class="right">
@@ -65,8 +67,13 @@
                     <span>3</span>
                 </div>
 
-                <button class="logout-btn">
+                <button
+                    class="logout-btn"
+                    onclick="logout()">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
+
                 </button>
 
             </div>
@@ -75,190 +82,266 @@
 
         <!-- Page Title -->
         <div class="page-title">
-            <h1>Application Settings</h1>
+
+            <h1>
+                Application Settings
+            </h1>
+
         </div>
 
         <!-- Cards -->
         <div class="card-grid">
 
-            <!-- Person -->
+            <!-- Person Master -->
             <div class="setting-card">
+
                 <div class="card-top">
+
                     <div class="icon green">
                         <i class="fa-solid fa-user"></i>
                     </div>
 
                     <div>
                         <h3>Person Master</h3>
-                        <p>Add, edit and manage persons information</p>
+                        <p>
+                            Add, edit and manage
+                            persons information
+                        </p>
                     </div>
+
                 </div>
 
                 <hr>
 
                 <div class="actions">
+
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i> Add Person
+                        <i class="fa-solid fa-plus"></i>
+                        Add Person
                     </button>
 
                     <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i> Edit Person
+                        <i class="fa-solid fa-pen"></i>
+                        Edit Person
                     </button>
 
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i> View List
+                        <i class="fa-solid fa-list"></i>
+                        View List
                     </button>
+
                 </div>
+
             </div>
 
-            <!-- Item -->
+            <!-- Item Master -->
             <div class="setting-card">
+
                 <div class="card-top">
+
                     <div class="icon yellow">
                         <i class="fa-solid fa-box"></i>
                     </div>
 
                     <div>
                         <h3>Item Master</h3>
-                        <p>Add, edit and manage items information</p>
+                        <p>
+                            Add, edit and manage
+                            items information
+                        </p>
                     </div>
+
                 </div>
 
                 <hr>
 
                 <div class="actions">
+
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i> Add Item
+                        <i class="fa-solid fa-plus"></i>
+                        Add Item
                     </button>
 
                     <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i> Edit Item
+                        <i class="fa-solid fa-pen"></i>
+                        Edit Item
                     </button>
 
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i> View List
+                        <i class="fa-solid fa-list"></i>
+                        View List
                     </button>
+
                 </div>
+
             </div>
 
-            <!-- Village -->
+            <!-- Village Master -->
             <div class="setting-card">
+
                 <div class="card-top">
+
                     <div class="icon blue">
                         <i class="fa-solid fa-house"></i>
                     </div>
 
                     <div>
                         <h3>Village Master</h3>
-                        <p>Add and manage village information</p>
+                        <p>
+                            Add and manage village
+                            information
+                        </p>
                     </div>
+
                 </div>
 
                 <hr>
 
                 <div class="actions">
+
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i> Add Village
+                        <i class="fa-solid fa-plus"></i>
+                        Add Village
                     </button>
 
                     <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i> Edit Village
+                        <i class="fa-solid fa-pen"></i>
+                        Edit Village
                     </button>
 
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i> View List
+                        <i class="fa-solid fa-list"></i>
+                        View List
                     </button>
+
                 </div>
+
             </div>
 
-            <!-- Ward -->
+            <!-- Ward Master -->
             <div class="setting-card">
+
                 <div class="card-top">
+
                     <div class="icon purple">
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
 
                     <div>
                         <h3>Ward Master</h3>
-                        <p>Add and manage ward information</p>
+                        <p>
+                            Add and manage ward
+                            information
+                        </p>
                     </div>
+
                 </div>
 
                 <hr>
 
                 <div class="actions">
+
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i> Add Ward
+                        <i class="fa-solid fa-plus"></i>
+                        Add Ward
                     </button>
 
                     <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i> Edit Ward
+                        <i class="fa-solid fa-pen"></i>
+                        Edit Ward
                     </button>
 
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i> View List
+                        <i class="fa-solid fa-list"></i>
+                        View List
                     </button>
+
                 </div>
+
             </div>
 
-            <!-- Crop -->
+            <!-- Crop Master -->
             <div class="setting-card">
+
                 <div class="card-top">
+
                     <div class="icon green">
                         <i class="fa-solid fa-seedling"></i>
                     </div>
 
                     <div>
                         <h3>Crop Master</h3>
-                        <p>Add and manage crop information</p>
+                        <p>
+                            Add and manage crop
+                            information
+                        </p>
                     </div>
+
                 </div>
 
                 <hr>
 
                 <div class="actions">
+
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i> Add Crop
+                        <i class="fa-solid fa-plus"></i>
+                        Add Crop
                     </button>
 
                     <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i> Edit Crop
+                        <i class="fa-solid fa-pen"></i>
+                        Edit Crop
                     </button>
 
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i> View List
+                        <i class="fa-solid fa-list"></i>
+                        View List
                     </button>
+
                 </div>
+
             </div>
 
-            <!-- User -->
+            <!-- User Management -->
             <div class="setting-card">
+
                 <div class="card-top">
+
                     <div class="icon orange">
                         <i class="fa-solid fa-users"></i>
                     </div>
 
                     <div>
                         <h3>User Management</h3>
-                        <p>Add users and manage user accounts</p>
+                        <p>
+                            Add users and manage
+                            user accounts
+                        </p>
                     </div>
+
                 </div>
 
                 <hr>
 
                 <div class="actions">
+
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i> Add User
+                        <i class="fa-solid fa-plus"></i>
+                        Add User
                     </button>
 
                     <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i> Edit User
+                        <i class="fa-solid fa-pen"></i>
+                        Edit User
                     </button>
 
                     <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i> View List
+                        <i class="fa-solid fa-list"></i>
+                        View List
                     </button>
+
                 </div>
+
             </div>
 
         </div>
@@ -267,8 +350,13 @@
 
 </div>
 
-<script src="assets/js/settings.js"></script>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script src="assets/js/supabase-config.js"></script>
+
+<script src="assets/js/settings.js"></script>
 
 </body>
 </html>
+
