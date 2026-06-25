@@ -1,416 +1,367 @@
 /* ==========================
-   Sidebar Toggle
+Sidebar Toggle
 ========================== */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+"DOMContentLoaded",
+() => {
 
-        const toggleBtn =
-            document.getElementById(
-                "toggleBtn"
-            );
+```
+    const toggleBtn =
+        document.getElementById(
+            "toggleBtn"
+        );
 
-        const sidebar =
-            document.querySelector(
-                ".sidebar"
-            );
+    const sidebar =
+        document.querySelector(
+            ".sidebar"
+        );
 
-        if (
-            toggleBtn &&
-            sidebar
-        ) {
+    if (
+        toggleBtn &&
+        sidebar
+    ) {
 
-            toggleBtn.addEventListener(
-                "click",
-                () => {
+        toggleBtn.addEventListener(
+            "click",
+            () => {
 
-                    sidebar.classList.toggle(
-                        "collapsed"
-                    );
-
-                }
-            );
-
-        }
-
-    }
-);
-
-
-/* ==========================
-   Session Validation
-========================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
-
-        try {
-
-            if (
-                !window.supabaseClient
-            ) {
-                return;
-            }
-
-            const {
-                data: { session }
-            } =
-            await window
-                .supabaseClient
-                .auth
-                .getSession();
-
-            if (!session) {
-
-                window.location.replace(
-                    "logincard.html"
+                sidebar.classList.toggle(
+                    "collapsed"
                 );
 
-                return;
             }
+        );
 
-            console.log(
-                "Logged In User:",
-                session.user.email
-            );
+    }
 
+}
+```
+
+);
+
+/* ==========================
+Session Validation
+========================== */
+
+document.addEventListener(
+"DOMContentLoaded",
+async () => {
+
+```
+    try {
+
+        if (
+            !window.supabaseClient
+        ) {
+            return;
         }
-        catch (error) {
 
-            console.error(
-                "Session Error:",
-                error
-            );
+        const {
+            data: { session }
+        } =
+        await window
+            .supabaseClient
+            .auth
+            .getSession();
+
+        if (!session) {
 
             window.location.replace(
                 "logincard.html"
             );
 
+            return;
         }
 
-    }
-);
-
-
-/* ==========================
-   Logout Function
-========================== */
-
-async function logout() {
-
-    try {
-
-        if (
-            window.supabaseClient
-        ) {
-
-            await window
-                .supabaseClient
-                .auth
-                .signOut();
-
-        }
+        console.log(
+            "Logged In User:",
+            session.user.email
+        );
 
     }
     catch (error) {
 
         console.error(
-            "Logout Error:",
+            "Session Error:",
             error
+        );
+
+        window.location.replace(
+            "logincard.html"
         );
 
     }
 
-    window.location.replace(
-        "logincard.html"
+}
+```
+
+);
+
+/* ==========================
+Logout Function
+========================== */
+
+async function logout() {
+
+```
+try {
+
+    if (
+        window.supabaseClient
+    ) {
+
+        await window
+            .supabaseClient
+            .auth
+            .signOut();
+
+    }
+
+}
+catch (error) {
+
+    console.error(
+        "Logout Error:",
+        error
     );
 
 }
 
+window.location.replace(
+    "logincard.html"
+);
+```
+
+}
 
 /* ==========================
-   Logout Button Binding
+Logout Button Binding
 ========================== */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+"DOMContentLoaded",
+() => {
 
-        const logoutBtn =
-            document.querySelector(
-                ".logout-btn"
-            );
+```
+    const logoutBtn =
+        document.querySelector(
+            ".logout-btn"
+        );
 
-        if (
-            logoutBtn
-        ) {
+    if (
+        logoutBtn
+    ) {
 
-            logoutBtn.addEventListener(
-                "click",
-                logout
-            );
-
-        }
+        logoutBtn.addEventListener(
+            "click",
+            logout
+        );
 
     }
+
+}
+```
+
 );
 
-
 /* ==========================
-   Dashboard Menu Highlight
+Dashboard Menu Highlight
 ========================== */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+"DOMContentLoaded",
+() => {
 
-        const dashboardLink =
-            document.querySelector(
-                '.menu a[href="dashboard.html"]'
-            );
+```
+    const dashboardLink =
+        document.querySelector(
+            '.menu a[href="dashboard.html"]'
+        );
 
-        if (
-            dashboardLink
-        ) {
+    if (
+        dashboardLink
+    ) {
 
-            dashboardLink.classList.add(
-                "active-menu"
-            );
-
-        }
+        dashboardLink.classList.add(
+            "active-menu"
+        );
 
     }
+
+}
+```
+
 );
 
-
 /* ==========================
-   Dynamic Settings Cards
+Dynamic Settings Cards
 ========================== */
 
 const settingsCards = [
 
-    {
-        iconColor: "green",
-        icon: "fa-user",
-        title: "Person Master",
-        description:
-            "Add, edit and manage persons information",
+```
+{
+    iconColor: "green",
+    icon: "fa-user",
+    title: "Person Master",
+    description:
+        "Add, edit and manage persons information",
 
-        buttons: [
-            {
-                text: "Add Person",
-                icon: "fa-plus",
-                class: "green-btn"
-            },
-            {
-                text: "Edit Person",
-                icon: "fa-pen",
-                class: "blue-btn"
-            },
-            {
-                text: "View List",
-                icon: "fa-list",
-                class: "green-btn"
-            }
-        ]
-    },
+    buttons: [
 
-    {
-        iconColor: "yellow",
-        icon: "fa-box",
-        title: "Item Master",
-        description:
-            "Add, edit and manage items information",
+        {
+            text: "Add Person",
+            icon: "fa-plus",
+            class: "green-btn",
+            action: "addPerson"
+        },
 
-        buttons: [
-            {
-                text: "Add Item",
-                icon: "fa-plus",
-                class: "green-btn"
-            },
-            {
-                text: "Edit Item",
-                icon: "fa-pen",
-                class: "blue-btn"
-            },
-            {
-                text: "View List",
-                icon: "fa-list",
-                class: "green-btn"
-            }
-        ]
-    },
+        {
+            text: "Edit Person",
+            icon: "fa-pen",
+            class: "blue-btn",
+            action: "editPerson"
+        },
 
-    {
-        iconColor: "blue",
-        icon: "fa-house",
-        title: "Village Master",
-        description:
-            "Add and manage village information",
+        {
+            text: "View List",
+            icon: "fa-list",
+            class: "green-btn",
+            action: "viewPersonList"
+        }
 
-        buttons: [
-            {
-                text: "Add Village",
-                icon: "fa-plus",
-                class: "green-btn"
-            },
-            {
-                text: "Edit Village",
-                icon: "fa-pen",
-                class: "blue-btn"
-            },
-            {
-                text: "View List",
-                icon: "fa-list",
-                class: "green-btn"
-            }
-        ]
-    },
+    ]
+},
 
-    {
-        iconColor: "purple",
-        icon: "fa-location-dot",
-        title: "Ward Master",
-        description:
-            "Add and manage ward information",
+{
+    iconColor: "yellow",
+    icon: "fa-box",
+    title: "Item Master",
+    description:
+        "Add, edit and manage items information",
 
-        buttons: [
-            {
-                text: "Add Ward",
-                icon: "fa-plus",
-                class: "green-btn"
-            },
-            {
-                text: "Edit Ward",
-                icon: "fa-pen",
-                class: "blue-btn"
-            },
-            {
-                text: "View List",
-                icon: "fa-list",
-                class: "green-btn"
-            }
-        ]
-    },
+    buttons: [
 
-    {
-        iconColor: "green",
-        icon: "fa-seedling",
-        title: "Crop Master",
-        description:
-            "Add and manage crop information",
+        {
+            text: "Add Item",
+            icon: "fa-plus",
+            class: "green-btn",
+            action: "addItem"
+        },
 
-        buttons: [
-            {
-                text: "Add Crop",
-                icon: "fa-plus",
-                class: "green-btn"
-            },
-            {
-                text: "Edit Crop",
-                icon: "fa-pen",
-                class: "blue-btn"
-            },
-            {
-                text: "View List",
-                icon: "fa-list",
-                class: "green-btn"
-            }
-        ]
-    },
+        {
+            text: "Edit Item",
+            icon: "fa-pen",
+            class: "blue-btn",
+            action: "editItem"
+        },
 
-    {
-        iconColor: "orange",
-        icon: "fa-users",
-        title: "User Management",
-        description:
-            "Add users and manage user accounts",
+        {
+            text: "View List",
+            icon: "fa-list",
+            class: "green-btn",
+            action: "viewItemList"
+        }
 
-        buttons: [
-            {
-                text: "Add User",
-                icon: "fa-plus",
-                class: "green-btn"
-            },
-            {
-                text: "Edit User",
-                icon: "fa-pen",
-                class: "blue-btn"
-            },
-            {
-                text: "View List",
-                icon: "fa-list",
-                class: "green-btn"
-            }
-        ]
-    }
+    ]
+}
+```
 
 ];
 
-
 /* ==========================
-   Render Settings Cards
+Render Settings Cards
 ========================== */
 
 function renderSettingsCards() {
 
-    const container =
-        document.getElementById(
-            "settingsCardContainer"
-        );
+```
+const container =
+    document.getElementById(
+        "settingsCardContainer"
+    );
 
-    if (!container) return;
+if (!container) return;
 
-    container.innerHTML =
-        settingsCards.map(card => `
+container.innerHTML =
+    settingsCards.map(card => `
 
-        <div class="setting-card">
+    <div class="setting-card">
 
-            <div class="card-top">
+        <div class="card-top">
 
-                <div class="icon ${card.iconColor}">
-                    <i class="fa-solid ${card.icon}"></i>
-                </div>
-
-                <div>
-                    <h3>${card.title}</h3>
-                    <p>${card.description}</p>
-                </div>
-
+            <div class="icon ${card.iconColor}">
+                <i class="fa-solid ${card.icon}"></i>
             </div>
 
-            <hr>
-
-            <div class="actions">
-
-                ${card.buttons.map(btn => `
-
-                    <button
-                        class="btn ${btn.class}">
-
-                        <i class="fa-solid ${btn.icon}"></i>
-                        ${btn.text}
-
-                    </button>
-
-                `).join("")}
-
+            <div>
+                <h3>${card.title}</h3>
+                <p>${card.description}</p>
             </div>
 
         </div>
 
-        `).join("");
+        <hr>
+
+        <div class="actions">
+
+            ${card.buttons.map(btn => `
+
+                <button
+                    class="btn ${btn.class}"
+                    onclick="${btn.action}()">
+
+                    <i class="fa-solid ${btn.icon}"></i>
+
+                    ${btn.text}
+
+                </button>
+
+            `).join("")}
+
+        </div>
+
+    </div>
+
+    `).join("");
+```
 
 }
 
+/* ==========================
+Placeholder Action Functions
+========================== */
+
+function addPerson() {
+console.log("Add Person");
+}
+
+function editPerson() {
+console.log("Edit Person");
+}
+
+function viewPersonList() {
+console.log("View Person List");
+}
+
+function addItem() {
+console.log("Add Item");
+}
+
+function editItem() {
+console.log("Edit Item");
+}
+
+function viewItemList() {
+console.log("View Item List");
+}
 
 /* ==========================
-   Initialize Dynamic Cards
+Initialize Dynamic Cards
 ========================== */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    renderSettingsCards
+"DOMContentLoaded",
+renderSettingsCards
 );
