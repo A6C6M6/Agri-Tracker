@@ -1,28 +1,31 @@
-/* app-config.js ൽ നിന്നുള്ള routes */
+/* ==========================================
+   ROUTES
+========================================== */
 
 const moduleRoutes =
-    window.APP_CONFIG?.MODULES || {
+window.APP_CONFIG?.MODULES || {
 
     dashboard: "dashboard.html",
     overview: "dashboard.html",
 
-   Entry: "Entry.html",
-   activities: "activities.html",
+    Entry: "Entry.html",
+    activities: "activities.html",
     reports: "reports.html",
+
     support: "",
     paymentHistory: "",
+
     print: "",
     downloadJson: "",
     exportData: "",
-    settings: "settings.html",
 
-
+    settings: "settings.html"
 };
 
 
-/* ----------------------------------
-   Central Navigation Function
----------------------------------- */
+/* ==========================================
+   CENTRAL NAVIGATION
+========================================== */
 
 function navigateTo(moduleName) {
 
@@ -45,17 +48,21 @@ function navigateTo(moduleName) {
 }
 
 
-/* ----------------------------------
-   Toast
----------------------------------- */
+/* ==========================================
+   TOAST
+========================================== */
 
 function showToast(message) {
 
     const container =
-        document.getElementById("toast-container");
+        document.getElementById(
+            "toast-container"
+        );
 
     if (!container) {
+
         alert(message);
+
         return;
     }
 
@@ -65,43 +72,83 @@ function showToast(message) {
     toast.className =
         "bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg toast";
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
-    container.appendChild(toast);
+    container.appendChild(
+        toast
+    );
 
     setTimeout(() => {
+
         toast.remove();
+
     }, 3000);
 }
 
 
-/* ----------------------------------
-   Navigation Items
----------------------------------- */
+/* ==========================================
+   NAVIGATION ITEMS
+========================================== */
 
 const navItems = [
 
-    { name: "📊 Overview", id: "overview", icon: "fa-chart-line" },
-    { name: "🌾 Entry", id: "Entry", icon: "fa-Entry" },
-    { name: "📅 Activities", id: "activities", icon: "fa-calendar" },
-    { name: "📑 Reports", id: "reports", icon: "fa-file-alt" },
-    { name: "🆘 Support", id: "support", icon: "fa-life-ring" },
-    { name: "💳 Payment History", id: "paymentHistory", icon: "fa-credit-card" },
-    { name: "⚙️ Settings", id: "settings", icon: "fa-cog" },
+    {
+        name: "📊 Overview",
+        id: "overview",
+        icon: "fa-chart-line"
+    },
 
-  
+    {
+        name: "🌾 Entry",
+        id: "Entry",
+        icon: "fa-seedling"
+    },
 
+    {
+        name: "📅 Activities",
+        id: "activities",
+        icon: "fa-calendar"
+    },
+
+    {
+        name: "📑 Reports",
+        id: "reports",
+        icon: "fa-file-alt"
+    },
+
+    {
+        name: "🆘 Support",
+        id: "support",
+        icon: "fa-life-ring"
+    },
+
+    {
+        name: "💳 Payment History",
+        id: "paymentHistory",
+        icon: "fa-credit-card"
+    },
+
+    {
+        name: "⚙️ Settings",
+        id: "settings",
+        icon: "fa-cog"
+    }
 ];
 
 
-/* ----------------------------------
-   Sidebar Menu Build
----------------------------------- */
+/* ==========================================
+   BUILD SIDEBAR MENU
+========================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
     const navMenu =
-        document.getElementById("nav-menu");
+        document.getElementById(
+            "nav-menu"
+        );
 
     if (!navMenu) {
         return;
@@ -115,12 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.href = "#";
 
         btn.innerHTML =
-            `<i class="fas ${item.icon} mr-3"></i> ${item.name}`;
+        `<i class="fas ${item.icon} mr-3"></i> ${item.name}`;
 
         btn.className =
-            "flex items-center p-3 rounded-lg cursor-pointer hover:bg-slate-100 mb-2";
+        "flex items-center p-3 rounded-lg cursor-pointer hover:bg-slate-100 mb-2";
 
-        btn.addEventListener("click", (e) => {
+        btn.addEventListener(
+            "click",
+            (e) => {
 
             e.preventDefault();
 
@@ -134,28 +183,50 @@ document.addEventListener("DOMContentLoaded", () => {
                 case "downloadJson":
 
                     const data = {
-                        app: "Agri Tracker",
-                        exportedAt: new Date().toISOString()
+
+                        app:
+                        "Agri Tracker",
+
+                        exportedAt:
+                        new Date()
+                        .toISOString()
                     };
 
-                    const blob = new Blob(
-                        [JSON.stringify(data, null, 2)],
+                    const blob =
+                    new Blob(
+                        [
+                            JSON.stringify(
+                                data,
+                                null,
+                                2
+                            )
+                        ],
                         {
-                            type: "application/json"
+                            type:
+                            "application/json"
                         }
                     );
 
                     const url =
-                        URL.createObjectURL(blob);
+                    URL.createObjectURL(
+                        blob
+                    );
 
                     const a =
-                        document.createElement("a");
+                    document.createElement(
+                        "a"
+                    );
 
                     a.href = url;
-                    a.download = "agri-tracker.json";
+
+                    a.download =
+                    "agri-tracker.json";
+
                     a.click();
 
-                    URL.revokeObjectURL(url);
+                    URL.revokeObjectURL(
+                        url
+                    );
 
                     return;
 
@@ -169,47 +240,105 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 default:
 
-                    navigateTo(item.id);
+                    navigateTo(
+                        item.id
+                    );
 
                     return;
             }
 
         });
 
-        navMenu.appendChild(btn);
+        navMenu.appendChild(
+            btn
+        );
 
     });
 
 });
 
 
-/* ----------------------------------
-   Logout
----------------------------------- */
+/* ==========================================
+   CALENDAR WIDGET
+========================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const logoutBtn =
-        document.getElementById("logout-btn");
+    const dateElement =
+        document.getElementById(
+            "current-date"
+        );
 
-    if (logoutBtn) {
+    const dayElement =
+        document.getElementById(
+            "current-day"
+        );
 
-        logoutBtn.addEventListener("click", () => {
-
-            window.location.href =
-                "logincard.html";
-
-        });
-
+    if (
+        !dateElement ||
+        !dayElement
+    ) {
+        return;
     }
+
+    const now =
+        new Date();
+
+    dateElement.textContent =
+        now.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+    dayElement.textContent =
+        now.toLocaleDateString(
+            "en-GB",
+            {
+                weekday: "long"
+            }
+        );
 
 });
 
 
+/* ==========================================
+   SIMPLE LOGOUT BUTTON
+========================================== */
 
-/* ==========================
-   Supabase Session Check
-========================== */
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+    const logoutBtn =
+        document.getElementById(
+            "logout-btn"
+        );
+
+    if (!logoutBtn) {
+        return;
+    }
+
+    logoutBtn.addEventListener(
+        "click",
+        () => {
+
+            logout();
+
+        }
+    );
+
+});
+
+
+/* ==========================================
+   SUPABASE SESSION CHECK
+========================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -220,7 +349,8 @@ document.addEventListener(
         const {
             data: { session }
         } =
-        await window.supabaseClient
+        await window
+        .supabaseClient
         .auth
         .getSession();
 
@@ -237,6 +367,94 @@ document.addEventListener(
             "Logged In User:",
             session.user.email
         );
+
+        /* ==========================
+           USER NAME
+        ========================== */
+
+        const userName =
+
+            session.user
+            ?.user_metadata
+            ?.full_name ||
+
+            session.user
+            ?.user_metadata
+            ?.name ||
+
+            session.user
+            ?.email ||
+
+            "Admin User";
+
+        const userNameElement =
+            document.getElementById(
+                "logged-user-name"
+            );
+
+        if (
+            userNameElement
+        ) {
+
+            userNameElement.textContent =
+                userName;
+        }
+
+        /* ==========================
+           USER AVATAR
+        ========================== */
+
+        const avatarElement =
+            document.getElementById(
+                "user-avatar"
+            );
+
+        if (
+            avatarElement
+        ) {
+
+            const avatarUrl =
+
+                session.user
+                ?.user_metadata
+                ?.avatar_url ||
+
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=ffffff&color=0d6efd`;
+
+            avatarElement.src =
+                avatarUrl;
+        }
+
+        /* ==========================
+           ONLINE STATUS
+        ========================== */
+
+        const statusText =
+            document.getElementById(
+                "user-status-text"
+            );
+
+        const statusContainer =
+            document.querySelector(
+                ".user-status"
+            );
+
+        if (
+            statusText &&
+            statusContainer
+        ) {
+
+            statusText.textContent =
+                "Online";
+
+            statusContainer.classList.remove(
+                "offline"
+            );
+
+            statusContainer.classList.add(
+                "online"
+            );
+        }
 
     }
     catch(error){
@@ -255,9 +473,9 @@ document.addEventListener(
 });
 
 
-/* ==========================
-   Logout Function
-========================== */
+/* ==========================================
+   LOGOUT FUNCTION
+========================================== */
 
 async function logout(){
 
@@ -283,56 +501,85 @@ async function logout(){
     );
 
 }
-/* ==========================
-   Sidebar Hover Active State
-========================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+
+/* ==========================================
+   SIDEBAR ACTIVE STATE
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
     const sidebarLinks =
-        document.querySelectorAll(".sidebar a");
+        document.querySelectorAll(
+            ".sidebar a"
+        );
 
-    let selectedLink = null;
+    let selectedLink =
+        null;
 
-    sidebarLinks.forEach(link => {
+    sidebarLinks.forEach(
+        link => {
 
-        /* Hover */
+        link.addEventListener(
+            "mouseenter",
+            () => {
 
-        link.addEventListener("mouseenter", () => {
+            sidebarLinks.forEach(
+                item => {
 
-            sidebarLinks.forEach(item => {
+                if (
+                    item !== selectedLink
+                ) {
 
-                if (item !== selectedLink) {
-                    item.classList.remove("active");
+                    item.classList.remove(
+                        "active"
+                    );
                 }
 
             });
 
-            link.classList.add("active");
+            link.classList.add(
+                "active"
+            );
 
         });
 
-        /* Mouse Leave */
+        link.addEventListener(
+            "mouseleave",
+            () => {
 
-        link.addEventListener("mouseleave", () => {
+            if (
+                link !== selectedLink
+            ) {
 
-            if (link !== selectedLink) {
-                link.classList.remove("active");
+                link.classList.remove(
+                    "active"
+                );
             }
 
         });
 
-        /* Click */
+        link.addEventListener(
+            "click",
+            () => {
 
-        link.addEventListener("click", () => {
+            sidebarLinks.forEach(
+                item => {
 
-            sidebarLinks.forEach(item => {
-                item.classList.remove("active");
+                item.classList.remove(
+                    "active"
+                );
+
             });
 
-            selectedLink = link;
+            selectedLink =
+                link;
 
-            link.classList.add("active");
+            link.classList.add(
+                "active"
+            );
 
         });
 
