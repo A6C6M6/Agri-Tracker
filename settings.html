@@ -1,61 +1,96 @@
-html
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
 <title>Application Settings</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<link rel="stylesheet"
-href="assets/css/settings.css">
+<link
+    rel="stylesheet"
+    href="assets/css/settings.css">
+
 
 </head>
 
 <body>
 
+
 <div class="wrapper">
 
-    <!-- Sidebar -->
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
     <aside class="sidebar">
 
         <div class="logo">
+
             <i class="fa-solid fa-seedling"></i>
-            <span>Agri-Tracker</span>
+
+            <span>
+                Agri-Tracker
+            </span>
+
         </div>
 
         <ul class="menu">
 
             <li>
+
                 <a href="dashboard.html">
+
                     <i class="fa-solid fa-house"></i>
-                    <span>Dashboard</span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
                 </a>
+
             </li>
 
         </ul>
 
     </aside>
 
-    <!-- Main Content -->
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
     <main class="main-content">
 
-        <!-- Topbar -->
+        <!-- =========================
+             TOPBAR
+        ========================== -->
+
         <header class="topbar">
 
             <div class="left">
 
                 <button id="toggleBtn">
+
                     <i class="fa-solid fa-bars"></i>
+
                 </button>
 
                 <h2>
+
                     <i class="fa-solid fa-gear"></i>
+
                     Application Settings
+
                 </h2>
 
             </div>
@@ -63,8 +98,13 @@ href="assets/css/settings.css">
             <div class="right">
 
                 <div class="notification">
+
                     <i class="fa-solid fa-bell"></i>
-                    <span>3</span>
+
+                    <span>
+                        3
+                    </span>
+
                 </div>
 
                 <button
@@ -72,6 +112,7 @@ href="assets/css/settings.css">
                     onclick="logout()">
 
                     <i class="fa-solid fa-right-from-bracket"></i>
+
                     Logout
 
                 </button>
@@ -80,260 +121,13 @@ href="assets/css/settings.css">
 
         </header>
 
-        <!-- Cards -->
-        <div class="card-grid">
-
-            <!-- Person Master -->
-            <div class="setting-card">
-
-                <div class="card-top">
-
-                    <div class="icon green">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-
-                    <div>
-                        <h3>Person Master</h3>
-                        <p>
-                            Add, edit and manage
-                            persons information
-                        </p>
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <div class="actions">
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i>
-                        Add Person
-                    </button>
-
-                    <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i>
-                        Edit Person
-                    </button>
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i>
-                        View List
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- Item Master -->
-            <div class="setting-card">
-
-                <div class="card-top">
-
-                    <div class="icon yellow">
-                        <i class="fa-solid fa-box"></i>
-                    </div>
-
-                    <div>
-                        <h3>Item Master</h3>
-                        <p>
-                            Add, edit and manage
-                            items information
-                        </p>
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <div class="actions">
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i>
-                        Add Item
-                    </button>
-
-                    <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i>
-                        Edit Item
-                    </button>
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i>
-                        View List
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- Village Master -->
-            <div class="setting-card">
-
-                <div class="card-top">
-
-                    <div class="icon blue">
-                        <i class="fa-solid fa-house"></i>
-                    </div>
-
-                    <div>
-                        <h3>Village Master</h3>
-                        <p>
-                            Add and manage village
-                            information
-                        </p>
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <div class="actions">
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i>
-                        Add Village
-                    </button>
-
-                    <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i>
-                        Edit Village
-                    </button>
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i>
-                        View List
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- Ward Master -->
-            <div class="setting-card">
-
-                <div class="card-top">
-
-                    <div class="icon purple">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </div>
-
-                    <div>
-                        <h3>Ward Master</h3>
-                        <p>
-                            Add and manage ward
-                            information
-                        </p>
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <div class="actions">
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i>
-                        Add Ward
-                    </button>
-
-                    <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i>
-                        Edit Ward
-                    </button>
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i>
-                        View List
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- Crop Master -->
-            <div class="setting-card">
-
-                <div class="card-top">
-
-                    <div class="icon green">
-                        <i class="fa-solid fa-seedling"></i>
-                    </div>
-
-                    <div>
-                        <h3>Crop Master</h3>
-                        <p>
-                            Add and manage crop
-                            information
-                        </p>
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <div class="actions">
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i>
-                        Add Crop
-                    </button>
-
-                    <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i>
-                        Edit Crop
-                    </button>
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i>
-                        View List
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- User Management -->
-            <div class="setting-card">
-
-                <div class="card-top">
-
-                    <div class="icon orange">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-
-                    <div>
-                        <h3>User Management</h3>
-                        <p>
-                            Add users and manage
-                            user accounts
-                        </p>
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <div class="actions">
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-plus"></i>
-                        Add User
-                    </button>
-
-                    <button class="btn blue-btn">
-                        <i class="fa-solid fa-pen"></i>
-                        Edit User
-                    </button>
-
-                    <button class="btn green-btn">
-                        <i class="fa-solid fa-list"></i>
-                        View List
-                    </button>
-
-                </div>
-
-            </div>
+        <!-- =========================
+             DYNAMIC SETTINGS CARDS
+        ========================== -->
+
+        <div
+            class="card-grid"
+            id="settingsCardContainer">
 
         </div>
 
@@ -341,11 +135,21 @@ href="assets/css/settings.css">
 
 </div>
 
-<!-- Supabase -->
+<!-- =========================
+     SUPABASE
+========================== -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="assets/js/supabase-config.js"></script>
+
+<!-- =========================
+     SETTINGS PAGE SCRIPT
+========================== -->
+
 <script src="assets/js/settings.js"></script>
 
-</body>
-</html>
 
+</body>
+
+</html>
