@@ -6,7 +6,7 @@ document.addEventListener(
 "DOMContentLoaded",
 () => {
 
-```
+
     const toggleBtn =
         document.getElementById(
             "toggleBtn"
@@ -36,7 +36,7 @@ document.addEventListener(
     }
 
 }
-```
+
 
 );
 
@@ -48,7 +48,7 @@ document.addEventListener(
 "DOMContentLoaded",
 async () => {
 
-```
+
     try {
 
         if (
@@ -94,7 +94,7 @@ async () => {
     }
 
 }
-```
+
 
 );
 
@@ -104,7 +104,7 @@ Logout Function
 
 async function logout() {
 
-```
+
 try {
 
     if (
@@ -131,7 +131,7 @@ catch (error) {
 window.location.replace(
     "logincard.html"
 );
-```
+
 
 }
 
@@ -143,7 +143,7 @@ document.addEventListener(
 "DOMContentLoaded",
 () => {
 
-```
+
     const logoutBtn =
         document.querySelector(
             ".logout-btn"
@@ -161,7 +161,7 @@ document.addEventListener(
     }
 
 }
-```
+
 
 );
 
@@ -173,7 +173,7 @@ document.addEventListener(
 "DOMContentLoaded",
 () => {
 
-```
+
     const dashboardLink =
         document.querySelector(
             '.menu a[href="dashboard.html"]'
@@ -190,7 +190,7 @@ document.addEventListener(
     }
 
 }
-```
+
 
 );
 
@@ -200,7 +200,7 @@ Dynamic Settings Cards
 
 const settingsCards = [
 
-```
+
 {
     iconColor: "green",
     icon: "fa-user",
@@ -266,7 +266,7 @@ const settingsCards = [
 
     ]
 }
-```
+
 
 ];
 
@@ -276,7 +276,7 @@ Render Settings Cards
 
 function renderSettingsCards() {
 
-```
+
 const container =
     document.getElementById(
         "settingsCardContainer"
@@ -325,7 +325,7 @@ container.innerHTML =
     </div>
 
     `).join("");
-```
+
 
 }
 
