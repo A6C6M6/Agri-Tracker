@@ -283,4 +283,59 @@ async function logout(){
     );
 
 }
+/* ==========================
+   Sidebar Hover Active State
+========================== */
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    const sidebarLinks =
+        document.querySelectorAll(".sidebar a");
+
+    let selectedLink = null;
+
+    sidebarLinks.forEach(link => {
+
+        /* Hover */
+
+        link.addEventListener("mouseenter", () => {
+
+            sidebarLinks.forEach(item => {
+
+                if (item !== selectedLink) {
+                    item.classList.remove("active");
+                }
+
+            });
+
+            link.classList.add("active");
+
+        });
+
+        /* Mouse Leave */
+
+        link.addEventListener("mouseleave", () => {
+
+            if (link !== selectedLink) {
+                link.classList.remove("active");
+            }
+
+        });
+
+        /* Click */
+
+        link.addEventListener("click", () => {
+
+            sidebarLinks.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            selectedLink = link;
+
+            link.classList.add("active");
+
+        });
+
+    });
+
+});
