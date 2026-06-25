@@ -190,39 +190,98 @@ body{
 }
 
 /* ==========================================
-   USER CARD
+   USER PROFILE CARD
 ========================================== */
 
 .sidebar-footer{
 
     margin-top:auto;
 
-    padding:20px;
+    padding:18px;
 }
 
 .user-card{
 
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    padding:20px;
+
+    text-align:center;
+
     background:
-    rgba(255,255,255,.08);
+    rgba(255,255,255,.10);
 
-    border-radius:22px;
+    backdrop-filter:blur(15px);
 
-    padding:16px;
+    -webkit-backdrop-filter:blur(15px);
 
-    display:flex;
+    border:
+    1px solid rgba(255,255,255,.18);
 
-    align-items:center;
+    box-shadow:
+    0 12px 30px rgba(0,0,0,.25);
 
-    gap:14px;
-
-    backdrop-filter:blur(10px);
+    transition:.35s ease;
 }
+
+.user-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(
+        circle at top left,
+        rgba(255,0,128,.35),
+        transparent 40%
+    ),
+
+    radial-gradient(
+        circle at top right,
+        rgba(0,255,255,.30),
+        transparent 40%
+    ),
+
+    radial-gradient(
+        circle at bottom center,
+        rgba(255,255,0,.18),
+        transparent 45%
+    );
+
+    z-index:0;
+}
+
+.user-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.28);
+}
+
+/* ==========================================
+   AVATAR
+========================================== */
 
 .user-avatar{
 
-    width:64px;
+    position:relative;
 
-    height:64px;
+    z-index:1;
+
+    width:90px;
+
+    height:90px;
+
+    margin:0 auto 15px;
 
     border-radius:50%;
 
@@ -230,7 +289,8 @@ body{
 
     background:#fff;
 
-    flex-shrink:0;
+    box-shadow:
+    0 10px 20px rgba(0,0,0,.20);
 }
 
 .user-avatar img{
@@ -242,27 +302,37 @@ body{
     object-fit:cover;
 }
 
+/* ==========================================
+   USER INFO
+========================================== */
+
 .user-info{
 
-    flex:1;
+    position:relative;
+
+    z-index:1;
 }
 
 .user-info h4{
 
-    font-size:16px;
-
     color:white;
 
-    margin-bottom:4px;
+    font-size:16px;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+
+    word-break:break-word;
 }
 
 .user-role{
 
-    font-size:13px;
+    color:rgba(255,255,255,.88);
 
-    color:#cbd5e1;
+    font-size:14px;
 
-    margin-bottom:8px;
+    margin-bottom:12px;
 }
 
 /* ==========================================
@@ -275,9 +345,11 @@ body{
 
     align-items:center;
 
+    justify-content:center;
+
     gap:8px;
 
-    font-size:13px;
+    font-size:14px;
 
     font-weight:600;
 }
@@ -299,16 +371,19 @@ body{
 .user-status.online .status-dot{
 
     background:#22c55e;
+
+    box-shadow:
+    0 0 10px #22c55e;
 }
 
 .user-status.offline{
 
-    color:#ef4444;
+    color:#d1d5db;
 }
 
 .user-status.offline .status-dot{
 
-    background:#ef4444;
+    background:#9ca3af;
 }
 
 /* ==========================================
@@ -343,12 +418,7 @@ body{
     padding:0 35px;
 
     box-shadow:
-    0 3px 15px rgba(
-        0,
-        0,
-        0,
-        .05
-    );
+    0 3px 15px rgba(0,0,0,.05);
 }
 
 .header-left{
@@ -441,11 +511,9 @@ body{
 
     padding:10px 22px;
 
-    border-left:
-        1px solid #e5e7eb;
+    border-left:1px solid #e5e7eb;
 
-    border-right:
-        1px solid #e5e7eb;
+    border-right:1px solid #e5e7eb;
 }
 
 .calendar-widget i{
@@ -492,7 +560,7 @@ body{
 
     padding:14px 28px;
 
-    border-radius:12px;
+    border-radius:14px;
 
     cursor:pointer;
 
@@ -514,12 +582,7 @@ body{
     transform:translateY(-2px);
 
     box-shadow:
-    0 8px 20px rgba(
-        255,
-        59,
-        48,
-        .30
-    );
+    0 8px 20px rgba(255,59,48,.30);
 }
 
 /* ==========================================
@@ -565,7 +628,7 @@ body{
 }
 
 /* ==========================================
-   CARDS
+   DASHBOARD CARDS
 ========================================== */
 
 .stats-grid{
@@ -593,15 +656,12 @@ body{
 
     transition:.3s;
 
-    border-top:
-    4px solid
-    var(--primary);
+    border-top:4px solid var(--primary);
 }
 
 .stat-card:hover{
 
-    transform:
-    translateY(-5px);
+    transform:translateY(-5px);
 }
 
 .stat-icon{
