@@ -40,7 +40,7 @@ document.addEventListener(
 
 
 /* ==========================
-   Supabase Session Check
+   Session Validation
 ========================== */
 
 document.addEventListener(
@@ -59,9 +59,9 @@ document.addEventListener(
                 data: { session }
             } =
             await window
-            .supabaseClient
-            .auth
-            .getSession();
+                .supabaseClient
+                .auth
+                .getSession();
 
             if (!session) {
 
@@ -108,9 +108,9 @@ async function logout() {
         ) {
 
             await window
-            .supabaseClient
-            .auth
-            .signOut();
+                .supabaseClient
+                .auth
+                .signOut();
 
         }
 
@@ -151,6 +151,33 @@ document.addEventListener(
             logoutBtn.addEventListener(
                 "click",
                 logout
+            );
+
+        }
+
+    }
+);
+
+
+/* ==========================
+   Dashboard Menu Highlight
+========================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const dashboardLink =
+            document.querySelector(
+                '.menu a[href="dashboard.html"]'
+            );
+
+        if (
+            dashboardLink
+        ) {
+
+            dashboardLink.classList.add(
+                "active-menu"
             );
 
         }
