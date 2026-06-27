@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================= */
 const entryCards = [
   {
-    id: "Workers",
+    id: "workers",
     iconColor: "green",
     icon: "fa-user",
     title: "Workers",
