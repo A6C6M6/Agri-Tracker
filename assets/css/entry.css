@@ -1,3 +1,4 @@
+css
 /* =========================
    RESET
 ========================= */
@@ -96,10 +97,6 @@ body{
 }
 
 .menu li a:hover{
-    background:#0d6efd;
-}
-
-.menu li a.active-menu{
     background:#0d6efd;
 }
 
@@ -205,7 +202,7 @@ body{
    CARD
 ========================= */
 
-.entry-card{
+.setting-card{
     background:#fff;
     border-radius:24px;
     padding:25px;
@@ -217,11 +214,11 @@ body{
     justify-content:space-between;
 }
 
-.entry-card:hover{
+.setting-card:hover{
     transform:translateY(-5px);
 }
 
-.entry-card hr{
+.setting-card hr{
     border:none;
     border-top:1px solid #e5e7eb;
     margin:20px 0;
@@ -307,7 +304,6 @@ body{
     font-weight:600;
     cursor:pointer;
     transition:.3s;
-    border:none;
 }
 
 .green-btn{
@@ -378,3 +374,4 @@ body{
         font-size:18px;
     }
 }
+
