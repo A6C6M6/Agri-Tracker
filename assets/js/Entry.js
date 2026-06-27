@@ -3,6 +3,7 @@
    - Preserves all existing business logic, APIs, DB behavior and navigation.
    - Renders dynamic cards: Workers, Farm Tasks, Fertilizers, Pesticides, Irrigation, Harvest, Sales, Drying, Equipment
    - Safe placeholders: if your real functions exist they will be used; otherwise placeholders prevent runtime errors.
+   - Complete integration: sidebar toggle, session validation, logout, menu highlighting.
 */
 
 /* -------------------------
@@ -158,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================
-   entryCards: requested new cards (keeps design & styles)
+   entryCards: Farm Entry cards with all operations
    Titles contain English + Malayalam where appropriate.
    Buttons use action names that map to existing functions (unchanged).
 ========================= */
@@ -325,5 +326,27 @@ document.addEventListener('DOMContentLoaded', () => {
     else console.warn(`No container found for entry cards. Add <div class="card-grid" id="${targetId}"></div> in Entry.html`);
   } else {
     console.warn('renderCards not available');
+  }
+});
+
+/* ==========================
+   When on Entry page: convert any "Entry" or "Settings" menu item to "Dashboard"
+   (so Entry/Settings link is not shown again; clicking goes to dashboard.html)
+   This preserves user flow as requested.
+========================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const entryLink = document.querySelector('.menu a[href="entry.html"]');
+  const settingsLink = document.querySelector('.menu a[href="settings.html"]');
+  
+  if (entryLink) {
+    entryLink.setAttribute('href', 'dashboard.html');
+    const span = entryLink.querySelector('span');
+    if (span) span.textContent = 'Dashboard';
+  }
+  
+  if (settingsLink) {
+    settingsLink.setAttribute('href', 'dashboard.html');
+    const span = settingsLink.querySelector('span');
+    if (span) span.textContent = 'Dashboard';
   }
 });
