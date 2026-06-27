@@ -1,5 +1,5 @@
-/* assets/js/activities.js
-   Single-file implementation for Activities page.
+/* assets/js/entry.js
+   Single-file implementation for entry page.
    - Reusable renderCards (only defines if window.renderCards not present)
    - Sidebar toggle, session validation, logout, menu highlight (unchanged behavior)
    - Dynamic activityCards array based on existing static HTML
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ==========================
    Dynamic Activity Cards (data)
-   - Based on the static cards in your activities.html
+   - Based on the static cards in your entry.html
    - To add/remove cards, edit this array only
    ========================== */
 const activityCards = [
@@ -327,14 +327,14 @@ window.viewUserList = window.viewUserList || function () { console.log("View Use
 
 /* ==========================
    Render on load
-   - Uses 'activitiesCardContainer' id if present, otherwise first .card-grid
+   - Uses 'entryCardContainer' id if present, otherwise first .card-grid
    ========================== */
 document.addEventListener('DOMContentLoaded', () => {
-  const targetId = 'activitiesCardContainer';
+  const targetId = 'entryCardContainer';
   if (typeof window.renderCards === 'function') {
     const container = document.getElementById(targetId) || document.querySelector('.card-grid');
     if (container) window.renderCards(targetId, activityCards);
-    else console.warn('No container found for activity cards. Add <div class="card-grid" id="activitiesCardContainer"></div>');
+    else console.warn('No container found for activity cards. Add <div class="card-grid" id="entryCardContainer"></div>');
   } else {
     console.warn('renderCards not available');
   }
