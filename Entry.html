@@ -1,154 +1,227 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+<title>Agri Tracker | Farm Entry</title>
 
-<title>Application Entry</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<link
-    rel="stylesheet"
-    href="assets/css/settings.css">
+<link rel="stylesheet"
+href="assets/css/dashboard.css">
 
 </head>
 
 <body>
 
-<div class="wrapper">
+<!-- ===================================
+SIDEBAR
+=================================== -->
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
+<aside class="sidebar">
 
-    <aside class="sidebar">
+    <div class="logo-section">
 
-        <div class="logo">
-
-            <i class="fa-solid fa-seedling"></i>
-
-            <span>
-                Agri-Tracker
-            </span>
-
+        <div class="logo-title">
+            🌿 Agri Tracker
         </div>
 
-        <ul class="menu">
+        <div class="logo-sub">
+            Smart Agriculture System
+        </div>
 
-            <li>
+    </div>
 
-                <a href="dashboard.html">
+    <ul>
 
-                    <i class="fa-solid fa-house"></i>
+        <li>
+            <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                Overview
+            </a>
+        </li>
 
-                    <span>
-                        Dashboard
-                    </span>
+        <li>
+            <a class="active" href="Entry.html">
+                <i class="fas fa-seedling"></i>
+                Entry
+            </a>
+        </li>
 
-                </a>
+        <li>
+            <a href="activities.html">
+                <i class="fas fa-calendar"></i>
+                Activities
+            </a>
+        </li>
 
-            </li>
+        <li>
+            <a href="reports.html">
+                <i class="fas fa-file-lines"></i>
+                Reports
+            </a>
+        </li>
 
-        </ul>
+        <li>
+            <a href="#">
+                <i class="fas fa-life-ring"></i>
+                Support
+            </a>
+        </li>
 
-    </aside>
+        <li>
+            <a href="#">
+                <i class="fas fa-credit-card"></i>
+                Payment History
+            </a>
+        </li>
 
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
+        <li>
+            <a href="settings.html">
+                <i class="fas fa-gear"></i>
+                Settings
+            </a>
+        </li>
 
-    <main class="main-content">
+    </ul>
 
-        <!-- =========================
-             TOPBAR
-        ========================== -->
+    <!-- USER PROFILE -->
 
-        <header class="topbar">
+    <div class="sidebar-footer">
 
-            <div class="left">
+        <div class="user-card">
 
-                <button id="toggleBtn">
+            <div class="user-avatar">
 
-                    <i class="fa-solid fa-bars"></i>
-
-                </button>
-
-                <h2>
-
-                    <i class="fa-solid fa-leaf"></i>
-
-                    Farm Entry
-
-                </h2>
+                <img
+                    id="user-avatar"
+                    src="https://ui-avatars.com/api/?name=Admin+User&background=ffffff&color=0d6efd"
+                    alt="User">
 
             </div>
 
-            <div class="right">
+            <div class="user-info">
 
-                <div class="notification">
+                <h4 id="logged-user-name">
+                    Admin User
+                </h4>
 
-                    <i class="fa-solid fa-bell"></i>
+                <p class="user-role">
+                    Administrator
+                </p>
 
-                    <span>
-                        3
+                <div class="user-status online">
+
+                    <span class="status-dot"></span>
+
+                    <span id="user-status-text">
+                        Online
                     </span>
 
                 </div>
 
-                <button
-                    class="logout-btn"
-                    onclick="logout()">
-
-                    <i class="fa-solid fa-right-from-bracket"></i>
-
-                    Logout
-
-                </button>
-
             </div>
-
-        </header>
-
-        <!-- =========================
-             DYNAMIC ENTRY CARDS
-        ========================== -->
-
-        <div
-            class="card-grid"
-            id="entryCardContainer">
 
         </div>
 
-    </main>
+    </div>
 
-</div>
+</aside>
 
-<!-- =========================
-     SUPABASE
-========================== -->
+<!-- ===================================
+MAIN CONTENT
+=================================== -->
+
+<main class="main-content">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="header-left">
+
+            <i class="fas fa-bars"></i>
+
+            <div class="page-title">
+                🌾 Farm Entry
+            </div>
+
+        </div>
+
+        <div class="header-right">
+
+            <!-- Notification -->
+
+            <div class="notification">
+
+                <i class="fas fa-bell"></i>
+
+                <span>3</span>
+
+            </div>
+
+            <!-- Calendar Widget -->
+
+            <div class="calendar-widget">
+
+                <i class="fas fa-calendar-alt"></i>
+
+                <div class="calendar-info">
+
+                    <span id="current-date">
+                        25 June 2026
+                    </span>
+
+                    <small id="current-day">
+                        Thursday
+                    </small>
+
+                </div>
+
+            </div>
+
+            <!-- Logout -->
+
+            <button
+                id="logout-btn"
+                class="logout-btn"
+                onclick="logout()">
+
+                <i class="fas fa-sign-out-alt"></i>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ENTRY CARDS GRID -->
+
+    <div class="dashboard-body">
+
+        <div class="card-grid" id="entryCardContainer">
+            <!-- Dynamic cards will render here -->
+        </div>
+
+    </div>
+
+</main>
+
+<!-- ===================================
+SUPABASE
+=================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="assets/js/supabase-config.js"></script>
 
-<!-- =========================
-     CARD RENDERER (reusable)
-========================== -->
-
-<script src="assets/js/card-template.js"></script>
-
-<!-- =========================
-     ENTRY PAGE SCRIPT
-========================== -->
+<script src="assets/js/dashboard.js"></script>
 
 <script src="assets/js/entry.js"></script>
 
