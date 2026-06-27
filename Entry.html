@@ -1,84 +1,157 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Application Settings</title>
+<meta charset="UTF-8">
 
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="assets/css/settings.css" />
+<title>Application Entry</title>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link
+    rel="stylesheet"
+    href="assets/css/settings.css">
+
 </head>
 
 <body>
 
-  <div class="wrapper">
+<div class="wrapper">
 
-    <!-- Sidebar -->
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
     <aside class="sidebar">
 
-      <div class="logo">
-        <i class="fa-solid fa-seedling"></i>
-        <span>Agri-Tracker</span>
-      </div>
+        <div class="logo">
 
-      <ul class="menu">
-        <li>
-          <a href="dashboard.html">
-            <i class="fa-solid fa-house"></i>
-            <span>Dashboard</span>
-          </a>
-        </li>
-      </ul>
+            <i class="fa-solid fa-seedling"></i>
 
-      <!-- optional footer / profile remains unchanged -->
+            <span>
+                Agri-Tracker
+            </span>
+
+        </div>
+
+        <ul class="menu">
+
+            <li>
+
+                <a href="dashboard.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
     </aside>
 
-    <!-- Main Content -->
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
     <main class="main-content">
 
-      <!-- Topbar -->
-      <header class="topbar">
-        <div class="left">
-          <button id="toggleBtn">
-            <i class="fa-solid fa-bars"></i>
-          </button>
+        <!-- =========================
+             TOPBAR
+        ========================== -->
 
-          <h2>
-            <i class="fa-solid fa-gear"></i>
-            Application Settings
-          </h2>
+        <header class="topbar">
+
+            <div class="left">
+
+                <button id="toggleBtn">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+                <h2>
+
+                    <i class="fa-solid fa-leaf"></i>
+
+                    Farm Entry
+
+                </h2>
+
+            </div>
+
+            <div class="right">
+
+                <div class="notification">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                    <span>
+                        3
+                    </span>
+
+                </div>
+
+                <button
+                    class="logout-btn"
+                    onclick="logout()">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- =========================
+             DYNAMIC ENTRY CARDS
+        ========================== -->
+
+        <div
+            class="card-grid"
+            id="entryCardContainer">
+
         </div>
-
-        <div class="right">
-          <div class="notification">
-            <i class="fa-solid fa-bell"></i>
-            <span>3</span>
-          </div>
-
-          <button class="logout-btn" onclick="logout()">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Logout
-          </button>
-        </div>
-      </header>
-
-      <!-- Cards: dynamic container (replaces previous static cards) -->
-      <div class="card-grid" id="entryCardContainer">
-        <!-- Dynamic cards will be rendered here by assets/js/entry.js -->
-      </div>
 
     </main>
-  </div>
 
-  <!-- SUPABASE (if used) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/js/supabase-config.js"></script>
+</div>
 
-  <!-- Entry page script (renders dynamic cards) -->
-  <script src="assets/js/entry.js"></script>
+<!-- =========================
+     SUPABASE
+========================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="assets/js/supabase-config.js"></script>
+
+<!-- =========================
+     CARD RENDERER (reusable)
+========================== -->
+
+<script src="assets/js/card-template.js"></script>
+
+<!-- =========================
+     ENTRY PAGE SCRIPT
+========================== -->
+
+<script src="assets/js/entry.js"></script>
+
 </body>
+
 </html>
