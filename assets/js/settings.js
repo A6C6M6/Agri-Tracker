@@ -111,10 +111,23 @@ const settingsCards = [
           { text: "Edit Item", icon: "fa-pen", class: "blue-btn", action: "editItem" },
           { text: "View List", icon: "fa-list", class: "green-btn", action: "viewItemList" }
       ]
+  };
+
+
+{
+    id: "reports",
+    iconColor: "purple",
+    icon: "fa-chart-line",
+    title: "Reports",
+    description: "Generate and download system reports",
+    buttons: [
+      { text: "Generate", icon: "fa-file-arrow-down", class: "green-btn", action: "generateReports" },
+      { text: "Schedule", icon: "fa-clock", class: "blue-btn", action: "scheduleReports" }
+    ]
+    // optional: href: "reports.html"
   }
 
 ];
-
 /* ==========================
 Render Settings Cards (uses renderCards from card-template.js)
 ========================= */
