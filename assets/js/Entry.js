@@ -211,10 +211,10 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================= */
 const entryCards = [
   {
-    id: "workers",
+    id: "person-master",
     iconColor: "green",
     icon: "fa-user",
-    title: "Workers",
+    title: "Person Master",
     description: "Add, edit and manage persons information",
     buttons: [
       { text: "Add Person", icon: "fa-plus", class: "green-btn", action: "addPerson" },
