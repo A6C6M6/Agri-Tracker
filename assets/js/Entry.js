@@ -1,15 +1,16 @@
-/* Entry page single-file JS
-   - Includes renderCards (reusable)
-   - Sidebar toggle, session validation, logout, menu highlight
-   - Dynamic cards data for Entry page and action bindings
-   - Safe placeholders that defer to existing global functions if present
+/* assets/js/entry.js
+   Replaces static Entry.html cards with dynamic cards:
+   Workers, Farm Tasks, Fertilizers, Pesticides, Irrigation, Harvest, Sales, Drying, Equipment
+   Preserves all existing business logic, API calls, session/logout, navigation, etc.
 */
 
 /* -------------------------
    Card renderer (reusable)
-   Exposes: window.renderCards(containerId, cards)
+   Defines window.renderCards only if not already defined
    ------------------------- */
 (function () {
+  if (typeof window.renderCards === 'function') return;
+
   function createEl(tag, className) {
     const e = document.createElement(tag);
     if (className) e.className = className;
@@ -19,6 +20,7 @@
   function buildCard(card, index) {
     const wrapper = createEl('div', 'setting-card');
     wrapper.setAttribute('data-card-index', index);
+    if (card.id) wrapper.setAttribute('data-card-id', card.id);
 
     // card-top
     const top = createEl('div', 'card-top');
@@ -55,8 +57,7 @@
           const bi = createEl('i', 'fa-solid ' + btn.icon);
           button.appendChild(bi);
         }
-        const txt = document.createTextNode(' ' + (btn.text || ''));
-        button.appendChild(txt);
+        button.appendChild(document.createTextNode(' ' + (btn.text || '')));
 
         // action binding:
         if (typeof btn.action === 'function') {
@@ -82,7 +83,7 @@
 
     wrapper.appendChild(actions);
 
-    // whole-card click support (href or onClick)
+    // optional whole-card click support
     if (card.onClick && typeof card.onClick === 'function') {
       wrapper.tabIndex = 0;
       wrapper.setAttribute('role', 'button');
@@ -114,22 +115,19 @@
       return;
     }
 
-    // Accept both id or fallback to first .card-grid
+    // find by id, otherwise fallback to first .card-grid (backwards compat)
     let container = document.getElementById(containerId);
+    if (!container) container = document.querySelector('.card-grid');
     if (!container) {
-      container = document.querySelector('.card-grid');
-      if (!container) {
-        console.warn(`renderCards: element with id "${containerId}" not found and no .card-grid present`);
-        return;
-      }
+      console.warn(`renderCards: container "${containerId}" not found and no .card-grid present.`);
+      return;
     }
 
     const list = Array.isArray(cards) ? cards : [];
-
     const frag = document.createDocumentFragment();
+
     list.forEach((card, idx) => {
-      const cardEl = buildCard(card, idx);
-      frag.appendChild(cardEl);
+      frag.appendChild(buildCard(card, idx));
     });
 
     container.innerHTML = '';
@@ -140,20 +138,23 @@
 })();
 
 /* ==========================
-   Sidebar Toggle
+   Sidebar Toggle (preserve existing behavior)
+   If you have other pages implementing a more advanced hide/restore,
+   this keeps the simple collapse behavior as before.
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
   const toggleBtn = document.getElementById("toggleBtn");
   const sidebar = document.querySelector(".sidebar");
-
   if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener("click", () => sidebar.classList.toggle("collapsed"));
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+    });
   }
 });
 
 /* ==========================
    Session Validation (Supabase)
-   (keeps same behavior)
+   Behavior unchanged
 ========================= */
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -174,8 +175,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 /* ==========================
-   Logout (keeps same behavior)
-   - Exposed as window.logout for onclick="logout()" in HTML
+   Logout (exposed globally)
 ========================= */
 window.logout = window.logout || (async function logout() {
   try {
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================
-   Dashboard Menu Highlight
+   Dashboard Menu Highlight (preserve)
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
   const dashboardLink = document.querySelector('.menu a[href="dashboard.html"]');
@@ -205,135 +205,185 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================
-   Entry Page Cards (dynamic)
-   - These reflect the static cards you had in Entry.html
-   - To add/remove cards, edit only this array or manage it remotely
+   Entry Page Cards (new requested cards)
+   Titles include English and Malayalam in parentheses as requested.
+   Buttons keep existing pattern (Add/Edit/View List) — action names are string names
+   so existing business logic functions (if present) will be called; otherwise placeholders exist below.
 ========================= */
 const entryCards = [
   {
-    id: "person-master",
-    iconColor: "green",
-    icon: "fa-user",
-    title: "Person Master",
-    description: "Add, edit and manage persons information",
+    id: "workers",
+    iconColor: "orange",
+    icon: "fa-people-group",
+    title: "Workers (തൊഴിലാളികൾ)",
+    description: "Details: name, phone, work days, wage, payment info",
     buttons: [
-      { text: "Add Person", icon: "fa-plus", class: "green-btn", action: "addPerson" },
-      { text: "Edit Person", icon: "fa-pen", class: "blue-btn", action: "editPerson" },
-      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewPersonList" }
+      { text: "Add Worker", icon: "fa-plus", class: "green-btn", action: "addWorker" },
+      { text: "Edit Worker", icon: "fa-pen", class: "blue-btn", action: "editWorker" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewWorkerList" }
     ]
   },
 
   {
-    id: "item-master",
-    iconColor: "yellow",
-    icon: "fa-box",
-    title: "Item Master",
-    description: "Add, edit and manage items information",
-    buttons: [
-      { text: "Add Item", icon: "fa-plus", class: "green-btn", action: "addItem" },
-      { text: "Edit Item", icon: "fa-pen", class: "blue-btn", action: "editItem" },
-      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewItemList" }
-    ]
-  },
-
-  {
-    id: "village-master",
+    id: "farm-tasks",
     iconColor: "blue",
-    icon: "fa-house",
-    title: "Village Master",
-    description: "Add and manage village information",
+    icon: "fa-tractor",
+    title: "Farm Tasks (കൃഷി ജോലികൾ)",
+    description: "Tasks: digging, ploughing, planting, cutting, etc.",
     buttons: [
-      { text: "Add Village", icon: "fa-plus", class: "green-btn", action: "addVillage" },
-      { text: "Edit Village", icon: "fa-pen", class: "blue-btn", action: "editVillage" },
-      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewVillageList" }
+      { text: "Add Task", icon: "fa-plus", class: "green-btn", action: "addFarmTask" },
+      { text: "Edit Task", icon: "fa-pen", class: "blue-btn", action: "editFarmTask" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewFarmTaskList" }
     ]
   },
 
   {
-    id: "ward-master",
-    iconColor: "purple",
-    icon: "fa-location-dot",
-    title: "Ward Master",
-    description: "Add and manage ward information",
-    buttons: [
-      { text: "Add Ward", icon: "fa-plus", class: "green-btn", action: "addWard" },
-      { text: "Edit Ward", icon: "fa-pen", class: "blue-btn", action: "editWard" },
-      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewWardList" }
-    ]
-  },
-
-  {
-    id: "crop-master",
+    id: "fertilizers",
     iconColor: "green",
     icon: "fa-seedling",
-    title: "Crop Master",
-    description: "Add and manage crop information",
+    title: "Fertilizers (വളങ്ങൾ)",
+    description: "Info: fertilizer name, quantity, used date, cost",
     buttons: [
-      { text: "Add Crop", icon: "fa-plus", class: "green-btn", action: "addCrop" },
-      { text: "Edit Crop", icon: "fa-pen", class: "blue-btn", action: "editCrop" },
-      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewCropList" }
+      { text: "Add Fertilizer", icon: "fa-plus", class: "green-btn", action: "addFertilizer" },
+      { text: "Edit Fertilizer", icon: "fa-pen", class: "blue-btn", action: "editFertilizer" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewFertilizerList" }
     ]
   },
 
   {
-    id: "user-management",
-    iconColor: "orange",
-    icon: "fa-users",
-    title: "User Management",
-    description: "Add users and manage user accounts",
+    id: "pesticides",
+    iconColor: "purple",
+    icon: "fa-bug",
+    title: "Pesticides (കീടനാശിനികൾ)",
+    description: "Info: pesticide name, dose, spray date",
     buttons: [
-      { text: "Add User", icon: "fa-plus", class: "green-btn", action: "addUser" },
-      { text: "Edit User", icon: "fa-pen", class: "blue-btn", action: "editUser" },
-      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewUserList" }
+      { text: "Add Pesticide", icon: "fa-plus", class: "green-btn", action: "addPesticide" },
+      { text: "Edit Pesticide", icon: "fa-pen", class: "blue-btn", action: "editPesticide" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewPesticideList" }
+    ]
+  },
+
+  {
+    id: "irrigation",
+    iconColor: "blue",
+    icon: "fa-water",
+    title: "Irrigation (ജലസേചനം)",
+    description: "Records: date, time, irrigation method",
+    buttons: [
+      { text: "Add Irrigation", icon: "fa-plus", class: "green-btn", action: "addIrrigation" },
+      { text: "Edit Irrigation", icon: "fa-pen", class: "blue-btn", action: "editIrrigation" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewIrrigationList" }
+    ]
+  },
+
+  {
+    id: "harvest",
+    iconColor: "green",
+    icon: "fa-wheat-awn",
+    title: "Harvest (വിളവെടുപ്പ്)",
+    description: "Details: crop name, weight, harvest date",
+    buttons: [
+      { text: "Add Harvest", icon: "fa-plus", class: "green-btn", action: "addHarvest" },
+      { text: "Edit Harvest", icon: "fa-pen", class: "blue-btn", action: "editHarvest" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewHarvestList" }
+    ]
+  },
+
+  {
+    id: "sales",
+    iconColor: "orange",
+    icon: "fa-hand-holding-dollar",
+    title: "Sales (വിൽപ്പന)",
+    description: "Sales: bananas, pepper, other produce — price, buyer info",
+    buttons: [
+      { text: "Add Sale", icon: "fa-plus", class: "green-btn", action: "addSale" },
+      { text: "Edit Sale", icon: "fa-pen", class: "blue-btn", action: "editSale" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewSaleList" }
+    ]
+  },
+
+  {
+    id: "drying",
+    iconColor: "yellow",
+    icon: "fa-sun",
+    title: "Drying (ഉണക്കൽ)",
+    description: "Drying: quantity sent, dry weight after, charges",
+    buttons: [
+      { text: "Add Drying", icon: "fa-plus", class: "green-btn", action: "addDrying" },
+      { text: "Edit Drying", icon: "fa-pen", class: "blue-btn", action: "editDrying" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewDryingList" }
+    ]
+  },
+
+  {
+    id: "equipment",
+    iconColor: "purple",
+    icon: "fa-wrench",
+    title: "Equipment (ഉപകരണങ്ങൾ)",
+    description: "Equipment: sprayers, pumps, machines — service info",
+    buttons: [
+      { text: "Add Equipment", icon: "fa-plus", class: "green-btn", action: "addEquipment" },
+      { text: "Edit Equipment", icon: "fa-pen", class: "blue-btn", action: "editEquipment" },
+      { text: "View List", icon: "fa-list", class: "green-btn", action: "viewEquipmentList" }
     ]
   }
 ];
 
 /* ==========================
-   Action functions
-   - If you already have implementations elsewhere (global), keep them.
-   - Otherwise these placeholders will be used (console.log), preventing errors.
-   - This preserves "business logic unchanged" because when a real implementation exists it will be used.
+   Action placeholders
+   - If your real implementations exist elsewhere (same names), they will be used.
+   - Otherwise these placeholders prevent runtime errors and log calls.
+   - This preserves business logic because existing functions are not changed.
 ========================= */
-window.addPerson = window.addPerson || function () { console.log("Add Person"); };
-window.editPerson = window.editPerson || function () { console.log("Edit Person"); };
-window.viewPersonList = window.viewPersonList || function () { console.log("View Person List"); };
+window.addWorker = window.addWorker || function () { console.log("addWorker"); };
+window.editWorker = window.editWorker || function () { console.log("editWorker"); };
+window.viewWorkerList = window.viewWorkerList || function () { console.log("viewWorkerList"); };
 
-window.addItem = window.addItem || function () { console.log("Add Item"); };
-window.editItem = window.editItem || function () { console.log("Edit Item"); };
-window.viewItemList = window.viewItemList || function () { console.log("View Item List"); };
+window.addFarmTask = window.addFarmTask || function () { console.log("addFarmTask"); };
+window.editFarmTask = window.editFarmTask || function () { console.log("editFarmTask"); };
+window.viewFarmTaskList = window.viewFarmTaskList || function () { console.log("viewFarmTaskList"); };
 
-window.addVillage = window.addVillage || function () { console.log("Add Village"); };
-window.editVillage = window.editVillage || function () { console.log("Edit Village"); };
-window.viewVillageList = window.viewVillageList || function () { console.log("View Village List"); };
+window.addFertilizer = window.addFertilizer || function () { console.log("addFertilizer"); };
+window.editFertilizer = window.editFertilizer || function () { console.log("editFertilizer"); };
+window.viewFertilizerList = window.viewFertilizerList || function () { console.log("viewFertilizerList"); };
 
-window.addWard = window.addWard || function () { console.log("Add Ward"); };
-window.editWard = window.editWard || function () { console.log("Edit Ward"); };
-window.viewWardList = window.viewWardList || function () { console.log("View Ward List"); };
+window.addPesticide = window.addPesticide || function () { console.log("addPesticide"); };
+window.editPesticide = window.editPesticide || function () { console.log("editPesticide"); };
+window.viewPesticideList = window.viewPesticideList || function () { console.log("viewPesticideList"); };
 
-window.addCrop = window.addCrop || function () { console.log("Add Crop"); };
-window.editCrop = window.editCrop || function () { console.log("Edit Crop"); };
-window.viewCropList = window.viewCropList || function () { console.log("View Crop List"); };
+window.addIrrigation = window.addIrrigation || function () { console.log("addIrrigation"); };
+window.editIrrigation = window.editIrrigation || function () { console.log("editIrrigation"); };
+window.viewIrrigationList = window.viewIrrigationList || function () { console.log("viewIrrigationList"); };
 
-window.addUser = window.addUser || function () { console.log("Add User"); };
-window.editUser = window.editUser || function () { console.log("Edit User"); };
-window.viewUserList = window.viewUserList || function () { console.log("View User List"); };
+window.addHarvest = window.addHarvest || function () { console.log("addHarvest"); };
+window.editHarvest = window.editHarvest || function () { console.log("editHarvest"); };
+window.viewHarvestList = window.viewHarvestList || function () { console.log("viewHarvestList"); };
+
+window.addSale = window.addSale || function () { console.log("addSale"); };
+window.editSale = window.editSale || function () { console.log("editSale"); };
+window.viewSaleList = window.viewSaleList || function () { console.log("viewSaleList"); };
+
+window.addDrying = window.addDrying || function () { console.log("addDrying"); };
+window.editDrying = window.editDrying || function () { console.log("editDrying"); };
+window.viewDryingList = window.viewDryingList || function () { console.log("viewDryingList"); };
+
+window.addEquipment = window.addEquipment || function () { console.log("addEquipment"); };
+window.editEquipment = window.editEquipment || function () { console.log("editEquipment"); };
+window.viewEquipmentList = window.viewEquipmentList || function () { console.log("viewEquipmentList"); };
 
 /* ==========================
    Render cards on load
-   - Attempts specific container id 'entryCardContainer'
-   - If not present, falls back to the first .card-grid (for backward compatibility)
+   - Target container id: 'entryCardContainer'
+   - If not present, will render into first .card-grid (backward compatibility)
 ========================= */
 document.addEventListener('DOMContentLoaded', () => {
   const targetId = 'entryCardContainer';
   if (typeof window.renderCards === 'function') {
-    // render into named container or fallback to .card-grid
     const container = document.getElementById(targetId) || document.querySelector('.card-grid');
     if (container) {
-      // if container exists but not with id, still pass the id (renderCards will fallback)
       window.renderCards(targetId, entryCards);
     } else {
-      console.warn('No container found for entry cards. Add <div class="card-grid" id="entryCardContainer"></div> to the HTML.');
+      console.warn(`No container present for entry cards. Add <div class="card-grid" id="${targetId}"></div> in Entry.html`);
     }
   } else {
     console.warn('renderCards not available');
