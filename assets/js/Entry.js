@@ -1,284 +1,245 @@
-/* assets/js/entry.js
-   Final single-file for Entry page.
-   - Preserves all existing business logic, APIs, DB behavior and navigation.
-   - Renders dynamic cards: Workers, Farm Tasks, Fertilizers, Pesticides, Irrigation, Harvest, Sales, Drying, Equipment
-   - Safe placeholders: if your real functions exist they will be used; otherwise placeholders prevent runtime errors.
-   - Complete integration: sidebar toggle, session validation, logout, menu highlighting.
-*/
+/* ==========================================
+   FARM ENTRY PAGE
+   - Renders dynamic entry cards: Workers, Farm Tasks, Fertilizers, etc.
+   - Preserves all business logic, API contracts, DB behavior
+   - Session validation, logout, sidebar toggle from dashboard.js
+   - Safe placeholders for action functions
+========================================== */
 
-/* -------------------------
-   renderCards (define only if not present)
-------------------------- */
-(function () {
-  if (typeof window.renderCards === 'function') return;
+/* ==========================================
+   CARD RENDERER FUNCTION
+========================================== */
 
-  function createEl(tag, className) {
-    const e = document.createElement(tag);
-    if (className) e.className = className;
-    return e;
-  }
-
-  function buildCard(card, index) {
-    const wrapper = createEl('div', 'setting-card');
-    wrapper.setAttribute('data-card-index', index);
-    if (card.id) wrapper.setAttribute('data-card-id', card.id);
-
-    // top
-    const top = createEl('div', 'card-top');
-    const iconDiv = createEl('div', 'icon ' + (card.iconColor || 'green'));
-    const iconI = createEl('i', 'fa-solid ' + (card.icon || 'fa-circle'));
-    iconDiv.appendChild(iconI);
-
-    const textWrap = document.createElement('div');
-    const h3 = createEl('h3'); h3.textContent = card.title || '';
-    const p = createEl('p'); p.textContent = card.description || '';
-
-    textWrap.appendChild(h3);
-    textWrap.appendChild(p);
-
-    top.appendChild(iconDiv);
-    top.appendChild(textWrap);
-    wrapper.appendChild(top);
-
-    // hr
-    wrapper.appendChild(document.createElement('hr'));
-
-    // actions
-    const actions = createEl('div', 'actions');
-    if (Array.isArray(card.buttons)) {
-      card.buttons.forEach((btn) => {
-        const button = createEl('button', 'btn ' + (btn.class || ''));
-        if (btn.icon) {
-          const bi = createEl('i', 'fa-solid ' + btn.icon);
-          button.appendChild(bi);
-        }
-        button.appendChild(document.createTextNode(' ' + (btn.text || '')));
-
-        // bind action: prefer function ref, then global name, then href
-        if (typeof btn.action === 'function') {
-          button.addEventListener('click', (ev) => { try { btn.action(ev, card); } catch (e) { console.error(e); } });
-        } else if (typeof btn.action === 'string' && typeof window[btn.action] === 'function') {
-          button.addEventListener('click', (ev) => { try { window[btn.action](ev, card); } catch (e) { console.error(e); } });
-        } else if (btn.href) {
-          button.addEventListener('click', () => { window.location.href = btn.href; });
-        } else {
-          button.addEventListener('click', (ev) => { console.warn('No action for button', btn, card); ev.preventDefault(); });
-        }
-
-        actions.appendChild(button);
-      });
-    }
-    wrapper.appendChild(actions);
-
-    // optional whole-card click
-    if (card.onClick && typeof card.onClick === 'function') {
-      wrapper.tabIndex = 0;
-      wrapper.setAttribute('role', 'button');
-      wrapper.addEventListener('click', (ev) => card.onClick(ev, card));
-      wrapper.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); card.onClick(ev, card); }
-      });
-    } else if (card.href) {
-      wrapper.style.cursor = 'pointer';
-      wrapper.tabIndex = 0;
-      wrapper.addEventListener('click', () => { window.location.href = card.href; });
-      wrapper.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); window.location.href = card.href; }
-      });
+function renderEntryCards() {
+    const container = document.getElementById('entryCardContainer');
+    
+    if (!container) {
+        console.warn('Entry cards container not found');
+        return;
     }
 
-    return wrapper;
-  }
+    const entryCards = [
+        {
+            id: 'workers',
+            iconColor: 'orange',
+            icon: 'fa-people-group',
+            title: 'Workers (തൊഴിലാളികൾ)',
+            description: 'Fields: name, phone, work days, wage, payment info',
+            buttons: [
+                { text: 'Add Worker', icon: 'fa-plus', class: 'btn-success', action: 'addWorker' },
+                { text: 'Edit Worker', icon: 'fa-pen', class: 'btn-primary', action: 'editWorker' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewWorkerList' }
+            ]
+        },
+        {
+            id: 'farm-tasks',
+            iconColor: 'blue',
+            icon: 'fa-tractor',
+            title: 'Farm Tasks (കൃഷി ജോലികൾ)',
+            description: 'Tasks: digging, ploughing, planting, cutting, etc.',
+            buttons: [
+                { text: 'Add Task', icon: 'fa-plus', class: 'btn-success', action: 'addFarmTask' },
+                { text: 'Edit Task', icon: 'fa-pen', class: 'btn-primary', action: 'editFarmTask' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewFarmTaskList' }
+            ]
+        },
+        {
+            id: 'fertilizers',
+            iconColor: 'green',
+            icon: 'fa-seedling',
+            title: 'Fertilizers (വളങ്ങൾ)',
+            description: 'Info: fertilizer name, quantity, used date, cost',
+            buttons: [
+                { text: 'Add Fertilizer', icon: 'fa-plus', class: 'btn-success', action: 'addFertilizer' },
+                { text: 'Edit Fertilizer', icon: 'fa-pen', class: 'btn-primary', action: 'editFertilizer' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewFertilizerList' }
+            ]
+        },
+        {
+            id: 'pesticides',
+            iconColor: 'purple',
+            icon: 'fa-bug',
+            title: 'Pesticides (കീടനാശിനികൾ)',
+            description: 'Info: pesticide name, dose, spray date',
+            buttons: [
+                { text: 'Add Pesticide', icon: 'fa-plus', class: 'btn-success', action: 'addPesticide' },
+                { text: 'Edit Pesticide', icon: 'fa-pen', class: 'btn-primary', action: 'editPesticide' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewPesticideList' }
+            ]
+        },
+        {
+            id: 'irrigation',
+            iconColor: 'blue',
+            icon: 'fa-water',
+            title: 'Irrigation (ജലസേചനം)',
+            description: 'Records: date, time, irrigation method',
+            buttons: [
+                { text: 'Add Irrigation', icon: 'fa-plus', class: 'btn-success', action: 'addIrrigation' },
+                { text: 'Edit Irrigation', icon: 'fa-pen', class: 'btn-primary', action: 'editIrrigation' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewIrrigationList' }
+            ]
+        },
+        {
+            id: 'harvest',
+            iconColor: 'green',
+            icon: 'fa-wheat-awn',
+            title: 'Harvest (വിളവെടുപ്പ്)',
+            description: 'Details: crop name, weight, harvest date',
+            buttons: [
+                { text: 'Add Harvest', icon: 'fa-plus', class: 'btn-success', action: 'addHarvest' },
+                { text: 'Edit Harvest', icon: 'fa-pen', class: 'btn-primary', action: 'editHarvest' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewHarvestList' }
+            ]
+        },
+        {
+            id: 'sales',
+            iconColor: 'orange',
+            icon: 'fa-hand-holding-dollar',
+            title: 'Sales (വിൽപ്പന)',
+            description: 'Sales: bananas, pepper, other produce — price, buyer info',
+            buttons: [
+                { text: 'Add Sale', icon: 'fa-plus', class: 'btn-success', action: 'addSale' },
+                { text: 'Edit Sale', icon: 'fa-pen', class: 'btn-primary', action: 'editSale' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewSaleList' }
+            ]
+        },
+        {
+            id: 'drying',
+            iconColor: 'yellow',
+            icon: 'fa-sun',
+            title: 'Drying (ഉണക്കൽ)',
+            description: 'Drying: quantity sent, dry weight after, charges',
+            buttons: [
+                { text: 'Add Drying', icon: 'fa-plus', class: 'btn-success', action: 'addDrying' },
+                { text: 'Edit Drying', icon: 'fa-pen', class: 'btn-primary', action: 'editDrying' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewDryingList' }
+            ]
+        },
+        {
+            id: 'equipment',
+            iconColor: 'purple',
+            icon: 'fa-wrench',
+            title: 'Equipment (ഉപകരണങ്ങൾ)',
+            description: 'Equipment: sprayers, pumps, machines — service info',
+            buttons: [
+                { text: 'Add Equipment', icon: 'fa-plus', class: 'btn-success', action: 'addEquipment' },
+                { text: 'Edit Equipment', icon: 'fa-pen', class: 'btn-primary', action: 'editEquipment' },
+                { text: 'View List', icon: 'fa-list', class: 'btn-info', action: 'viewEquipmentList' }
+            ]
+        }
+    ];
 
-  function renderCards(containerId, cards) {
-    if (!containerId) { console.warn('renderCards: missing containerId'); return; }
-    let container = document.getElementById(containerId);
-    if (!container) container = document.querySelector('.card-grid');
-    if (!container) { console.warn(`renderCards: container "${containerId}" not found and no .card-grid present.`); return; }
-
-    const list = Array.isArray(cards) ? cards : [];
-    const frag = document.createDocumentFragment();
-    list.forEach((card, idx) => frag.appendChild(buildCard(card, idx)));
+    // Clear container
     container.innerHTML = '';
-    container.appendChild(frag);
-  }
 
-  window.renderCards = renderCards;
-})();
+    // Render each card
+    entryCards.forEach((card) => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'stat-card entry-card';
+        cardEl.setAttribute('data-card-id', card.id);
 
-/* ==========================
-   Sidebar Toggle (simple collapse) — UI only
-   Preserves existing behavior; doesn't touch business logic.
-========================= */
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.getElementById('toggleBtn');
-  const sidebar = document.querySelector('.sidebar');
-  if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
-  }
-});
+        // Card header
+        const header = document.createElement('div');
+        header.style.display = 'flex';
+        header.style.alignItems = 'center';
+        header.style.gap = '15px';
+        header.style.marginBottom = '15px';
 
-/* ==========================
-   Session Validation (Supabase) — unchanged behavior
-========================= */
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    if (!window.supabaseClient) return;
-    const { data: { session } } = await window.supabaseClient.auth.getSession();
-    if (!session) { window.location.replace('logincard.html'); return; }
-    console.log('Logged In User:', session.user.email);
-  } catch (error) {
-    console.error('Session Error:', error);
-    window.location.replace('logincard.html');
-  }
-});
+        // Icon
+        const iconDiv = document.createElement('div');
+        iconDiv.className = `stat-icon icon-${card.iconColor}`;
+        iconDiv.innerHTML = `<i class="fas ${card.icon}"></i>`;
 
-/* ==========================
-   Logout (exposed but not overwritten if exists)
-========================= */
-window.logout = window.logout || (async function logout() {
-  try { if (window.supabaseClient) await window.supabaseClient.auth.signOut(); }
-  catch (error) { console.error('Logout Error:', error); }
-  window.location.replace('logincard.html');
-});
+        // Title & Description
+        const textDiv = document.createElement('div');
+        textDiv.style.flex = '1';
 
-/* ==========================
-   Logout button binding
-========================= */
-document.addEventListener('DOMContentLoaded', () => {
-  const logoutBtn = document.querySelector('.logout-btn');
-  if (logoutBtn) logoutBtn.addEventListener('click', window.logout);
-});
+        const title = document.createElement('h4');
+        title.textContent = card.title;
+        title.style.margin = '0 0 5px 0';
 
-/* ==========================
-   Dashboard menu highlight (no changes)
-========================= */
-document.addEventListener('DOMContentLoaded', () => {
-  const dashboardLink = document.querySelector('.menu a[href="dashboard.html"]');
-  if (dashboardLink) dashboardLink.classList.add('active-menu');
-});
+        const desc = document.createElement('p');
+        desc.textContent = card.description;
+        desc.style.margin = '0';
+        desc.style.fontSize = '12px';
+        desc.style.color = '#666';
 
-/* ==========================
-   entryCards: Farm Entry cards with all operations
-   Titles contain English + Malayalam where appropriate.
-   Buttons use action names that map to existing functions (unchanged).
-========================= */
-const entryCards = [
-  {
-    id: 'workers',
-    iconColor: 'orange',
-    icon: 'fa-people-group',
-    title: 'Workers (തൊഴിലാളികൾ)',
-    description: 'Fields: name, phone, work days, wage, payment info',
-    buttons: [
-      { text: 'Add Worker', icon: 'fa-plus', class: 'green-btn', action: 'addWorker' },
-      { text: 'Edit Worker', icon: 'fa-pen', class: 'blue-btn', action: 'editWorker' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewWorkerList' }
-    ]
-  },
-  {
-    id: 'farm-tasks',
-    iconColor: 'blue',
-    icon: 'fa-tractor',
-    title: 'Farm Tasks (കൃഷി ജോലികൾ)',
-    description: 'Tasks: digging, ploughing, planting, cutting, etc.',
-    buttons: [
-      { text: 'Add Task', icon: 'fa-plus', class: 'green-btn', action: 'addFarmTask' },
-      { text: 'Edit Task', icon: 'fa-pen', class: 'blue-btn', action: 'editFarmTask' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewFarmTaskList' }
-    ]
-  },
-  {
-    id: 'fertilizers',
-    iconColor: 'green',
-    icon: 'fa-seedling',
-    title: 'Fertilizers (വളങ്ങൾ)',
-    description: 'Info: fertilizer name, quantity, used date, cost',
-    buttons: [
-      { text: 'Add Fertilizer', icon: 'fa-plus', class: 'green-btn', action: 'addFertilizer' },
-      { text: 'Edit Fertilizer', icon: 'fa-pen', class: 'blue-btn', action: 'editFertilizer' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewFertilizerList' }
-    ]
-  },
-  {
-    id: 'pesticides',
-    iconColor: 'purple',
-    icon: 'fa-bug',
-    title: 'Pesticides (കീടനാശിനികൾ)',
-    description: 'Info: pesticide name, dose, spray date',
-    buttons: [
-      { text: 'Add Pesticide', icon: 'fa-plus', class: 'green-btn', action: 'addPesticide' },
-      { text: 'Edit Pesticide', icon: 'fa-pen', class: 'blue-btn', action: 'editPesticide' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewPesticideList' }
-    ]
-  },
-  {
-    id: 'irrigation',
-    iconColor: 'blue',
-    icon: 'fa-water',
-    title: 'Irrigation (ജലസേചനം)',
-    description: 'Records: date, time, irrigation method',
-    buttons: [
-      { text: 'Add Irrigation', icon: 'fa-plus', class: 'green-btn', action: 'addIrrigation' },
-      { text: 'Edit Irrigation', icon: 'fa-pen', class: 'blue-btn', action: 'editIrrigation' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewIrrigationList' }
-    ]
-  },
-  {
-    id: 'harvest',
-    iconColor: 'green',
-    icon: 'fa-wheat-awn',
-    title: 'Harvest (വിളവെടുപ്പ്)',
-    description: 'Details: crop name, weight, harvest date',
-    buttons: [
-      { text: 'Add Harvest', icon: 'fa-plus', class: 'green-btn', action: 'addHarvest' },
-      { text: 'Edit Harvest', icon: 'fa-pen', class: 'blue-btn', action: 'editHarvest' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewHarvestList' }
-    ]
-  },
-  {
-    id: 'sales',
-    iconColor: 'orange',
-    icon: 'fa-hand-holding-dollar',
-    title: 'Sales (വിൽപ്പന)',
-    description: 'Sales: bananas, pepper, other produce — price, buyer info',
-    buttons: [
-      { text: 'Add Sale', icon: 'fa-plus', class: 'green-btn', action: 'addSale' },
-      { text: 'Edit Sale', icon: 'fa-pen', class: 'blue-btn', action: 'editSale' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewSaleList' }
-    ]
-  },
-  {
-    id: 'drying',
-    iconColor: 'yellow',
-    icon: 'fa-sun',
-    title: 'Drying (ഉണക്കൽ)',
-    description: 'Drying: quantity sent, dry weight after, charges',
-    buttons: [
-      { text: 'Add Drying', icon: 'fa-plus', class: 'green-btn', action: 'addDrying' },
-      { text: 'Edit Drying', icon: 'fa-pen', class: 'blue-btn', action: 'editDrying' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewDryingList' }
-    ]
-  },
-  {
-    id: 'equipment',
-    iconColor: 'purple',
-    icon: 'fa-wrench',
-    title: 'Equipment (ഉപകരണങ്ങൾ)',
-    description: 'Equipment: sprayers, pumps, machines — service info',
-    buttons: [
-      { text: 'Add Equipment', icon: 'fa-plus', class: 'green-btn', action: 'addEquipment' },
-      { text: 'Edit Equipment', icon: 'fa-pen', class: 'blue-btn', action: 'editEquipment' },
-      { text: 'View List', icon: 'fa-list', class: 'green-btn', action: 'viewEquipmentList' }
-    ]
-  }
-];
+        textDiv.appendChild(title);
+        textDiv.appendChild(desc);
 
-/* ==========================
-   Action placeholders (do not override real implementations)
-   If your app already defines these functions globally, those will be used.
-   Otherwise we provide safe console.log placeholders.
-========================= */
+        header.appendChild(iconDiv);
+        header.appendChild(textDiv);
+        cardEl.appendChild(header);
+
+        // Divider
+        const hr = document.createElement('hr');
+        hr.style.margin = '15px 0';
+        hr.style.border = 'none';
+        hr.style.borderTop = '1px solid #e0e0e0';
+        cardEl.appendChild(hr);
+
+        // Buttons
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.style.display = 'flex';
+        buttonsDiv.style.gap = '8px';
+        buttonsDiv.style.flexWrap = 'wrap';
+
+        card.buttons.forEach((btn) => {
+            const button = document.createElement('button');
+            button.className = `btn ${btn.class}`;
+            button.innerHTML = `<i class="fas ${btn.icon}"></i> ${btn.text}`;
+            button.style.flex = '1';
+            button.style.minWidth = '80px';
+            button.style.padding = '8px 12px';
+            button.style.fontSize = '12px';
+            button.style.border = 'none';
+            button.style.borderRadius = '6px';
+            button.style.cursor = 'pointer';
+            button.style.transition = 'transform 200ms, box-shadow 200ms';
+
+            // Apply class-based styles
+            if (btn.class === 'btn-success') {
+                button.style.background = '#10b981';
+                button.style.color = 'white';
+            } else if (btn.class === 'btn-primary') {
+                button.style.background = '#3b82f6';
+                button.style.color = 'white';
+            } else if (btn.class === 'btn-info') {
+                button.style.background = '#0ea5e9';
+                button.style.color = 'white';
+            }
+
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'translateY(-2px)';
+                button.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            });
+
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0)';
+                button.style.boxShadow = 'none';
+            });
+
+            button.addEventListener('click', () => {
+                if (typeof window[btn.action] === 'function') {
+                    window[btn.action]();
+                } else {
+                    console.log(`Action: ${btn.action}`);
+                }
+            });
+
+            buttonsDiv.appendChild(button);
+        });
+
+        cardEl.appendChild(buttonsDiv);
+        container.appendChild(cardEl);
+    });
+}
+
+/* ==========================================
+   ACTION PLACEHOLDER FUNCTIONS
+   - Safe: only define if not already present
+========================================== */
+
 window.addWorker = window.addWorker || function () { console.log('addWorker'); };
 window.editWorker = window.editWorker || function () { console.log('editWorker'); };
 window.viewWorkerList = window.viewWorkerList || function () { console.log('viewWorkerList'); };
@@ -315,38 +276,10 @@ window.addEquipment = window.addEquipment || function () { console.log('addEquip
 window.editEquipment = window.editEquipment || function () { console.log('editEquipment'); };
 window.viewEquipmentList = window.viewEquipmentList || function () { console.log('viewEquipmentList'); };
 
-/* ==========================
-   Render on DOMContentLoaded
-========================= */
-document.addEventListener('DOMContentLoaded', () => {
-  const targetId = 'entryCardContainer';
-  if (typeof window.renderCards === 'function') {
-    const container = document.getElementById(targetId) || document.querySelector('.card-grid');
-    if (container) window.renderCards(targetId, entryCards);
-    else console.warn(`No container found for entry cards. Add <div class="card-grid" id="${targetId}"></div> in Entry.html`);
-  } else {
-    console.warn('renderCards not available');
-  }
-});
+/* ==========================================
+   INITIALIZE ON PAGE LOAD
+========================================== */
 
-/* ==========================
-   When on Entry page: convert any "Entry" or "Settings" menu item to "Dashboard"
-   (so Entry/Settings link is not shown again; clicking goes to dashboard.html)
-   This preserves user flow as requested.
-========================= */
 document.addEventListener('DOMContentLoaded', () => {
-  const entryLink = document.querySelector('.menu a[href="entry.html"]');
-  const settingsLink = document.querySelector('.menu a[href="settings.html"]');
-  
-  if (entryLink) {
-    entryLink.setAttribute('href', 'dashboard.html');
-    const span = entryLink.querySelector('span');
-    if (span) span.textContent = 'Dashboard';
-  }
-  
-  if (settingsLink) {
-    settingsLink.setAttribute('href', 'dashboard.html');
-    const span = settingsLink.querySelector('span');
-    if (span) span.textContent = 'Dashboard';
-  }
+    renderEntryCards();
 });
