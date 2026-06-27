@@ -7,7 +7,7 @@ window.APP_CONFIG = {
         dashboard: "dashboard.html",
         
         overview: "dashboard.html",
-        Entry: "Entry.html",
+        Entry: "entry.html",
         activities: "activities.html",
         reports: "reports.html",
         support: "support.html",
