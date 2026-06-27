@@ -2,98 +2,83 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Application Settings</title>
+  <title>Application Settings</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-<link rel="stylesheet"
-href="assets/css/settings.css">
-
+  <link rel="stylesheet" href="assets/css/settings.css" />
 </head>
 
 <body>
 
-<div class="wrapper">
+  <div class="wrapper">
 
     <!-- Sidebar -->
     <aside class="sidebar">
 
-        <div class="logo">
-            <i class="fa-solid fa-seedling"></i>
-            <span>Agri-Tracker</span>
-        </div>
+      <div class="logo">
+        <i class="fa-solid fa-seedling"></i>
+        <span>Agri-Tracker</span>
+      </div>
 
-        <ul class="menu">
+      <ul class="menu">
+        <li>
+          <a href="dashboard.html">
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+      </ul>
 
-            <li>
-                <a href="dashboard.html">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-
-        </ul>
-
+      <!-- optional footer / profile remains unchanged -->
     </aside>
 
     <!-- Main Content -->
     <main class="main-content">
 
-        <!-- Topbar -->
-        <header class="topbar">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="left">
+          <button id="toggleBtn">
+            <i class="fa-solid fa-bars"></i>
+          </button>
 
-            <div class="left">
-
-                <button id="toggleBtn">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-
-                <h2>
-                    <i class="fa-solid fa-gear"></i>
-                    Application Settings
-                </h2>
-
-            </div>
-
-            <div class="right">
-
-                <div class="notification">
-                    <i class="fa-solid fa-bell"></i>
-                    <span>3</span>
-                </div>
-
-                <button
-                    class="logout-btn"
-                    onclick="logout()">
-
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Logout
-
-                </button>
-
-            </div>
-
-        </header>
-
-        <!-- Cards: replaced static cards with single dynamic container -->
-        <div class="card-grid" id="entryCardContainer">
-            <!-- Dynamic cards will be rendered here by assets/js/entry.js -->
+          <h2>
+            <i class="fa-solid fa-gear"></i>
+            Application Settings
+          </h2>
         </div>
 
+        <div class="right">
+          <div class="notification">
+            <i class="fa-solid fa-bell"></i>
+            <span>3</span>
+          </div>
+
+          <button class="logout-btn" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+          </button>
+        </div>
+      </header>
+
+      <!-- Cards: dynamic container (replaces previous static cards) -->
+      <div class="card-grid" id="entryCardContainer">
+        <!-- Dynamic cards will be rendered here by assets/js/entry.js -->
+      </div>
+
     </main>
+  </div>
 
-</div>
+  <!-- SUPABASE (if used) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
 
-<!-- Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/js/supabase-config.js"></script>
-
-<!-- Entry page script (renders the dynamic cards) -->
-<script src="assets/js/entry.js"></script>
-
+  <!-- Entry page script (renders dynamic cards) -->
+  <script src="assets/js/entry.js"></script>
 </body>
 </html>
