@@ -73,83 +73,75 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================
-Entry Menu Highlight
+Dashboard Menu Highlight
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-    const entryLink = document.querySelector('.menu a[href="entry.html"]');
-    if (entryLink) {
-        entryLink.classList.add("active-menu");
+    const dashboardLink = document.querySelector('.menu a[href="dashboard.html"]');
+    if (dashboardLink) {
+        dashboardLink.classList.add("active-menu");
     }
 });
 
 /* ==========================
-Dynamic Entry Cards (data)
+Dynamic Settings Cards (data)
 ========================= */
 
-const entryCards = [
+const settingsCards = [
 
   {
       iconColor: "green",
-      icon: "fa-leaf",
-      title: "Crop Entry",
-      description: "Record and manage crop planting and growth data",
+      icon: "fa-user",
+      title: "Person Master",
+      description: "Add, edit and manage persons information",
       buttons: [
-          { text: "New Entry", icon: "fa-plus", class: "green-btn", action: "newCropEntry" },
-          { text: "Edit Entry", icon: "fa-pen", class: "blue-btn", action: "editCropEntry" },
-          { text: "View List", icon: "fa-list", class: "green-btn", action: "viewCropList" }
+          { text: "Add Person", icon: "fa-plus", class: "green-btn", action: "addPerson" },
+          { text: "Edit Person", icon: "fa-pen", class: "blue-btn", action: "editPerson" },
+          { text: "View List", icon: "fa-list", class: "green-btn", action: "viewPersonList" }
       ]
   },
 
   {
       iconColor: "yellow",
-      icon: "fa-cloud",
-      title: "Weather Data",
-      description: "Log weather conditions and climate information",
+      icon: "fa-box",
+      title: "Item Master",
+      description: "Add, edit and manage items information",
       buttons: [
-          { text: "Add Data", icon: "fa-plus", class: "green-btn", action: "addWeatherData" },
-          { text: "View History", icon: "fa-history", class: "blue-btn", action: "viewWeatherHistory" }
+          { text: "Add Item", icon: "fa-plus", class: "green-btn", action: "addItem" },
+          { text: "Edit Item", icon: "fa-pen", class: "blue-btn", action: "editItem" },
+          { text: "View List", icon: "fa-list", class: "green-btn", action: "viewItemList" }
       ]
   },
 
   {
+    id: "reports",
     iconColor: "purple",
-    icon: "fa-flask",
-    title: "Soil Entry",
-    description: "Record soil quality and nutrient analysis data",
+    icon: "fa-chart-line",
+    title: "Reports",
+    description: "Generate and download system reports",
     buttons: [
-      { text: "New Sample", icon: "fa-plus", class: "green-btn", action: "newSoilSample" },
-      { text: "View Report", icon: "fa-file-alt", class: "blue-btn", action: "viewSoilReport" }
+      { text: "Generate", icon: "fa-file-arrow-down", class: "green-btn", action: "generateReports" },
+      { text: "Schedule", icon: "fa-clock", class: "blue-btn", action: "scheduleReports" }
     ]
-  },
-
-  {
-    iconColor: "orange",
-    icon: "fa-droplet",
-    title: "Irrigation",
-    description: "Track irrigation schedules and water usage",
-    buttons: [
-      { text: "Log Irrigation", icon: "fa-plus", class: "green-btn", action: "logIrrigation" },
-      { text: "View Schedule", icon: "fa-calendar", class: "blue-btn", action: "viewIrrigationSchedule" }
-    ]
+    // optional: href: "reports.html"
   }
 
 ];
 
 /* ==========================
-Render Entry Cards (uses renderCards from card-template.js)
+Render Settings Cards (uses renderCards from card-template.js)
 ========================= */
 
-function renderEntryCards() {
+function renderSettingsCards() {
     // renderCards is global (from card-template.js)
     if (typeof window.renderCards === 'function') {
-        window.renderCards('entryCardContainer', entryCards);
+        window.renderCards('settingsCardContainer', settingsCards);
     } else {
         // fallback: original innerHTML method (very unlikely)
-        const container = document.getElementById("entryCardContainer");
+        const container = document.getElementById("settingsCardContainer");
         if (!container) return;
-        container.innerHTML = entryCards.map(card => `
-          <div class="entry-card">
+        container.innerHTML = settingsCards.map(card => `
+          <div class="setting-card">
               <div class="card-top">
                   <div class="icon ${card.iconColor}">
                       <i class="fa-solid ${card.icon}"></i>
@@ -174,42 +166,47 @@ function renderEntryCards() {
 }
 
 /* ==========================
-Placeholder Action Functions
+Placeholder Action Functions (keep as-is)
 ========================= */
 
-function newCropEntry() { console.log("New Crop Entry"); }
-function editCropEntry() { console.log("Edit Crop Entry"); }
-function viewCropList() { console.log("View Crop List"); }
+function addPerson() { console.log("Add Person"); }
+function editPerson() { console.log("Edit Person"); }
+function viewPersonList() { console.log("View Person List"); }
+function addItem() { console.log("Add Item"); }
+function editItem() { console.log("Edit Item"); }
+function viewItemList() { console.log("View Item List"); }
 
-function addWeatherData() { console.log("Add Weather Data"); }
-function viewWeatherHistory() { console.log("View Weather History"); }
+/* new action placeholders for Reports card */
+function generateReports() {
+  console.log("Generate Reports");
+  // call existing business logic / APIs here as needed
+}
 
-function newSoilSample() { console.log("New Soil Sample"); }
-function viewSoilReport() { console.log("View Soil Report"); }
-
-function logIrrigation() { console.log("Log Irrigation"); }
-function viewIrrigationSchedule() { console.log("View Irrigation Schedule"); }
+function scheduleReports() {
+  console.log("Schedule Reports");
+  // call existing business logic / APIs here as needed
+}
 
 /* ==========================
 Initialize Dynamic Cards
 ========================= */
 
-document.addEventListener("DOMContentLoaded", renderEntryCards);
+document.addEventListener("DOMContentLoaded", renderSettingsCards);
 
 /* ==========================
-When on Entry page: convert any "Entry" menu item to "Dashboard"
-(so Entry link is not shown again; clicking goes to dashboard.html)
-This preserves user flow.
+When on Settings page: convert any "Settings" menu item to "Dashboard"
+(so Settings link is not shown again; clicking goes to dashboard.html)
+This preserves user flow you requested.
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Find a menu link that points to entry.html
-  const entryLink = document.querySelector('.menu a[href="entry.html"]');
-  if (entryLink) {
+  // Find a menu link that points to settings.html
+  const settingsLink = document.querySelector('.menu a[href="settings.html"]');
+  if (settingsLink) {
     // change it to dashboard
-    entryLink.setAttribute('href', 'dashboard.html');
+    settingsLink.setAttribute('href', 'dashboard.html');
     // change visible text if there's a span
-    const span = entryLink.querySelector('span');
+    const span = settingsLink.querySelector('span');
     if (span) {
       span.textContent = 'Dashboard';
     }
