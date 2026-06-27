@@ -111,10 +111,9 @@ const settingsCards = [
           { text: "Edit Item", icon: "fa-pen", class: "blue-btn", action: "editItem" },
           { text: "View List", icon: "fa-list", class: "green-btn", action: "viewItemList" }
       ]
-  };
+  },
 
-
-{
+  {
     id: "reports",
     iconColor: "purple",
     icon: "fa-chart-line",
@@ -128,6 +127,7 @@ const settingsCards = [
   }
 
 ];
+
 /* ==========================
 Render Settings Cards (uses renderCards from card-template.js)
 ========================= */
@@ -175,6 +175,17 @@ function viewPersonList() { console.log("View Person List"); }
 function addItem() { console.log("Add Item"); }
 function editItem() { console.log("Edit Item"); }
 function viewItemList() { console.log("View Item List"); }
+
+/* new action placeholders for Reports card */
+function generateReports() {
+  console.log("Generate Reports");
+  // call existing business logic / APIs here as needed
+}
+
+function scheduleReports() {
+  console.log("Schedule Reports");
+  // call existing business logic / APIs here as needed
+}
 
 /* ==========================
 Initialize Dynamic Cards
