@@ -84,10 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================
-Dynamic Settings Cards (data)
+Dynamic entry Cards (data)
 ========================= */
 
-const settingsCards = [
+const entryCards = [
 
   {
       iconColor: "green",
@@ -129,18 +129,18 @@ const settingsCards = [
 ];
 
 /* ==========================
-Render Settings Cards (uses renderCards from card-template.js)
+Render entry Cards (uses renderCards from card-template.js)
 ========================= */
 
-function renderSettingsCards() {
+function renderentryCards() {
     // renderCards is global (from card-template.js)
     if (typeof window.renderCards === 'function') {
-        window.renderCards('settingsCardContainer', settingsCards);
+        window.renderCards('entryCardContainer', entryCards);
     } else {
         // fallback: original innerHTML method (very unlikely)
-        const container = document.getElementById("settingsCardContainer");
+        const container = document.getElementById("entryCardContainer");
         if (!container) return;
-        container.innerHTML = settingsCards.map(card => `
+        container.innerHTML = entryCards.map(card => `
           <div class="setting-card">
               <div class="card-top">
                   <div class="icon ${card.iconColor}">
@@ -191,22 +191,22 @@ function scheduleReports() {
 Initialize Dynamic Cards
 ========================= */
 
-document.addEventListener("DOMContentLoaded", renderSettingsCards);
+document.addEventListener("DOMContentLoaded", renderentryCards);
 
 /* ==========================
-When on Settings page: convert any "Settings" menu item to "Dashboard"
-(so Settings link is not shown again; clicking goes to dashboard.html)
+When on entry page: convert any "entry" menu item to "Dashboard"
+(so entry link is not shown again; clicking goes to dashboard.html)
 This preserves user flow you requested.
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Find a menu link that points to settings.html
-  const settingsLink = document.querySelector('.menu a[href="settings.html"]');
-  if (settingsLink) {
+  // Find a menu link that points to entry.html
+  const entryLink = document.querySelector('.menu a[href="entry.html"]');
+  if (entryLink) {
     // change it to dashboard
-    settingsLink.setAttribute('href', 'dashboard.html');
+    entryLink.setAttribute('href', 'dashboard.html');
     // change visible text if there's a span
-    const span = settingsLink.querySelector('span');
+    const span = entryLink.querySelector('span');
     if (span) {
       span.textContent = 'Dashboard';
     }
