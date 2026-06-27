@@ -234,6 +234,39 @@ const settingsCards = [
     ]
 },
 
+    {
+    iconColor: "Blue",
+    icon: "fa-user",
+    title: "Master",
+    description:
+        "Add, edit and manage persons information",
+
+    buttons: [
+
+        {
+            text: "Add Person",
+            icon: "fa-plus",
+            class: "green-btn",
+            action: "addPerson"
+        },
+
+        {
+            text: "Edit Person",
+            icon: "fa-pen",
+            class: "blue-btn",
+            action: "editPerson"
+        },
+
+        {
+            text: "View List",
+            icon: "fa-list",
+            class: "green-btn",
+            action: "viewPersonList"
+        }
+
+    ]
+},
+
 {
     iconColor: "yellow",
     icon: "fa-box",
