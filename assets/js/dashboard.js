@@ -9,7 +9,7 @@ window.APP_CONFIG?.MODULES || {
     overview: "dashboard.html",
 
     Entry: "Entry.html",
-    farmManagement: "activities.html",
+    farmManagement: "farm-management.html",
     reports: "reports.html",
 
     support: "",
