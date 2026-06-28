@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ==========================
    Dynamic Activity Cards (data)
-   - Based on the static cards in your activities.html
+   - Based on the static cards in your farm-management.html
    - To add/remove cards, edit this array only
    ========================== */
 const activityCards = [
