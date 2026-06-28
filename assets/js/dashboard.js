@@ -9,7 +9,7 @@ window.APP_CONFIG?.MODULES || {
     overview: "dashboard.html",
 
     Entry: "Entry.html",
-    activities: "activities.html",
+    farmManagement: "activities.html",
     reports: "reports.html",
 
     support: "",
@@ -106,8 +106,8 @@ const navItems = [
     },
 
     {
-        name: "📅 Activities",
-        id: "activities",
+        name: "🏡 Farm Management",
+        id: "farmManagement",
         icon: "fa-calendar"
     },
 
@@ -139,7 +139,7 @@ const navItems = [
 
 /* ==========================================
    BUILD SIDEBAR MENU
-========================================== */
+========================== */
 
 document.addEventListener(
     "DOMContentLoaded",
