@@ -8,7 +8,7 @@ window.APP_CONFIG = {
         
         overview: "dashboard.html",
         Entry: "Entry.html",
-        activities: "activities.html",
+        farm-management: "farm-management.html",
         reports: "reports.html",
         support: "support.html",
         paymentHistory: "payment-history.html",
