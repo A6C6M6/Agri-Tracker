@@ -1,521 +1,212 @@
-/**
- * =====================================================
- * SETTINGS PERSON MASTER UI HANDLER
- * Interface Management and Event Handlers
- * =====================================================
- */
+/* assets/js/settings-person-master-ui.js
+   UI-layer: renders list, handles modal, validation, messages
+   Ensure this file is loaded AFTER settings-person-master.js and supabase-config.js
+*/
 
-let currentEditingId = null;
-let currentDeleteId = null;
+document.addEventListener('DOMContentLoaded', () => {
+  const listEl = document.getElementById('pm-list');
+  const addBtn = document.getElementById('pm-add-btn');
 
-/**
- * Initialize UI when Database is Ready
- */
-window.onSettingsPersonDatabaseReady = async function() {
-    console.log('[SettingsPersonMasterUI] Initializing UI...');
-    
-    // Load and display persons
-    await loadAndDisplayPersons();
-    
-    // Setup event listeners
-    setupEventListeners();
-    
-    console.log('[SettingsPersonMasterUI] UI initialized');
-};
+  const modal = document.getElementById('pm-modal');
+  const form = document.getElementById('pm-form');
+  const msgEl = document.getElementById('pm-form-msg');
+  const saveBtn = document.getElementById('pm-save-btn');
+  const updateBtn = document.getElementById('pm-update-btn');
+  const cancelBtn = document.getElementById('pm-cancel-btn');
 
-/**
- * Setup Event Listeners
- */
-function setupEventListeners() {
-    // Add Person Button
-    document.getElementById('addNewBtn').addEventListener('click', openAddPersonModal);
+  let currentChannel = null;
 
-    // Search Input
-    document.getElementById('searchInput').addEventListener('input', debounce(handleSearch, 300));
+  async function showMsg(message, type = 'error') {
+    msgEl.textContent = message;
+    msgEl.className = 'pm-msg ' + (type === 'success' ? 'pm-success' : '');
+  }
 
-    // Form Submit
-    document.getElementById('personForm').addEventListener('submit', handleFormSubmit);
+  function clearMsg() { showMsg('', ''); }
 
-    // View Toggle
-    document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.addEventListener('click', handleViewChange);
-    });
+  function openModal(mode = 'add', person = null) {
+    clearMsg();
+    modal.classList.remove('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+    if (mode === 'add') {
+      document.getElementById('pm-modal-title').textContent = 'Add Person';
+      saveBtn.classList.remove('hidden');
+      updateBtn.classList.add('hidden');
+      form.reset();
+      document.getElementById('pm-id').value = '';
+    } else {
+      document.getElementById('pm-modal-title').textContent = 'Edit Person';
+      saveBtn.classList.add('hidden');
+      updateBtn.classList.remove('hidden');
+      if (person) {
+        document.getElementById('pm-id').value = person.id || '';
+        document.getElementById('pm-full_name').value = person.full_name || '';
+        document.getElementById('pm-mobile').value = person.mobile || '';
+        document.getElementById('pm-email').value = person.email || '';
+        document.getElementById('pm-person_type').value = person.person_type || '';
+        document.getElementById('pm-status').value = person.status || 'Active';
+      }
+    }
+  }
 
-    // Mobile Number Format
-    document.getElementById('personMobile').addEventListener('input', formatMobileNumber);
-}
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.setAttribute('aria-hidden', 'true');
+  }
 
-/**
- * Load and Display Persons
- */
-async function loadAndDisplayPersons() {
+  async function loadList() {
+    listEl.innerHTML = '<div class="pm-loading">Loading...</div>';
     try {
-        showLoadingState();
-        const persons = await getAllPersons();
-        displayPersonsList(persons);
-        updatePersonCount(persons.length);
-    } catch (error) {
-        console.error('[SettingsPersonMasterUI] Error loading persons:', error);
-        showErrorMessage('Failed to load persons: ' + error.message);
-    } finally {
-        hideLoadingState();
+      const items = await PersonService.fetchAll();
+      renderList(items);
+    } catch (err) {
+      listEl.innerHTML = `<div class="pm-loading">Error loading list: ${err.message}</div>`;
     }
-}
+  }
 
-/**
- * Display Persons List
- */
-function displayPersonsList(persons) {
-    const tableBody = document.getElementById('personsList');
-    const cardContainer = document.getElementById('personCards');
-
-    if (persons.length === 0) {
-        tableBody.innerHTML = `
-            <tr class="empty-row">
-                <td colspan="6">
-                    <div class="empty-state">
-                        <i class="fa-solid fa-inbox"></i>
-                        <p>No persons found. Add one to get started!</p>
-                    </div>
-                </td>
-            </tr>
-        `;
-
-        cardContainer.innerHTML = `
-            <div class="empty-state">
-                <i class="fa-solid fa-inbox"></i>
-                <p>No persons found. Add one to get started!</p>
-            </div>
-        `;
-        return;
+  function renderList(items) {
+    if (!items || items.length === 0) {
+      listEl.innerHTML = '<div class="pm-loading">No persons found.</div>';
+      return;
     }
-
-    // Table View
-    tableBody.innerHTML = persons.map(person => `
-        <tr class="person-row" data-id="${person.id}">
-            <td class="name-cell">
-                <div class="person-avatar">
-                    ${person.name.charAt(0).toUpperCase()}
-                </div>
-                ${escapeHtml(person.name)}
-            </td>
-            <td>${escapeHtml(person.email)}</td>
-            <td>${escapeHtml(person.mobileNumber)}</td>
-            <td>
-                <span class="role-badge">${escapeHtml(person.role)}</span>
-            </td>
-            <td>${person.dateOfBirth ? formatDate(person.dateOfBirth) : '-'}</td>
-            <td>
-                <div class="action-buttons">
-                    <button class="btn-icon edit-btn" onclick="openEditPersonModal('${person.id}')" title="Edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-icon delete-btn" onclick="openDeleteModal('${person.id}', '${escapeHtml(person.name)}')" title="Delete">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
-
-    // Card View
-    cardContainer.innerHTML = persons.map(person => `
-        <div class="person-card" data-id="${person.id}">
-            <div class="card-header">
-                <div class="person-avatar-large">
-                    ${person.name.charAt(0).toUpperCase()}
-                </div>
-                <div class="card-actions">
-                    <button class="btn-icon edit-btn" onclick="openEditPersonModal('${person.id}')" title="Edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-icon delete-btn" onclick="openDeleteModal('${person.id}', '${escapeHtml(person.name)}')" title="Delete">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                <h4>${escapeHtml(person.name)}</h4>
-                <div class="card-info">
-                    <p><strong>Email:</strong> ${escapeHtml(person.email)}</p>
-                    <p><strong>Mobile:</strong> ${escapeHtml(person.mobileNumber)}</p>
-                    <p><strong>Role:</strong> <span class="role-badge">${escapeHtml(person.role)}</span></p>
-                    ${person.dateOfBirth ? `<p><strong>DOB:</strong> ${formatDate(person.dateOfBirth)}</p>` : ''}
-                    ${person.address ? `<p><strong>Address:</strong> ${escapeHtml(person.address)}</p>` : ''}
-                </div>
-            </div>
+    listEl.innerHTML = '';
+    items.forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'pm-row';
+      row.innerHTML = `
+        <div>
+          <strong>${escapeHtml(p.full_name||'-')}</strong><br/>
+          <small>${escapeHtml(p.mobile||'')} ${p.email ? ' | ' + escapeHtml(p.email) : ''}</small>
         </div>
-    `).join('');
-}
-
-/**
- * Open Add Person Modal
- */
-function openAddPersonModal() {
-    currentEditingId = null;
-    document.getElementById('modalTitle').textContent = 'Add Person';
-    document.getElementById('personForm').reset();
-    document.getElementById('submitBtn').querySelector('.btn-text').textContent = 'Save Person';
-    
-    // Clear previous errors
-    clearFormErrors();
-    
-    document.getElementById('personModal').classList.add('active');
-    document.getElementById('personName').focus();
-}
-
-/**
- * Open Edit Person Modal
- */
-async function openEditPersonModal(id) {
-    try {
-        currentEditingId = id;
-        const person = await getPersonById(id);
-
-        if (!person) {
-            showErrorMessage('Person not found');
-            return;
+        <div class="actions">
+          <button class="btn btn-sm btn-primary pm-edit" data-id="${p.id}">Edit</button>
+          <button class="btn btn-sm btn-danger pm-delete" data-id="${p.id}">Delete</button>
+        </div>
+      `;
+      listEl.appendChild(row);
+    });
+    // wire up edit/delete
+    listEl.querySelectorAll('.pm-edit').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = parseInt(e.currentTarget.dataset.id, 10);
+        // load single item details from supabase to be safe
+        const persons = await PersonService.fetchAll();
+        const person = persons.find(x => x.id === id);
+        openModal('edit', person);
+      });
+    });
+    listEl.querySelectorAll('.pm-delete').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = parseInt(e.currentTarget.dataset.id, 10);
+        if (!confirm('Are you sure to delete this person?')) return;
+        try {
+          await PersonService.remove(id);
+          await loadList();
+          showTransientToast('Deleted successfully');
+        } catch (err) {
+          alert('Delete failed: ' + err.message);
         }
+      });
+    });
+  }
 
-        document.getElementById('modalTitle').textContent = 'Edit Person';
-        document.getElementById('personName').value = person.name;
-        document.getElementById('personEmail').value = person.email;
-        document.getElementById('personMobile').value = person.mobileNumber;
-        document.getElementById('personRole').value = person.role;
-        document.getElementById('personDOB').value = person.dateOfBirth || '';
-        document.getElementById('personAddress').value = person.address;
-        document.getElementById('submitBtn').querySelector('.btn-text').textContent = 'Update Person';
+  // Simple escape
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"'`]/g, s => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;', '`':'&#96;' }[s]));
+  }
 
-        clearFormErrors();
-        document.getElementById('personModal').classList.add('active');
-        document.getElementById('personName').focus();
-    } catch (error) {
-        console.error('[SettingsPersonMasterUI] Error opening edit modal:', error);
-        showErrorMessage('Failed to load person: ' + error.message);
-    }
-}
-
-/**
- * Close Person Modal
- */
-function closePersonModal() {
-    document.getElementById('personModal').classList.remove('active');
-    currentEditingId = null;
-    document.getElementById('personForm').reset();
-    clearFormErrors();
-}
-
-/**
- * Handle Form Submit
- */
-async function handleFormSubmit(event) {
-    event.preventDefault();
-
-    const submitBtn = document.getElementById('submitBtn');
-    const spinner = document.getElementById('btnSpinner');
-
+  // Save handler
+  saveBtn.addEventListener('click', async () => {
+    clearMsg();
+    const person = readForm();
+    const validation = validatePerson(person);
+    if (!validation.ok) { showMsg(validation.message); return; }
+    saveBtn.disabled = true; saveBtn.textContent = 'Saving...';
     try {
-        // Show loading state
-        submitBtn.disabled = true;
-        spinner.style.display = 'inline-block';
-
-        // Collect form data
-        const personData = {
-            name: document.getElementById('personName').value,
-            email: document.getElementById('personEmail').value,
-            mobileNumber: document.getElementById('personMobile').value,
-            role: document.getElementById('personRole').value,
-            dateOfBirth: document.getElementById('personDOB').value,
-            address: document.getElementById('personAddress').value
-        };
-
-        // Add or Update
-        if (currentEditingId) {
-            await updatePerson(currentEditingId, personData);
-            showSuccessMessage('Person updated successfully!');
-        } else {
-            await addPerson(personData);
-            showSuccessMessage('Person added successfully!');
-        }
-
-        // Reload and close
-        await loadAndDisplayPersons();
-        closePersonModal();
-    } catch (error) {
-        console.error('[SettingsPersonMasterUI] Form submission error:', error);
-        showErrorFieldMessage(error.message);
+      const dup = await PersonService.findDuplicate({ email: person.email, mobile: person.mobile });
+      if (dup) { showMsg('Duplicate person found (same email or mobile).', 'error'); return; }
+      await PersonService.create(person);
+      showTransientToast('Saved successfully');
+      closeModal();
+      await loadList();
+    } catch (err) {
+      showMsg('Save failed: ' + err.message);
     } finally {
-        submitBtn.disabled = false;
-        spinner.style.display = 'none';
+      saveBtn.disabled = false; saveBtn.textContent = 'Save';
     }
-}
+  });
 
-/**
- * Open Delete Modal
- */
-function openDeleteModal(id, name) {
-    currentDeleteId = id;
-    document.getElementById('deletePersonName').textContent = name;
-    document.getElementById('deleteModal').classList.add('active');
+  // Update handler
+  updateBtn.addEventListener('click', async () => {
+    clearMsg();
+    const id = document.getElementById('pm-id').value;
+    if (!id) { showMsg('Missing id'); return; }
+    const person = readForm();
+    const validation = validatePerson(person);
+    if (!validation.ok) { showMsg(validation.message); return; }
 
-    // Setup delete button
-    const confirmBtn = document.getElementById('confirmDeleteBtn');
-    confirmBtn.onclick = handleDeleteConfirm;
-}
-
-/**
- * Close Delete Modal
- */
-function closeDeleteModal() {
-    document.getElementById('deleteModal').classList.remove('active');
-    currentDeleteId = null;
-}
-
-/**
- * Handle Delete Confirm
- */
-async function handleDeleteConfirm() {
-    if (!currentDeleteId) return;
-
+    updateBtn.disabled = true; updateBtn.textContent = 'Updating...';
     try {
-        const confirmBtn = document.getElementById('confirmDeleteBtn');
-        confirmBtn.disabled = true;
-
-        await deletePerson(currentDeleteId);
-        showSuccessMessage('Person deleted successfully!');
-        
-        await loadAndDisplayPersons();
-        closeDeleteModal();
-    } catch (error) {
-        console.error('[SettingsPersonMasterUI] Delete error:', error);
-        showErrorMessage('Failed to delete person: ' + error.message);
+      const dup = await PersonService.findDuplicate({ email: person.email, mobile: person.mobile }, parseInt(id,10));
+      if (dup) { showMsg('Duplicate person found (same email or mobile).', 'error'); return; }
+      await PersonService.update(parseInt(id,10), person);
+      showTransientToast('Updated successfully');
+      closeModal();
+      await loadList();
+    } catch (err) {
+      showMsg('Update failed: ' + err.message);
     } finally {
-        const confirmBtn = document.getElementById('confirmDeleteBtn');
-        confirmBtn.disabled = false;
+      updateBtn.disabled = false; updateBtn.textContent = 'Update';
     }
-}
+  });
 
-/**
- * Handle Search
- */
-async function handleSearch(event) {
-    try {
-        const searchTerm = event.target.value.trim();
-        const persons = await searchPersonsByName(searchTerm);
-        displayPersonsList(persons);
-        updatePersonCount(persons.length, searchTerm);
-    } catch (error) {
-        console.error('[SettingsPersonMasterUI] Search error:', error);
-        showErrorMessage('Search failed: ' + error.message);
-    }
-}
+  cancelBtn.addEventListener('click', () => closeModal());
 
-/**
- * Handle View Change
- */
-function handleViewChange(event) {
-    const view = event.currentTarget.dataset.view;
+  addBtn.addEventListener('click', () => openModal('add'));
 
-    // Update active button
-    document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-
-    // Show/Hide views
-    if (view === 'table') {
-        document.getElementById('tableView').style.display = 'block';
-        document.getElementById('cardView').style.display = 'none';
-    } else {
-        document.getElementById('tableView').style.display = 'none';
-        document.getElementById('cardView').style.display = 'block';
-    }
-}
-
-/**
- * Format Mobile Number
- */
-function formatMobileNumber(event) {
-    let value = event.target.value.replace(/\D/g, '');
-    if (value.length > 10) {
-        value = value.slice(0, 10);
-    }
-    event.target.value = value;
-}
-
-/**
- * Update Person Count
- */
-function updatePersonCount(count, searchTerm = null) {
-    const countBadge = document.getElementById('personCount');
-    if (searchTerm) {
-        countBadge.textContent = `${count} result${count !== 1 ? 's' : ''} found`;
-    } else {
-        countBadge.textContent = `${count} person${count !== 1 ? 's' : ''}`;
-    }
-}
-
-/**
- * Clear Form Errors
- */
-function clearFormErrors() {
-    document.querySelectorAll('.error-text').forEach(elem => {
-        elem.textContent = '';
-    });
-    document.querySelectorAll('.form-group input, .form-group textarea').forEach(elem => {
-        elem.classList.remove('error');
-    });
-}
-
-/**
- * Show Error Field Message
- */
-function showErrorFieldMessage(message) {
-    // Try to identify which field the error is about
-    if (message.includes('Name')) {
-        document.getElementById('nameError').textContent = message;
-        document.getElementById('personName').classList.add('error');
-    } else if (message.includes('Email')) {
-        document.getElementById('emailError').textContent = message;
-        document.getElementById('personEmail').classList.add('error');
-    } else if (message.includes('Mobile')) {
-        document.getElementById('mobileError').textContent = message;
-        document.getElementById('personMobile').classList.add('error');
-    } else {
-        showErrorMessage(message);
-    }
-}
-
-/**
- * Show Loading State
- */
-function showLoadingState() {
-    const tableBody = document.getElementById('personsList');
-    tableBody.innerHTML = `
-        <tr class="loading-row">
-            <td colspan="6">
-                <div class="loading-spinner">
-                    <i class="fa-solid fa-spinner fa-spin"></i> Loading...
-                </div>
-            </td>
-        </tr>
-    `;
-}
-
-/**
- * Hide Loading State
- */
-function hideLoadingState() {
-    // Already hidden when content is loaded
-}
-
-/**
- * Show Toast Message
- */
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = `
-        <i class="fa-solid fa-${getToastIcon(type)}"></i>
-        <span>${message}</span>
-    `;
-
-    container.appendChild(toast);
-
-    // Auto remove
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
-
-/**
- * Show Success Message
- */
-function showSuccessMessage(message) {
-    showToast(message, 'success');
-    console.log('[SettingsPersonMasterUI] Success:', message);
-}
-
-/**
- * Show Error Message
- */
-function showErrorMessage(message) {
-    showToast(message, 'error');
-    console.error('[SettingsPersonMasterUI] Error:', message);
-}
-
-/**
- * Get Toast Icon
- */
-function getToastIcon(type) {
-    const icons = {
-        success: 'circle-check',
-        error: 'circle-xmark',
-        warning: 'triangle-exclamation',
-        info: 'info'
+  // read form
+  function readForm() {
+    return {
+      full_name: document.getElementById('pm-full_name').value.trim(),
+      mobile: document.getElementById('pm-mobile').value.trim(),
+      email: document.getElementById('pm-email').value.trim(),
+      person_type: document.getElementById('pm-person_type').value.trim(),
+      status: document.getElementById('pm-status').value
     };
-    return icons[type] || 'info';
-}
+  }
 
-/**
- * Utility: Escape HTML
- */
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
+  function validatePerson(p) {
+    if (!p.full_name) return { ok:false, message: 'Full name is required' };
+    if (!p.mobile) return { ok:false, message: 'Mobile is required' };
+    if (p.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) return { ok:false, message: 'Email format is invalid' };
+    return { ok:true };
+  }
 
-/**
- * Utility: Format Date
- */
-function formatDate(dateString) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-IN', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
+  // Toast
+  function showTransientToast(text) {
+    // Simple: use alert or implement small toast
+    // Here minimal: temporary message area at top of list
+    const t = document.createElement('div');
+    t.className = 'pm-toast';
+    t.style = 'position:fixed;top:12px;right:12px;background:#2d7a2d;color:#fff;padding:8px 12px;border-radius:6px;z-index:2000';
+    t.textContent = text;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2200);
+  }
+
+  // Realtime subscription
+  function startRealtime() {
+    // subscribe; callback refreshes list on any change
+    currentChannel = PersonService.subscribe(payload => {
+      // Could optimize by patching list. Simpler: reload all
+      loadList();
     });
-}
+  }
 
-/**
- * Utility: Debounce
- */
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
+  // initialize
+  (async function init() {
+    await loadList();
+    startRealtime();
+  })();
 
-/**
- * Handle Logout
- */
-function logout() {
-    if (confirm('Are you sure you want to logout?')) {
-        localStorage.removeItem('user');
-        localStorage.removeItem('session');
-        window.location.href = 'logincard.html';
-    }
-}
-
-// Initialize when script loads
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log('[SettingsPersonMasterUI] DOM content loaded');
-    });
-} else {
-    console.log('[SettingsPersonMasterUI] DOM already loaded');
-}
-
-console.log('[SettingsPersonMasterUI] Module loaded successfully');
+});
