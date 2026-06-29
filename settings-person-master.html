@@ -1,51 +1,303 @@
-<!-- settings-person-master.html -->
-<!-- ഇടപ്പെടുത്തുക settings.html അല്ലെങ്കിൽ relevant page-ലുള്ള content area-ൽ -->
-<div id="person-master-card" class="person-master-card">
-  <div class="pm-header">
-    <h3>Person Master</h3>
-    <button id="pm-add-btn" class="btn btn-primary">Add Person</button>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
 
-  <div id="pm-list" class="pm-list">
-    <!-- person rows will be rendered here -->
-    <div class="pm-loading">Loading...</div>
-  </div>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Person Master</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="assets/css/settings-person-master.css">
+
+</head>
+
+<body>
+
+<div class="person-master-container">
+
+    <!-- Header -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>
+                <i class="fa-solid fa-users"></i>
+                Person Master
+            </h2>
+
+            <p>
+                Manage all persons from one place.
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            id="btnAddPerson">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Person
+
+        </button>
+
+    </div>
+
+
+    <!-- Search -->
+
+    <div class="toolbar">
+
+        <div class="search-box">
+
+            <i class="fa fa-search"></i>
+
+            <input
+                type="text"
+                id="txtSearch"
+                placeholder="Search Person...">
+
+        </div>
+
+    </div>
+
+
+    <!-- Table -->
+
+    <div class="table-wrapper">
+
+        <table class="person-table">
+
+            <thead>
+
+            <tr>
+
+                <th>#</th>
+
+                <th>Code</th>
+
+                <th>Name</th>
+
+                <th>Mobile</th>
+
+                <th>Email</th>
+
+                <th>Status</th>
+
+                <th width="170">
+                    Action
+                </th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="personTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
 
-<!-- Modal (hidden by default) -->
-<div id="pm-modal" class="pm-modal hidden" aria-hidden="true">
-  <div class="pm-modal-backdrop"></div>
-  <div class="pm-modal-dialog" role="dialog" aria-modal="true">
-    <form id="pm-form" class="pm-form" autocomplete="off">
-      <h4 id="pm-modal-title">Add Person</h4>
 
-      <input type="hidden" id="pm-id" />
+<!-- ===========================
+     ADD / EDIT MODAL
+=========================== -->
 
-      <label>Full Name <span class="required">*</span></label>
-      <input id="pm-full_name" name="full_name" type="text" placeholder="Enter full name" required />
+<div
+    class="modal"
+    id="personModal">
 
-      <label>Mobile <span class="required">*</span></label>
-      <input id="pm-mobile" name="mobile" type="tel" placeholder="Enter mobile" required />
+    <div class="modal-content">
 
-      <label>Email</label>
-      <input id="pm-email" name="email" type="email" placeholder="Enter email" />
+        <div class="modal-header">
 
-      <label>Person Type</label>
-      <input id="pm-person_type" name="person_type" type="text" placeholder="e.g., Farmer / Vendor" />
+            <h3 id="modalTitle">
 
-      <label>Status</label>
-      <select id="pm-status" name="status">
-        <option value="Active">Active</option>
-        <option value="Inactive">Inactive</option>
-      </select>
+                Add Person
 
-      <div class="pm-actions">
-        <button type="button" id="pm-save-btn" class="btn btn-success">Save</button>
-        <button type="button" id="pm-update-btn" class="btn btn-success hidden">Update</button>
-        <button type="button" id="pm-cancel-btn" class="btn btn-secondary">Close</button>
-      </div>
+            </h3>
 
-      <div id="pm-form-msg" class="pm-msg" aria-live="polite"></div>
-    </form>
-  </div>
+            <button
+                id="closeModal">
+
+                ×
+
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <input
+                type="hidden"
+                id="personId">
+
+            <div class="form-group">
+
+                <label>
+
+                    Person Code
+
+                </label>
+
+                <input
+                    id="personCode"
+                    type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Person Name
+
+                </label>
+
+                <input
+                    id="personName"
+                    type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Mobile
+
+                </label>
+
+                <input
+                    id="personMobile"
+                    type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Email
+
+                </label>
+
+                <input
+                    id="personEmail"
+                    type="email">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Address
+
+                </label>
+
+                <textarea
+                    id="personAddress"></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Status
+
+                </label>
+
+                <select id="personStatus">
+
+                    <option value="Active">
+
+                        Active
+
+                    </option>
+
+                    <option value="Inactive">
+
+                        Inactive
+
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn btn-secondary"
+                id="btnCancel">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="btn btn-success"
+                id="btnSavePerson">
+
+                Save
+
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
+
+
+<!-- Loading -->
+
+<div
+    id="loadingOverlay"
+    class="loading-overlay">
+
+    <div class="loader"></div>
+
+    <p>
+
+        Please Wait...
+
+    </p>
+
+</div>
+
+
+<!-- Toast -->
+
+<div
+    id="toastContainer">
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="assets/js/supabase-config.js"></script>
+
+<script src="assets/js/settings-person-master.js"></script>
+
+<script src="assets/js/settings-person-master-ui.js"></script>
+
+</body>
+
+</html>
