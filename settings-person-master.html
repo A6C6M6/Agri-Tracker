@@ -36,64 +36,148 @@
 
             <div class="card-grid">
                 <div class="setting-card">
-                    <div class="card-top" style="justify-content: space-between; display: flex; align-items: center; margin-bottom: 20px;">
-                        <h3>Manage Persons</h3>
-                        <button class="btn green-btn" onclick="openPersonModal()"><i class="fa-solid fa-plus"></i> Add Person</button>
+
+                    <!-- TABS -->
+                    <div class="tabs-nav" role="tablist">
+                        <button type="button" class="tab-btn selected" id="tabBtnAdd" data-tab="add" onclick="switchTab('add')">
+                            <i class="fa-solid fa-plus"></i> Add Person
+                        </button>
+                        <button type="button" class="tab-btn" id="tabBtnEdit" data-tab="edit" onclick="switchTab('edit')">
+                            <i class="fa-solid fa-pen"></i> Edit Person
+                        </button>
+                        <button type="button" class="tab-btn" id="tabBtnView" data-tab="view" onclick="switchTab('view')">
+                            <i class="fa-solid fa-list"></i> View List
+                        </button>
                     </div>
-                    <div class="table-container">
-                        <table id="personTable">
-                            <thead>
-                                <tr>
-                                    <th>Name</th><th>Mobile</th><th>Email</th><th>Type</th><th>Status</th><th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="personTableBody"></tbody>
-                        </table>
+
+                    <!-- ===================== ADD PANEL ===================== -->
+                    <div class="tab-panel" id="panelAdd">
+                        <form id="addPersonForm" onsubmit="saveNewPerson(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="add_fullName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mobile</label>
+                                    <input type="text" id="add_mobile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="add_email">
+                                </div>
+                                <div class="form-group">
+                                    <label>Person Type</label>
+                                    <select id="add_personType" required>
+                                        <option value="">Select Person Type</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-half">
+                                <label>Status</label>
+                                <select id="add_status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="reset" class="btn">Clear</button>
+                                <button type="submit" class="btn green-btn"><i class="fa-solid fa-check"></i> Save Person</button>
+                            </div>
+                        </form>
                     </div>
+
+                    <!-- ===================== EDIT PANEL ===================== -->
+                    <div class="tab-panel" id="panelEdit" style="display:none;">
+                        <div class="form-group form-group-half">
+                            <label>Select Person to Edit</label>
+                            <select id="editPersonSelect" onchange="loadPersonForEdit(this.value)">
+                                <option value="">-- Select Person --</option>
+                            </select>
+                        </div>
+
+                        <form id="editPersonForm" onsubmit="updateExistingPerson(event)" style="display:none;">
+                            <input type="hidden" id="edit_personId">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="edit_fullName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mobile</label>
+                                    <input type="text" id="edit_mobile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="edit_email">
+                                </div>
+                                <div class="form-group">
+                                    <label>Person Type</label>
+                                    <select id="edit_personType" required>
+                                        <option value="">Select Person Type</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-half">
+                                <label>Status</label>
+                                <select id="edit_status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="form-actions form-actions-split">
+                                <button type="button" class="btn btn-danger-outline" id="editDeleteBtn" onclick="deleteFromEditTab()">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </button>
+                                <div class="form-actions-right">
+                                    <button type="button" class="btn" onclick="cancelEdit()">Cancel</button>
+                                    <button type="submit" class="btn green-btn"><i class="fa-solid fa-check"></i> Update Person</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <p class="empty-hint" id="editEmptyHint">Select a person from the dropdown above to edit their details.</p>
+                    </div>
+
+                    <!-- ===================== VIEW LIST PANEL ===================== -->
+                    <div class="tab-panel" id="panelView" style="display:none;">
+                        <div class="table-container">
+                            <table id="personTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th><th>Mobile</th><th>Email</th><th>Type</th><th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="personTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </main>
     </div>
 
-    <div id="personModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle">Add Person</h2>
-                <span class="close" onclick="closePersonModal()">&times;</span>
-            </div>
-            <form id="personForm" onsubmit="savePerson(event)">
-                <input type="hidden" id="personId">
-                <div class="form-group"><label>Full Name</label><input type="text" id="fullName" required></div>
-                <div class="form-group"><label>Mobile</label><input type="text" id="mobile"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="email"></div>
-                <div class="form-group"><label>Person Type</label>
-                    <select id="personType" required>
-                        <option value="">Select Person Type</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Status</label>
-                    <select id="status"><option value="Active">Active</option><option value="Inactive">Inactive</option></select>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn" onclick="closePersonModal()">Cancel</button>
-                    <button type="submit" class="btn green-btn">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/settings-person-master.js"></script>
-    <script src="assets/js/settings-person-master-ui.js"></script>
     <!--
-        NOTE: Sidebar toggle & logout logic now live ONLY in
-        settings-person-master.js. The duplicate inline script that
-        used to be here was attaching a SECOND click listener to
-        #toggleBtn, which toggled the "collapsed" class twice per
-        click (add, then immediately remove) — that is why the
-        hamburger button looked broken. Do not re-add inline
-        listeners here.
+        settings-person-master-ui.js REMOVED INTENTIONALLY:
+        it redefined renderTable() and modal functions
+        (openPersonModal/closePersonModal/editPerson/deletePerson)
+        that referenced the old #personModal markup, which no
+        longer exists in this tabbed UI. Loading it after
+        settings-person-master.js would silently override the
+        working functions and break Add/Edit/View. All of that
+        logic now lives in settings-person-master.js only.
+    -->
+    <!--
+        NOTE: Sidebar toggle & logout logic live ONLY in
+        settings-person-master.js. Do not add inline listeners here.
     -->
 </body>
 </html>
