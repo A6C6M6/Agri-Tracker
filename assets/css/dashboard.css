@@ -730,6 +730,88 @@ body{
 }
 
 /* ==========================================
+   SIDEBAR COLLAPSED (ICON-ONLY) STATE
+========================================== */
+
+.sidebar.collapsed{
+
+    width:84px;
+}
+
+.sidebar.collapsed .logo-section{
+
+    padding:24px 10px;
+}
+
+.sidebar.collapsed .logo-title{
+
+    font-size:0;
+}
+
+.sidebar.collapsed .logo-title::before{
+
+    content:"🌿";
+
+    font-size:28px;
+}
+
+.sidebar.collapsed .logo-sub{
+
+    display:none;
+}
+
+.sidebar.collapsed ul{
+
+    padding:14px 10px;
+}
+
+.sidebar.collapsed a{
+
+    justify-content:center;
+
+    padding:15px;
+
+    gap:0;
+
+    font-size:0;
+}
+
+.sidebar.collapsed a i{
+
+    font-size:20px;
+}
+
+.sidebar.collapsed .sidebar-footer{
+
+    padding:12px 8px;
+}
+
+.sidebar.collapsed .user-card{
+
+    padding:10px;
+}
+
+.sidebar.collapsed .user-avatar{
+
+    width:46px;
+
+    height:46px;
+
+    margin:0 auto;
+}
+
+.sidebar.collapsed .user-info{
+
+    display:none;
+}
+
+.sidebar.collapsed ~ .main-content,
+.main-content.expanded{
+
+    margin-left:84px;
+}
+
+/* ==========================================
    RESPONSIVE
 ========================================== */
 
