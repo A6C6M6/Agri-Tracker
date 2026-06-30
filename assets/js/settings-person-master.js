@@ -1,9 +1,21 @@
-// പേജ് ലോഡ് ചെയ്യുമ്പോൾ ലിസ്റ്റ് കാണിക്കുക
+/* =========================================================
+   SETTINGS PERSON MASTER - FULL INTEGRATED LOGIC
+   ========================================================= */
+
+// പേജ് ലോഡ് ചെയ്യുമ്പോൾ ലിസ്റ്റ് ഡാറ്റ ഫെച്ച് ചെയ്യുക
 document.addEventListener('DOMContentLoaded', () => {
     fetchPersons();
+    
+    // സൈഡ്‌ബാർ ടോഗിൾ ലോജിക് (പേജിലെ ബട്ടൺ ഉപയോഗിച്ച്)
+    const toggleBtn = document.getElementById("toggleBtn");
+    if (toggleBtn) {
+        toggleBtn.addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("collapsed");
+        });
+    }
 });
 
-// 1. ഫെച്ച് ചെയ്യുക (View List)
+// 1. Supabase-ൽ നിന്ന് ഡാറ്റ എടുക്കുക (View List)
 async function fetchPersons() {
     try {
         const { data, error } = await window.supabaseClient
@@ -47,7 +59,7 @@ async function savePerson(e) {
 
 // 3. ഡിലീറ്റ് ചെയ്യുക (Delete)
 async function deletePerson(id) {
-    if (confirm('Are you sure?')) {
+    if (confirm('Are you sure you want to delete this record?')) {
         try {
             await window.supabaseClient.from('persons').delete().eq('id', id);
             fetchPersons();
@@ -57,7 +69,7 @@ async function deletePerson(id) {
     }
 }
 
-// 4. എഡിറ്റ് ചെയ്യുക (Edit)
+// 4. എഡിറ്റ് ചെയ്യുക (Load data to Form)
 async function editPerson(id) {
     const { data, error } = await window.supabaseClient.from('persons').select('*').eq('id', id).single();
     if (error) return alert('Error fetching data');
@@ -72,13 +84,16 @@ async function editPerson(id) {
     openPersonModal(true);
 }
 
-// 5. ടേബിൾ റെൻഡർ ചെയ്യുക (Render)
+// 5. ടേബിൾ റെൻഡർ ചെയ്യുക (Render Table Rows)
 function renderTable(data) {
     const tbody = document.getElementById('personTableBody');
     tbody.innerHTML = data.map(p => `
         <tr>
-            <td>${p.full_name}</td><td>${p.mobile}</td><td>${p.email}</td>
-            <td>${p.person_type}</td><td>${p.status}</td>
+            <td>${p.full_name}</td>
+            <td>${p.mobile}</td>
+            <td>${p.email}</td>
+            <td>${p.person_type}</td>
+            <td>${p.status}</td>
             <td>
                 <button class="action-btn btn-edit" onclick="editPerson('${p.id}')">Edit</button>
                 <button class="action-btn btn-delete" onclick="deletePerson('${p.id}')">Delete</button>
@@ -99,7 +114,20 @@ function closePersonModal() {
     document.getElementById('personModal').style.display = 'none';
 }
 
+// ലോഗ്ഔട്ട് ഫംഗ്‌ഷൻ
+async function logout() {
+    try {
+        if (window.supabaseClient) {
+            await window.supabaseClient.auth.signOut();
+        }
+        window.location.replace("logincard.html");
+    } catch (error) {
+        console.error("Logout Error:", error);
+    }
+}
+
 // പുറത്ത് ക്ലിക്ക് ചെയ്താൽ മോഡൽ അടയ്ക്കുക
 window.onclick = (event) => {
-    if (event.target == document.getElementById('personModal')) closePersonModal();
+    const modal = document.getElementById('personModal');
+    if (event.target == modal) closePersonModal();
 };
