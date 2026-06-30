@@ -54,6 +54,10 @@ function redirectToPersonMaster() {
     window.location.href = "settings-person-master.html";
 }
 
+function redirectToItemMaster(tab) {
+    window.location.href = "settings-item-master.html?tab=" + tab;
+}
+
 /* ==========================
    Settings Card Configuration
 ========================== */
@@ -107,9 +111,9 @@ function renderSettingsCards() {
 }
 
 // പ്ലേസ്‌ഹോൾഡർ ഫംഗ്‌ഷനുകൾ
-function addItem() { console.log("Add Item"); }
-function editItem() { console.log("Edit Item"); }
-function viewItemList() { console.log("View Item List"); }
+function addItem() { redirectToItemMaster('add'); }
+function editItem() { redirectToItemMaster('edit'); }
+function viewItemList() { redirectToItemMaster('view'); }
 function generateReports() { console.log("Generate Reports"); }
 function scheduleReports() { console.log("Schedule Reports"); }
 
