@@ -3,49 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Person Master - Agri-Tracker</title>
+    <title>Person Master | Agri-Tracker</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="assets/css/settings.css">
     <link rel="stylesheet" href="assets/css/settings-person-master.css">
 </head>
 <body>
     <div class="wrapper">
-        <!-- Sidebar (നിങ്ങളുടെ നിലവിലെ കോഡ് ഉപയോഗിക്കുക) -->
-        
-        <main class="main-content">
-            <!-- Topbar (നിങ്ങളുടെ നിലവിലെ കോഡ് ഉപയോഗിക്കുക) -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-seedling"></i>
+                <span>Agri-Tracker</span>
+            </div>
+            <ul class="menu">
+                <li><a href="dashboard.html"><i class="fa-solid fa-house"></i><span>Dashboard</span></a></li>
+                <li><a href="settings.html" class="active"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+            </ul>
+        </aside>
 
-            <div class="card-grid" style="display: block; padding: 25px;">
-                <div class="setting-card" style="width: 100%;">
-                    <div class="card-top" style="justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <div style="display: flex; gap: 18px; align-items: center;">
-                            <div class="icon green"><i class="fa-solid fa-users"></i></div>
-                            <div>
-                                <h3>Person Master</h3>
-                                <p>Manage persons information</p>
-                            </div>
-                        </div>
-                        <button class="btn green-btn" onclick="openPersonModal()" style="width: auto;">
-                            <i class="fa-solid fa-plus"></i> Add Person
-                        </button>
+        <main class="main-content">
+            <header>
+                <button id="toggleBtn"><i class="fa-solid fa-bars"></i></button>
+                <h2><i class="fa-solid fa-users"></i> Person Master</h2>
+                <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+            </header>
+
+            <div class="card-grid" style="padding: 20px;">
+                <div class="setting-card">
+                    <div class="card-top" style="justify-content: space-between; display: flex; align-items: center;">
+                        <h3>Manage Persons</h3>
+                        <button class="btn green-btn" onclick="openPersonModal()"><i class="fa-solid fa-plus"></i> Add Person</button>
                     </div>
-                    
                     <div class="table-container">
                         <table id="personTable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Mobile</th>
-                                    <th>Email</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>Name</th><th>Mobile</th><th>Email</th><th>Type</th><th>Status</th><th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="personTableBody">
-                                <!-- Data will be loaded here -->
-                            </tbody>
+                            <tbody id="personTableBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -53,47 +49,6 @@
         </main>
     </div>
 
-    <!-- Modal Form -->
-    <div id="personModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle">Add Person</h2>
-                <span class="close" onclick="closePersonModal()">&times;</span>
-            </div>
-            <form id="personForm" onsubmit="savePerson(event)">
-                <input type="hidden" id="personId">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" required>
-                </div>
-                <div class="form-group">
-                    <label for="mobile">Mobile</label>
-                    <input type="text" id="mobile">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email">
-                </div>
-                <div class="form-group">
-                    <label for="personType">Person Type</label>
-                    <input type="text" id="personType">
-                </div>
-                <div class="form-group">
-                    <label for="status">Status</label>
-                    <select id="status">
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
-                    </select>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn" onclick="closePersonModal()">Cancel</button>
-                    <button type="submit" class="btn green-btn">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/settings-person-master.js"></script>
