@@ -47,7 +47,7 @@ async function logout() {
 }
 
 /* ==========================
-   Person Master Redirection
+   Person Master Navigation
 ========================== */
 
 function redirectToPersonMaster() {
@@ -55,30 +55,63 @@ function redirectToPersonMaster() {
 }
 
 /* ==========================
-   Placeholders for other modules
+   Settings Card Configuration
 ========================== */
 
+const settingsCards = [
+  {
+      iconColor: "green",
+      icon: "fa-user",
+      title: "Person Master",
+      description: "Add, edit and manage persons information",
+      buttons: [
+          { text: "Add Person", icon: "fa-plus", class: "green-btn", action: "redirectToPersonMaster" },
+          { text: "Edit Person", icon: "fa-pen", class: "blue-btn", action: "redirectToPersonMaster" },
+          { text: "View List", icon: "fa-list", class: "green-btn", action: "redirectToPersonMaster" }
+      ]
+  },
+  {
+      iconColor: "yellow",
+      icon: "fa-box",
+      title: "Item Master",
+      description: "Add, edit and manage items information",
+      buttons: [
+          { text: "Add Item", icon: "fa-plus", class: "green-btn", action: "addItem" },
+          { text: "Edit Item", icon: "fa-pen", class: "blue-btn", action: "editItem" },
+          { text: "View List", icon: "fa-list", class: "green-btn", action: "viewItemList" }
+      ]
+  },
+  {
+    id: "reports",
+    iconColor: "purple",
+    icon: "fa-chart-line",
+    title: "Reports",
+    description: "Generate and download system reports",
+    buttons: [
+      { text: "Generate", icon: "fa-file-arrow-down", class: "green-btn", action: "generateReports" },
+      { text: "Schedule", icon: "fa-clock", class: "blue-btn", action: "scheduleReports" }
+    ]
+  }
+];
+
+/* ==========================
+   Render Cards Helper
+========================== */
+
+function renderSettingsCards() {
+    if (typeof window.renderCards === 'function') {
+        window.renderCards('settingsCardContainer', settingsCards);
+    } else {
+        console.error("renderCards function not found in card-template.js");
+    }
+}
+
+// പ്ലേസ്‌ഹോൾഡർ ഫംഗ്‌ഷനുകൾ
 function addItem() { console.log("Add Item"); }
 function editItem() { console.log("Edit Item"); }
 function viewItemList() { console.log("View Item List"); }
-
 function generateReports() { console.log("Generate Reports"); }
 function scheduleReports() { console.log("Schedule Reports"); }
 
-/* ==========================
-   Initialize Dynamic Cards
-========================== */
-
+// Init
 document.addEventListener("DOMContentLoaded", renderSettingsCards);
-
-/* Settings ലിങ്ക് Dashboard-ലേക്ക് മാറ്റുന്നു
-*/
-
-document.addEventListener("DOMContentLoaded", () => {
-    const settingsLink = document.querySelector('.menu a[href="settings.html"]');
-    if (settingsLink) {
-        settingsLink.setAttribute('href', 'dashboard.html');
-        const span = settingsLink.querySelector('span');
-        if (span) span.textContent = 'Dashboard';
-    }
-});
