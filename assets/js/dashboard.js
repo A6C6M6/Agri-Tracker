@@ -587,114 +587,59 @@ document.addEventListener(
 
 });
 
+
 /* ==========================================
-   SIDEBAR HIDE/RESTORE (Hamburger toggle)
-   - Preserves existing behavior and state (collapsed)
+   SIDEBAR COLLAPSE/EXPAND (Hamburger toggle)
+   - Collapses sidebar to icon-only mode (like
+     the reference screenshot) instead of fully
+     hiding it.
    - No changes to business logic / API / DB
-   - Adds small UI-only behavior that hides sidebar and expands main-content full-width
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
   try {
-    const headerHamburger = document.querySelector('.header-left i.fa-bars') || document.querySelector('.header-left .fa-bars') || null;
+    const headerHamburger =
+      document.querySelector('.header-left i.fa-bars') ||
+      document.querySelector('.header-left .fa-bars') ||
+      null;
+
     const sidebar = document.querySelector('.sidebar');
     const mainContent = document.querySelector('.main-content');
 
     if (!headerHamburger || !sidebar || !mainContent) {
-      // Nothing to do if elements missing
       return;
     }
 
-    // Helper: store previous values on sidebar.dataset to restore later
-    // prevMarginLeft: mainContent previous margin-left (computed)
-    if (!sidebar.dataset.prevMarginLeft) {
-      const prevMargin = window.getComputedStyle(mainContent).marginLeft || '280px';
-      sidebar.dataset.prevMarginLeft = prevMargin;
-    }
-
-    // Attach accessible attributes
     headerHamburger.setAttribute('role', 'button');
     headerHamburger.setAttribute('aria-label', 'Toggle sidebar');
     headerHamburger.tabIndex = 0;
 
-    // Click handler
-    const toggleHandler = (ev) => {
-      ev && ev.preventDefault && ev.preventDefault();
-
-      const isHidden = sidebar.classList.contains('hidden');
-
-      if (!isHidden) {
-        // Hide: remember collapsed state and prev margin-left
-        sidebar.dataset.wasCollapsed = sidebar.classList.contains('collapsed') ? '1' : '0';
-        // store computed main-content margin-left for accurate restore
-        const currentMargin = window.getComputedStyle(mainContent).marginLeft || sidebar.dataset.prevMarginLeft || '280px';
-        sidebar.dataset.prevMarginLeft = currentMargin;
-
-        // Add 'hidden' marker class (CSS may also define .sidebar.hidden)
-        sidebar.classList.add('hidden');
-
-        // Apply inline transform to move sidebar out of view
-        sidebar.style.transition = 'transform 240ms ease';
-        sidebar.style.transform = 'translateX(-110%)';
-        // Optionally collapse visual overflow
-        sidebar.style.width = sidebar.offsetWidth + 'px'; // keep width while animating, then hide for focusability
-        sidebar.style.overflow = 'hidden';
-        // Set main-content to full width by removing left margin
-        mainContent.style.transition = 'margin-left 240ms ease';
-        mainContent.style.marginLeft = '0px';
-
-        // Remove collapsed class because sidebar is hidden (but remember it)
-        sidebar.classList.remove('collapsed');
-
-        // For accessibility, mark as hidden
-        sidebar.setAttribute('aria-hidden', 'true');
-        headerHamburger.setAttribute('aria-expanded', 'false');
-
-      } else {
-        // Restore: remove hidden state, restore transform and margin
-        sidebar.classList.remove('hidden');
-
-        // Clear inline transform and width after a small delay to allow class removal if CSS defines animations
-        sidebar.style.transform = '';
-        sidebar.style.overflow = '';
-        // restore main-content margin-left to previous value
-        const prevMarginLeft = sidebar.dataset.prevMarginLeft || '';
-        if (prevMarginLeft) {
-          mainContent.style.marginLeft = prevMarginLeft;
-        } else {
-          // fallback default
-          mainContent.style.marginLeft = '';
-        }
-
-        // Restore collapsed state if it was collapsed before hiding
-        if (sidebar.dataset.wasCollapsed === '1') {
-          sidebar.classList.add('collapsed');
-        } else {
-          sidebar.classList.remove('collapsed');
-        }
-
-        // remove stored flags
-        delete sidebar.dataset.wasCollapsed;
-        // accessibility
-        sidebar.setAttribute('aria-hidden', 'false');
-        headerHamburger.setAttribute('aria-expanded', 'true');
-      }
+    const applyState = (collapsed) => {
+      sidebar.classList.toggle('collapsed', collapsed);
+      mainContent.classList.toggle('expanded', collapsed);
+      headerHamburger.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      try {
+        localStorage.setItem('sidebarCollapsed', collapsed ? '1' : '0');
+      } catch (e) {}
     };
 
-    // Click and keyboard handlers
+    // Restore last state on load
+    let savedState = '0';
+    try {
+      savedState = localStorage.getItem('sidebarCollapsed') || '0';
+    } catch (e) {}
+    applyState(savedState === '1');
+
+    const toggleHandler = (ev) => {
+      ev && ev.preventDefault && ev.preventDefault();
+      applyState(!sidebar.classList.contains('collapsed'));
+    };
+
     headerHamburger.addEventListener('click', toggleHandler);
     headerHamburger.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         toggleHandler(e);
-      }
-    });
-
-    // Ensure that if window is resized, we update stored prevMarginLeft to match responsive CSS
-    window.addEventListener('resize', () => {
-      if (!sidebar.classList.contains('hidden')) {
-        // update stored margin to current computed (in case responsive rules changed it)
-        sidebar.dataset.prevMarginLeft = window.getComputedStyle(mainContent).marginLeft || sidebar.dataset.prevMarginLeft || '';
       }
     });
 
