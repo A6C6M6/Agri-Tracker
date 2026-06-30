@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     fetchItems();
+    const params = new URLSearchParams(window.location.search);
+    const requestedTab = params.get('tab');
+    if (requestedTab === 'add' || requestedTab === 'edit' || requestedTab === 'view') {
+        switchTab(requestedTab);
+    }
 });
 
 function switchTab(tab) {
@@ -11,7 +16,7 @@ function switchTab(tab) {
 }
 
 async function fetchItems() {
-    const { data } = await window.supabaseClient.from('items').select('*');
+    const { data } = await window.supabaseClient.from('item_master').select('*');
     const tbody = document.getElementById('itemTableBody');
     tbody.innerHTML = data.map(i => `<tr><td>${i.item_name}</td></tr>`).join('');
     const select = document.getElementById('editItemSelect');
@@ -20,13 +25,13 @@ async function fetchItems() {
 
 async function saveNewItem(e) {
     e.preventDefault();
-    await window.supabaseClient.from('items').insert([{ item_name: document.getElementById('add_itemName').value }]);
+    await window.supabaseClient.from('item_master').insert([{ item_name: document.getElementById('add_itemName').value }]);
     switchTab('view');
 }
 
 async function loadItemForEdit(id) {
     if (!id) return;
-    const { data } = await window.supabaseClient.from('items').select('*').eq('id', id).single();
+    const { data } = await window.supabaseClient.from('item_master').select('*').eq('id', id).single();
     document.getElementById('edit_itemId').value = data.id;
     document.getElementById('edit_itemName').value = data.item_name;
     document.getElementById('editItemForm').style.display = 'block';
@@ -35,7 +40,7 @@ async function loadItemForEdit(id) {
 
 async function updateExistingItem(e) {
     e.preventDefault();
-    await window.supabaseClient.from('items').update({ item_name: document.getElementById('edit_itemName').value }).eq('id', document.getElementById('edit_itemId').value);
+    await window.supabaseClient.from('item_master').update({ item_name: document.getElementById('edit_itemName').value }).eq('id', document.getElementById('edit_itemId').value);
     switchTab('view');
 }
 
