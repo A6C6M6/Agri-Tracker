@@ -112,3 +112,23 @@ async function logout() {
     catch(e) { console.error("Logout Error:", e); }
     window.location.replace("logincard.html");
 }
+
+/* --- Hamburger Menu Toggle --- */
+document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.querySelector('.header-left .fa-bars'); // നിങ്ങളുടെ ഹാംബർഗർ ഐക്കൺ
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+
+    if (hamburger && sidebar) {
+        hamburger.style.cursor = "pointer";
+        hamburger.addEventListener('click', () => {
+            // സൈഡ്‌ബാർ ടോഗിൾ ചെയ്യുന്നു
+            sidebar.classList.toggle('active');
+            
+            // മൊബൈലിൽ മെയിൻ കണ്ടന്റ് അഡ്ജസ്റ്റ് ചെയ്യാൻ
+            if (mainContent) {
+                mainContent.classList.toggle('expanded');
+            }
+        });
+    }
+});
