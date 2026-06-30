@@ -24,7 +24,9 @@
         <main class="main-content">
             <header>
                 <div class="left">
-                    <button id="toggleBtn"><i class="fa-solid fa-bars"></i></button>
+                    <button id="toggleBtn" style="border:none; background:none; cursor:pointer; font-size: 18px; margin-right: 15px;">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                     <h2><i class="fa-solid fa-users"></i> Person Master</h2>
                 </div>
                 <div class="right">
@@ -57,7 +59,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle">Add Person</h2>
-                <span class="close" onclick="closePersonModal()">&times;</span>
+                <span class="close" onclick="closePersonModal()" style="cursor:pointer; font-size:24px;">&times;</span>
             </div>
             <form id="personForm" onsubmit="savePerson(event)">
                 <input type="hidden" id="personId">
@@ -79,10 +81,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/settings-person-master.js"></script>
+    <script src="assets/js/settings-person-master-ui.js"></script>
     <script>
         // Sidebar Toggle Logic
         document.getElementById("toggleBtn").addEventListener("click", () => {
-            document.querySelector(".sidebar").classList.toggle("collapsed");
+            const sidebar = document.querySelector(".sidebar");
+            sidebar.classList.toggle("collapsed");
         });
         
         // Logout Logic
