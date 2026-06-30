@@ -10,190 +10,92 @@
 </head>
 <body>
     <div class="wrapper">
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="logo">
-                <i class="fa-solid fa-seedling"></i>
-                <span>Agri-Tracker</span>
-            </div>
-            <ul class="menu">
-                <li>
-                    <a href="dashboard.html">
-                        <i class="fa-solid fa-house"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="settings.html">
-                        <i class="fa-solid fa-gear"></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-            </ul>
-        </aside>
-
-        <!-- MAIN CONTENT -->
+        <!-- Sidebar (നിങ്ങളുടെ നിലവിലെ കോഡ് ഉപയോഗിക്കുക) -->
+        
         <main class="main-content">
-            <!-- TOPBAR -->
-            <header class="topbar">
-                <div class="left">
-                    <button id="toggleBtn">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                    <h2>
-                        <i class="fa-solid fa-user"></i>
-                        Person Master
-                    </h2>
-                </div>
-                <div class="right">
-                    <div class="notification">
-                        <i class="fa-solid fa-bell"></i>
-                        <span>3</span>
+            <!-- Topbar (നിങ്ങളുടെ നിലവിലെ കോഡ് ഉപയോഗിക്കുക) -->
+
+            <div class="card-grid" style="display: block; padding: 25px;">
+                <div class="setting-card" style="width: 100%;">
+                    <div class="card-top" style="justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div style="display: flex; gap: 18px; align-items: center;">
+                            <div class="icon green"><i class="fa-solid fa-users"></i></div>
+                            <div>
+                                <h3>Person Master</h3>
+                                <p>Manage persons information</p>
+                            </div>
+                        </div>
+                        <button class="btn green-btn" onclick="openPersonModal()" style="width: auto;">
+                            <i class="fa-solid fa-plus"></i> Add Person
+                        </button>
                     </div>
-                    <button class="logout-btn" onclick="logout()">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        Logout
-                    </button>
-                </div>
-            </header>
-
-            <!-- PERSON MASTER CONTENT -->
-            <div class="person-master-container">
-                <!-- ACTION BUTTONS -->
-                <div class="action-bar">
-                    <button id="addPersonBtn" class="btn-primary">
-                        <i class="fa-solid fa-plus"></i>
-                        Add New Person
-                    </button>
-                    <div class="search-box">
-                        <i class="fa-solid fa-search"></i>
-                        <input type="text" id="searchInput" placeholder="Search by name, email, or mobile...">
+                    
+                    <div class="table-container">
+                        <table id="personTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="personTableBody">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-
-                <!-- PERSONS TABLE -->
-                <div class="table-container">
-                    <table id="personsTable" class="persons-table">
-                        <thead>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Person Type</th>
-                                <th>Status</th>
-                                <th>Created Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="personsTableBody">
-                            <tr class="loading-row">
-                                <td colspan="7" class="loading-message">
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-                                    Loading persons...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- EMPTY STATE -->
-                <div id="emptyState" class="empty-state" style="display:none;">
-                    <i class="fa-solid fa-user-slash"></i>
-                    <p>No persons found</p>
-                    <button id="emptyAddBtn" class="btn-primary">
-                        <i class="fa-solid fa-plus"></i>
-                        Add First Person
-                    </button>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- ADD/EDIT MODAL -->
+    <!-- Modal Form -->
     <div id="personModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">Add New Person</h3>
-                <button class="modal-close" onclick="closePersonModal()">&times;</button>
+                <h2 id="modalTitle">Add Person</h2>
+                <span class="close" onclick="closePersonModal()">&times;</span>
             </div>
-            <form id="personForm" class="person-form">
+            <form id="personForm" onsubmit="savePerson(event)">
+                <input type="hidden" id="personId">
                 <div class="form-group">
-                    <label for="fullName">Full Name *</label>
-                    <input type="text" id="fullName" name="fullName" required placeholder="Enter full name">
-                    <span class="error-message" id="fullNameError"></span>
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" required placeholder="Enter email">
-                        <span class="error-message" id="emailError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile">Mobile *</label>
-                        <input type="text" id="mobile" name="mobile" required placeholder="Enter mobile number">
-                        <span class="error-message" id="mobileError"></span>
-                    </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input type="text" id="mobile">
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="personType">Person Type *</label>
-                        <select id="personType" name="personType" required>
-                            <option value="">Select person type</option>
-                            <option value="Farmer">Farmer</option>
-                            <option value="Vendor">Vendor</option>
-                            <option value="Buyer">Buyer</option>
-                            <option value="Agent">Agent</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        <span class="error-message" id="personTypeError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="status">Status *</label>
-                        <select id="status" name="status" required>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-                        <span class="error-message" id="statusError"></span>
-                    </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email">
                 </div>
-
+                <div class="form-group">
+                    <label for="personType">Person Type</label>
+                    <input type="text" id="personType">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
                 <div class="form-actions">
-                    <button type="button" class="btn-cancel" onclick="closePersonModal()">Cancel</button>
-                    <button type="submit" class="btn-submit" id="submitBtn">
-                        <span id="submitText">Add Person</span>
-                        <i class="fa-solid fa-spinner fa-spin" id="submitSpinner" style="display:none;"></i>
-                    </button>
+                    <button type="button" class="btn" onclick="closePersonModal()">Cancel</button>
+                    <button type="submit" class="btn green-btn">Save</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- DELETE CONFIRMATION MODAL -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content modal-small">
-            <div class="modal-header">
-                <h3>Confirm Delete</h3>
-            </div>
-            <p>Are you sure you want to delete this person? This action cannot be undone.</p>
-            <div class="modal-actions">
-                <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
-                <button type="button" class="btn-danger" id="confirmDeleteBtn">
-                    <span id="deleteText">Delete</span>
-                    <i class="fa-solid fa-spinner fa-spin" id="deleteSpinner" style="display:none;"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="toast"></div>
-
-    <!-- SCRIPTS -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-config.js"></script>
-    <script src="assets/js/card-template.js"></script>
     <script src="assets/js/settings-person-master.js"></script>
     <script src="assets/js/settings-person-master-ui.js"></script>
 </body>
