@@ -5,6 +5,7 @@
 // പേജ് ലോഡ് ചെയ്യുമ്പോൾ ലിസ്റ്റ് ഡാറ്റ ഫെച്ച് ചെയ്യുക
 document.addEventListener('DOMContentLoaded', () => {
     fetchPersons();
+    fetchPersonTypes();
 
     // സൈഡ്‌ബാർ ടോഗിൾ ലോജിക് (ഒറ്റ listener മാത്രം — collapsed/expanded)
     const toggleBtn = document.getElementById("toggleBtn");
@@ -47,7 +48,28 @@ async function fetchPersons() {
     }
 }
 
-// 2. സേവ് അല്ലെങ്കിൽ അപ്‌ഡേറ്റ് ചെയ്യുക (Save/Update)
+// 1b. Person Type ലിസ്റ്റ് Supabase-ൽ നിന്ന് ലോഡ് ചെയ്ത് Select-ൽ ചേർക്കുക
+async function fetchPersonTypes() {
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('person_types')
+            .select('*')
+            .eq('is_active', true)
+            .order('sort_order', { ascending: true });
+
+        if (error) throw error;
+
+        const select = document.getElementById('personType');
+        if (!select) return;
+
+        select.innerHTML = '<option value="">Select Person Type</option>' +
+            data.map(t => `<option value="${t.type_name}">${t.type_name}</option>`).join('');
+    } catch (error) {
+        console.error('Error fetching person types:', error);
+    }
+}
+
+
 async function savePerson(e) {
     e.preventDefault();
 
