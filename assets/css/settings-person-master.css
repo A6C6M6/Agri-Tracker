@@ -145,3 +145,29 @@ header .right { display: flex; align-items: center; gap: 20px; }
     border-radius: 8px;
     outline: none;
 }
+
+
+/* =========================
+   COLLAPSED SIDEBAR (FIXED)
+   ========================= */
+
+/* സൈഡ്‌ബാർ കൊളാപ്സ് ചെയ്യുമ്പോൾ അത് പൂർണ്ണമായും മറയുന്നു */
+.sidebar.collapsed {
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    display: none !important;
+}
+
+/* മെയിൻ കണ്ടന്റ് ഫുൾ വിഡ്ത്തിൽ വരാൻ */
+.main-content {
+    flex: 1 !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+}
+
+/* സൈഡ്‌ബാർ കൊളാപ്സ് ചെയ്യുമ്പോൾ മെയിൻ കണ്ടന്റിന്റെ മാർജിൻ ഒഴിവാക്കാൻ */
+.sidebar.collapsed + .main-content {
+    margin-left: 0 !important;
+}
