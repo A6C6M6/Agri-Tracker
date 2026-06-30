@@ -24,7 +24,7 @@
         <main class="main-content">
             <header>
                 <div class="left">
-                    <button id="toggleBtn" style="border:none; background:none; cursor:pointer; font-size: 18px; margin-right: 15px;">
+                    <button id="toggleBtn" aria-label="Toggle sidebar">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <h2><i class="fa-solid fa-users"></i> Person Master</h2>
@@ -34,7 +34,7 @@
                 </div>
             </header>
 
-            <div class="card-grid" style="padding: 20px;">
+            <div class="card-grid">
                 <div class="setting-card">
                     <div class="card-top" style="justify-content: space-between; display: flex; align-items: center; margin-bottom: 20px;">
                         <h3>Manage Persons</h3>
@@ -59,7 +59,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle">Add Person</h2>
-                <span class="close" onclick="closePersonModal()" style="cursor:pointer; font-size:24px;">&times;</span>
+                <span class="close" onclick="closePersonModal()">&times;</span>
             </div>
             <form id="personForm" onsubmit="savePerson(event)">
                 <input type="hidden" id="personId">
@@ -70,7 +70,7 @@
                 <div class="form-group"><label>Status</label>
                     <select id="status"><option value="Active">Active</option><option value="Inactive">Inactive</option></select>
                 </div>
-                <div class="form-actions" style="display:flex; justify-content: flex-end; gap:10px; padding:0 25px 25px 25px;">
+                <div class="form-actions">
                     <button type="button" class="btn" onclick="closePersonModal()">Cancel</button>
                     <button type="submit" class="btn green-btn">Save</button>
                 </div>
@@ -82,20 +82,14 @@
     <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/settings-person-master.js"></script>
     <script src="assets/js/settings-person-master-ui.js"></script>
-    <script>
-        // Sidebar Toggle Logic
-        document.getElementById("toggleBtn").addEventListener("click", () => {
-            const sidebar = document.querySelector(".sidebar");
-            sidebar.classList.toggle("collapsed");
-        });
-        
-        // Logout Logic
-        async function logout() {
-            try {
-                if (window.supabaseClient) await window.supabaseClient.auth.signOut();
-            } catch(e) { console.error(e); }
-            window.location.replace("logincard.html");
-        }
-    </script>
+    <!--
+        NOTE: Sidebar toggle & logout logic now live ONLY in
+        settings-person-master.js. The duplicate inline script that
+        used to be here was attaching a SECOND click listener to
+        #toggleBtn, which toggled the "collapsed" class twice per
+        click (add, then immediately remove) — that is why the
+        hamburger button looked broken. Do not re-add inline
+        listeners here.
+    -->
 </body>
 </html>
