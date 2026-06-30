@@ -88,3 +88,37 @@
     gap: 10px;
     margin-top: 25px;
 }
+
+
+/* Sidebar Collapse/Expand Animation */
+.sidebar {
+    width: 280px;
+    transition: all 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.main-content {
+    flex: 1;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+/* ലോഗ്ഔട്ട് ബട്ടൺ വലതുവശത്ത് ക്രമീകരിക്കാൻ */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background: white;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
