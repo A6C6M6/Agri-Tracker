@@ -1,47 +1,77 @@
-/* Table Styles */
+/* =========================================================
+   SETTINGS PERSON MASTER - PROFESSIONAL STYLES
+   ========================================================= */
+
+/* കാർഡ് സ്റ്റൈൽ */
+.setting-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+
+/* ടേബിൾ സ്റ്റൈൽ */
 .table-container {
     overflow-x: auto;
-    margin-top: 20px;
+    margin-top: 15px;
 }
+
 #personTable {
     width: 100%;
-    border-collapse: collapse;
-    background: #fff;
+    border-collapse: separate;
+    border-spacing: 0;
 }
-#personTable th, #personTable td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #e5e7eb;
-    text-align: left;
-    color: #1e293b;
-}
+
 #personTable th {
     background: #f8fafc;
-    font-weight: 600;
     color: #475569;
+    font-weight: 600;
+    padding: 14px 16px;
+    border-bottom: 2px solid #e2e8f0;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-align: left;
 }
+
+#personTable td {
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+    color: #334155;
+}
+
+/* ആക്ഷൻ ബട്ടണുകൾ */
 .action-btn {
-    padding: 6px 12px;
+    padding: 8px 12px;
     border-radius: 6px;
-    border: none;
-    cursor: pointer;
     font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
     margin-right: 5px;
 }
-.btn-edit { background: #eef5ff; color: #2563eb; }
-.btn-delete { background: #fef2f2; color: #dc2626; }
 
-/* Modal Styles */
+.btn-edit { background-color: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+.btn-edit:hover { background-color: #dbeafe; }
+
+.btn-delete { background-color: #fef2f2; color: #dc2626; border-color: #fecaca; }
+.btn-delete:hover { background-color: #fee2e2; }
+
+/* മോഡൽ സ്റ്റൈൽ */
 .modal {
     display: none;
     position: fixed;
     z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
     background-color: rgba(0,0,0,0.5);
     backdrop-filter: blur(4px);
 }
+
 .modal-content {
     background-color: #fff;
     margin: 5% auto;
@@ -50,28 +80,19 @@
     border-radius: 16px;
     box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
 }
+
 .modal-header {
     padding: 20px 25px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e2e8f0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.modal-header h2 { color: #17396d; font-size: 20px; }
-.close {
-    font-size: 24px;
-    cursor: pointer;
-    color: #64748b;
-}
+
 #personForm { padding: 25px; }
+
 .form-group { margin-bottom: 15px; }
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #475569;
-    font-weight: 500;
-    font-size: 14px;
-}
+.form-group label { display: block; margin-bottom: 8px; color: #475569; font-weight: 500; font-size: 14px; }
 .form-group input, .form-group select {
     width: 100%;
     padding: 10px 15px;
@@ -79,46 +100,29 @@
     border-radius: 8px;
     outline: none;
 }
-.form-group input:focus, .form-group select:focus {
-    border-color: #0d6efd;
-}
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 25px;
-}
 
+/* സൈഡ്‌ബാർ ടോഗിൾ ഹെൽപ്പർ */
+.sidebar { transition: width 0.3s ease; }
+.sidebar.collapsed { width: 0; padding: 0; overflow: hidden; }
 
-/* Sidebar Collapse/Expand Animation */
-.sidebar {
-    width: 280px;
-    transition: all 0.3s ease;
-}
-
-.sidebar.collapsed {
-    width: 0;
-    overflow: hidden;
-    padding: 0;
-}
-
-.main-content {
-    flex: 1;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-/* ലോഗ്ഔട്ട് ബട്ടൺ വലതുവശത്ത് ക്രമീകരിക്കാൻ */
+/* ഹെഡർ അലൈൻമെന്റ് */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 25px;
-    background: white;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-.right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+header .left { display: flex; align-items: center; gap: 15px; }
+header .right { display: flex; align-items: center; }
+
+.logout-btn {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
 }
