@@ -23,14 +23,18 @@
 
         <main class="main-content">
             <header>
-                <button id="toggleBtn"><i class="fa-solid fa-bars"></i></button>
-                <h2><i class="fa-solid fa-users"></i> Person Master</h2>
-                <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                <div class="left">
+                    <button id="toggleBtn"><i class="fa-solid fa-bars"></i></button>
+                    <h2><i class="fa-solid fa-users"></i> Person Master</h2>
+                </div>
+                <div class="right">
+                    <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                </div>
             </header>
 
             <div class="card-grid" style="padding: 20px;">
                 <div class="setting-card">
-                    <div class="card-top" style="justify-content: space-between; display: flex; align-items: center;">
+                    <div class="card-top" style="justify-content: space-between; display: flex; align-items: center; margin-bottom: 20px;">
                         <h3>Manage Persons</h3>
                         <button class="btn green-btn" onclick="openPersonModal()"><i class="fa-solid fa-plus"></i> Add Person</button>
                     </div>
@@ -49,9 +53,44 @@
         </main>
     </div>
 
+    <div id="personModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Person</h2>
+                <span class="close" onclick="closePersonModal()">&times;</span>
+            </div>
+            <form id="personForm" onsubmit="savePerson(event)">
+                <input type="hidden" id="personId">
+                <div class="form-group"><label>Full Name</label><input type="text" id="fullName" required></div>
+                <div class="form-group"><label>Mobile</label><input type="text" id="mobile"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="email"></div>
+                <div class="form-group"><label>Person Type</label><input type="text" id="personType"></div>
+                <div class="form-group"><label>Status</label>
+                    <select id="status"><option value="Active">Active</option><option value="Inactive">Inactive</option></select>
+                </div>
+                <div class="form-actions" style="display:flex; justify-content: flex-end; gap:10px;">
+                    <button type="button" class="btn" onclick="closePersonModal()">Cancel</button>
+                    <button type="submit" class="btn green-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/settings-person-master.js"></script>
     <script src="assets/js/settings-person-master-ui.js"></script>
+    <script>
+        // Sidebar Toggle Logic
+        document.getElementById("toggleBtn").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("collapsed");
+        });
+        
+        // Logout Logic
+        async function logout() {
+            await window.supabaseClient.auth.signOut();
+            window.location.replace("logincard.html");
+        }
+    </script>
 </body>
 </html>
