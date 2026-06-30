@@ -1,67 +1,110 @@
 /* =========================================================
-   SETTINGS PERSON MASTER - PROFESSIONAL STYLES
+   SETTINGS PERSON MASTER - FULL INTEGRATED CSS
    ========================================================= */
 
-/* കാർഡ് സ്റ്റൈൽ */
+/* Layout & Sidebar Collapse Logic */
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 280px;
+    transition: all 0.3s ease;
+    background: #06254d; /* നിങ്ങളുടെ സൈഡ്‌ബാർ കളർ */
+    flex-shrink: 0;
+}
+
+.sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.main-content {
+    flex: 1;
+    transition: all 0.3s ease;
+    width: 100%;
+    background: #f5f7fb;
+}
+
+/* Header Alignment */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+header .left { display: flex; align-items: center; gap: 15px; }
+header .right { display: flex; align-items: center; gap: 20px; }
+
+.logout-btn {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Table Styles */
+.card-grid { padding: 20px; }
 .setting-card {
     background: #ffffff;
     border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     border: 1px solid #e2e8f0;
-    margin-bottom: 20px;
 }
 
-/* ടേബിൾ സ്റ്റൈൽ */
 .table-container {
     overflow-x: auto;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 #personTable {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+#personTable th, #personTable td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    color: #1e293b;
 }
 
 #personTable th {
     background: #f8fafc;
-    color: #475569;
     font-weight: 600;
-    padding: 14px 16px;
-    border-bottom: 2px solid #e2e8f0;
+    color: #475569;
     text-transform: uppercase;
     font-size: 12px;
-    letter-spacing: 0.05em;
-    text-align: left;
 }
 
-#personTable td {
-    padding: 16px;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 14px;
-    color: #334155;
-}
-
-/* ആക്ഷൻ ബട്ടണുകൾ */
+/* Action Buttons */
 .action-btn {
-    padding: 8px 12px;
+    padding: 6px 12px;
     border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
+    font-size: 13px;
     margin-right: 5px;
+    transition: 0.2s;
 }
 
-.btn-edit { background-color: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
-.btn-edit:hover { background-color: #dbeafe; }
+.btn-edit { background: #eef5ff; color: #2563eb; }
+.btn-edit:hover { background: #dbeafe; }
 
-.btn-delete { background-color: #fef2f2; color: #dc2626; border-color: #fecaca; }
-.btn-delete:hover { background-color: #fee2e2; }
+.btn-delete { background: #fef2f2; color: #dc2626; }
+.btn-delete:hover { background: #fee2e2; }
 
-/* മോഡൽ സ്റ്റൈൽ */
+/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -83,14 +126,16 @@
 
 .modal-header {
     padding: 20px 25px;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e5e7eb;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#personForm { padding: 25px; }
+.modal-header h2 { color: #17396d; font-size: 20px; }
+.close { font-size: 24px; cursor: pointer; color: #64748b; }
 
+#personForm { padding: 25px; }
 .form-group { margin-bottom: 15px; }
 .form-group label { display: block; margin-bottom: 8px; color: #475569; font-weight: 500; font-size: 14px; }
 .form-group input, .form-group select {
@@ -100,29 +145,11 @@
     border-radius: 8px;
     outline: none;
 }
+.form-group input:focus { border-color: #0d6efd; }
 
-/* സൈഡ്‌ബാർ ടോഗിൾ ഹെൽപ്പർ */
-.sidebar { transition: width 0.3s ease; }
-.sidebar.collapsed { width: 0; padding: 0; overflow: hidden; }
-
-/* ഹെഡർ അലൈൻമെന്റ് */
-header {
+.form-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 25px;
-    background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-header .left { display: flex; align-items: center; gap: 15px; }
-header .right { display: flex; align-items: center; }
-
-.logout-btn {
-    background: #fef2f2;
-    color: #dc2626;
-    border: 1px solid #fecaca;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
 }
