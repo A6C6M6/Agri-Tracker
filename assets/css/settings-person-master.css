@@ -17,20 +17,21 @@
     flex-shrink: 0;
 }
 
-/* ഇതാണ് നിർണ്ണായകമായ മാറ്റം */
+/* സൈഡ്‌ബാർ മറയാൻ */
 .sidebar.collapsed {
-    display: none !important; 
+    display: none !important;
 }
 
+/* മെയിൻ കണ്ടന്റ് വികസിക്കാൻ */
 .main-content {
-    flex: 1; 
+    flex: 1;
     transition: all 0.3s ease;
     width: 100%;
-    min-width: 0; 
+    min-width: 0;
     background: #f5f7fb;
 }
 
-/* Header Alignment */
+/* Header & Elements */
 header {
     display: flex;
     justify-content: space-between;
@@ -53,7 +54,6 @@ header .right { display: flex; align-items: center; gap: 20px; }
     font-weight: 600;
 }
 
-/* Card & Table Styles */
 .card-grid { padding: 20px; }
 .setting-card {
     background: #ffffff;
@@ -144,47 +144,4 @@ header .right { display: flex; align-items: center; gap: 20px; }
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     outline: none;
-}
-
-
-/* =========================
-   COLLAPSED SIDEBAR (FIXED)
-   ========================= */
-
-/* സൈഡ്‌ബാർ കൊളാപ്സ് ചെയ്യുമ്പോൾ അത് പൂർണ്ണമായും മറയുന്നു */
-.sidebar.collapsed {
-    width: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-    display: none !important;
-}
-
-/* മെയിൻ കണ്ടന്റ് ഫുൾ വിഡ്ത്തിൽ വരാൻ */
-.main-content {
-    flex: 1 !important;
-    transition: all 0.3s ease !important;
-    width: 100% !important;
-}
-
-/* സൈഡ്‌ബാർ കൊളാപ്സ് ചെയ്യുമ്പോൾ മെയിൻ കണ്ടന്റിന്റെ മാർജിൻ ഒഴിവാക്കാൻ */
-.sidebar.collapsed + .main-content {
-    margin-left: 0 !important;
-}
-
-
-/* സൈഡ്‌ബാർ അപ്രത്യക്ഷമാകുമ്പോൾ മെയിൻ കണ്ടന്റ് വികസിക്കാൻ */
-.sidebar.collapsed {
-    display: none !important;
-}
-
-.main-content {
-    flex: 1 !important;
-    transition: all 0.3s ease !important;
-    width: 100% !important;
-}
-
-/* സൈഡ്‌ബാർ മായുമ്പോൾ ഉണ്ടാകുന്ന അധിക സ്ഥലം ഒഴിവാക്കാൻ */
-.sidebar.collapsed + .main-content {
-    margin-left: 0 !important;
 }
