@@ -323,22 +323,22 @@ body{
 }
 
 /* =========================
-   COLLAPSED SIDEBAR
+   COLLAPSED SIDEBAR - FIXED
 ========================= */
 
-.sidebar.collapsed{
-    width:80px;
+.sidebar.collapsed {
+    display: none !important;
 }
 
-.sidebar.collapsed .logo span,
-.sidebar.collapsed .menu span{
-    display:none;
+.main-content {
+    flex: 1 !important;
+    width: 100% !important;
+    transition: all 0.3s ease !important;
 }
 
-.sidebar.collapsed + .main-content{
-    margin-left:80px;
+.sidebar.collapsed + .main-content {
+    margin-left: 0 !important;
 }
-
 /* =========================
    RESPONSIVE
 ========================= */
