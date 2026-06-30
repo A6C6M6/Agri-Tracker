@@ -65,6 +65,10 @@ function switchTab(tab) {
         fetchPersons();
     }
     if (tab === 'edit') {
+        // Always start the Edit Person tab in its default,
+        // nothing-selected state — never restore the previously
+        // selected person when re-entering this tab.
+        cancelEdit();
         fetchPersons(); // keeps the edit dropdown list current
     }
 }
