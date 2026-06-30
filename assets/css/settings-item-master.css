@@ -1,0 +1,501 @@
+/* =========================================================
+   SETTINGS PERSON MASTER - PROFESSIONAL THEME (TABBED UI)
+   (matches Agri Tracker dashboard design language)
+   ========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --primary:#0d6efd;
+    --primary-dark:#0b5ed7;
+    --sidebar-from:#062c61;
+    --sidebar-mid:#07264d;
+    --sidebar-to:#041a36;
+    --bg:#f4f7fc;
+    --text:#17396d;
+    --muted:#64748b;
+    --success:#22c55e;
+    --danger:#ef4444;
+    --border:#e2e8f0;
+    --radius:16px;
+}
+
+body{
+    font-family:"Segoe UI", sans-serif;
+    background:var(--bg);
+}
+
+/* ==========================================
+   LAYOUT
+========================================== */
+
+.wrapper{
+    display:flex;
+    min-height:100vh;
+    width:100%;
+    overflow-x:hidden;
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar{
+    width:270px;
+    flex-shrink:0;
+    color:#fff;
+    background:linear-gradient(180deg, var(--sidebar-from) 0%, var(--sidebar-mid) 55%, var(--sidebar-to) 100%);
+    transition:width .3s ease;
+    overflow:hidden;
+}
+
+.sidebar .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:28px 24px;
+    font-size:22px;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.sidebar .logo i{
+    font-size:24px;
+    color:#fff;
+    flex-shrink:0;
+}
+
+.sidebar ul.menu{
+    list-style:none;
+    padding:14px;
+}
+
+.sidebar ul.menu li{
+    margin-bottom:8px;
+}
+
+.sidebar ul.menu a{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    color:#fff;
+    text-decoration:none;
+    padding:14px 16px;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:600;
+    white-space:nowrap;
+    transition:.25s;
+}
+
+.sidebar ul.menu a i{
+    width:20px;
+    text-align:center;
+    flex-shrink:0;
+    font-size:17px;
+}
+
+.sidebar ul.menu a:hover{
+    background:rgba(255,255,255,.10);
+}
+
+.sidebar ul.menu a.active{
+    background:linear-gradient(90deg, var(--primary), var(--primary-dark));
+}
+
+/* ----- Collapsed (icon-only) state ----- */
+
+.sidebar.collapsed{
+    width:84px;
+}
+
+.sidebar.collapsed .logo{
+    justify-content:center;
+    padding:24px 0;
+    font-size:0;
+}
+
+.sidebar.collapsed .logo i{
+    font-size:24px;
+}
+
+.sidebar.collapsed ul.menu a{
+    justify-content:center;
+    padding:14px;
+    font-size:0;
+}
+
+.sidebar.collapsed ul.menu a i{
+    font-size:19px;
+}
+
+/* ==========================================
+   MAIN CONTENT
+========================================== */
+
+.main-content{
+    flex:1;
+    width:100%;
+    min-width:0;
+    background:var(--bg);
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header{
+    height:80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+}
+
+header .left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+header .left h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:21px;
+    color:var(--text);
+    font-weight:700;
+}
+
+header .left h2 i{
+    color:var(--primary);
+    font-size:19px;
+}
+
+#toggleBtn{
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:19px;
+    color:var(--text);
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s;
+}
+
+#toggleBtn:hover{
+    background:rgba(13,110,253,.10);
+    color:var(--primary);
+}
+
+#toggleBtn:active{
+    transform:scale(.92);
+}
+
+header .right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.logout-btn{
+    background:#fef2f2;
+    color:#dc2626;
+    border:1px solid #fecaca;
+    padding:10px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:.2s;
+}
+
+.logout-btn:hover{
+    background:#fee2e2;
+}
+
+/* ==========================================
+   CARD (no shadow — bordered, flat, clean)
+========================================== */
+
+.card-grid{
+    padding:28px;
+}
+
+.setting-card{
+    background:#fff;
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--border);
+}
+
+/* ==========================================
+   TABS
+========================================== */
+
+.tabs-nav{
+    display:flex;
+    gap:6px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:26px;
+}
+
+.tab-btn{
+    background:none;
+    border:none;
+    padding:13px 22px;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--muted);
+    cursor:pointer;
+    border-radius:10px 10px 0 0;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    position:relative;
+    bottom:-1px;
+    border-bottom:3px solid transparent;
+    transition:color .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.tab-btn i{
+    font-size:13.5px;
+}
+
+.tab-btn.selected{
+    color:var(--primary);
+    background:#eef5ff;
+    border-bottom:3px solid var(--primary);
+}
+
+/* Only the hovered tab should look "active". While the pointer is
+   over the tab row, the selected tab dims unless it's the one
+   being hovered; once the pointer leaves, .selected takes over again. */
+.tabs-nav.nav-hovering .tab-btn.selected:not(.hover-active){
+    color:var(--muted);
+    background:none;
+    border-bottom-color:transparent;
+}
+
+.tab-btn.hover-active{
+    color:var(--primary);
+    background:#eef5ff;
+    border-bottom:3px solid var(--primary);
+}
+
+/* ==========================================
+   FORMS
+========================================== */
+
+.form-row{
+    display:flex;
+    gap:18px;
+}
+
+.form-row .form-group{
+    flex:1;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group-half{
+    max-width:280px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    color:var(--muted);
+    font-weight:600;
+    font-size:13.5px;
+}
+
+.form-group input, .form-group select{
+    width:100%;
+    padding:11px 15px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    outline:none;
+    font-size:14.5px;
+    color:var(--text);
+    background:#fff;
+    transition:.2s;
+}
+
+.form-group input:focus, .form-group select:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(13,110,253,.12);
+}
+
+.form-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:8px;
+    padding-top:18px;
+    border-top:1px solid var(--border);
+}
+
+.form-actions-split{
+    justify-content:space-between;
+}
+
+.form-actions-right{
+    display:flex;
+    gap:10px;
+}
+
+.empty-hint{
+    color:var(--muted);
+    font-size:14px;
+    padding:18px 2px;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.btn{
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text);
+    padding:10px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.18s;
+}
+
+.btn:hover{
+    background:#f1f5f9;
+}
+
+.green-btn{
+    background:#16a34a;
+    color:#fff;
+    border:1px solid #16a34a;
+}
+
+.green-btn:hover{
+    background:#15803d;
+    border-color:#15803d;
+}
+
+.btn-danger-outline{
+    background:#fff;
+    color:#dc2626;
+    border:1px solid #fecaca;
+}
+
+.btn-danger-outline:hover{
+    background:#fef2f2;
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.table-container{
+    overflow-x:auto;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+#personTable{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+}
+
+#personTable th, #personTable td{
+    padding:13px 18px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    color:#1e293b;
+    font-size:14.5px;
+}
+
+#personTable tbody tr:last-child td{
+    border-bottom:none;
+}
+
+#personTable tbody tr:hover{
+    background:#f8fafc;
+}
+
+#personTable th{
+    background:#f8fafc;
+    font-weight:700;
+    color:var(--muted);
+    text-transform:uppercase;
+    font-size:12px;
+    letter-spacing:.4px;
+}
+
+/* Status pill */
+.status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:4px 12px;
+    border-radius:20px;
+    font-size:12.5px;
+    font-weight:700;
+}
+
+.status-pill.active{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.status-pill.inactive{
+    background:#f1f5f9;
+    color:#64748b;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+    .sidebar{
+        position:fixed;
+        height:100vh;
+        z-index:200;
+    }
+    .sidebar.collapsed{
+        width:0;
+    }
+    .card-grid{
+        padding:16px;
+    }
+    header{
+        padding:0 16px;
+    }
+    .form-row{
+        flex-direction:column;
+        gap:0;
+    }
+    .tabs-nav{
+        overflow-x:auto;
+    }
+    .tab-btn{
+        white-space:nowrap;
+    }
+}
