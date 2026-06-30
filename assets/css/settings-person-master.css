@@ -6,12 +6,14 @@
 .wrapper {
     display: flex;
     min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .sidebar {
     width: 280px;
     transition: all 0.3s ease;
-    background: #06254d; /* നിങ്ങളുടെ സൈഡ്‌ബാർ കളർ */
+    background: #06254d;
     flex-shrink: 0;
 }
 
@@ -22,9 +24,10 @@
 }
 
 .main-content {
-    flex: 1;
+    flex: 1; /* ഇത് വളരെ പ്രധാനം: സൈഡ്‌ബാർ മായുമ്പോൾ ബാക്കി സ്ഥലം മുഴുവൻ എടുക്കാൻ സഹായിക്കുന്നു */
     transition: all 0.3s ease;
     width: 100%;
+    min-width: 0; /* കണ്ടന്റ് വെട്ടിപ്പോകാതിരിക്കാൻ */
     background: #f5f7fb;
 }
 
@@ -51,7 +54,7 @@ header .right { display: flex; align-items: center; gap: 20px; }
     font-weight: 600;
 }
 
-/* Table Styles */
+/* Card & Table Styles */
 .card-grid { padding: 20px; }
 .setting-card {
     background: #ffffff;
@@ -126,16 +129,14 @@ header .right { display: flex; align-items: center; gap: 20px; }
 
 .modal-header {
     padding: 20px 25px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e2e8f0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.modal-header h2 { color: #17396d; font-size: 20px; }
-.close { font-size: 24px; cursor: pointer; color: #64748b; }
-
 #personForm { padding: 25px; }
+
 .form-group { margin-bottom: 15px; }
 .form-group label { display: block; margin-bottom: 8px; color: #475569; font-weight: 500; font-size: 14px; }
 .form-group input, .form-group select {
@@ -144,12 +145,4 @@ header .right { display: flex; align-items: center; gap: 20px; }
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     outline: none;
-}
-.form-group input:focus { border-color: #0d6efd; }
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 25px;
 }
