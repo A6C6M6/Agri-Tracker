@@ -435,6 +435,32 @@ body{
     font-size:24px;
 
     color:var(--text);
+
+    cursor:pointer;
+
+    padding:8px;
+
+    border-radius:10px;
+
+    transition:.25s;
+}
+
+.header-left i:hover{
+
+    background:rgba(13,110,253,.10);
+
+    color:var(--primary);
+}
+
+.header-left i:active{
+
+    transform:scale(.92);
+}
+
+/* Sidebar hidden state (used by hamburger toggle JS) */
+.sidebar.hidden{
+
+    pointer-events:none;
 }
 
 .page-title{
