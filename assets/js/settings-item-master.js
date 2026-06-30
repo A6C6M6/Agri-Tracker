@@ -13,14 +13,14 @@ function switchTab(tab) {
 async function fetchItems() {
     const { data } = await window.supabaseClient.from('items').select('*');
     const tbody = document.getElementById('itemTableBody');
-    tbody.innerHTML = data.map(i => `<tr><td>${i.item_name}</td><td>${i.category}</td></tr>`).join('');
+    tbody.innerHTML = data.map(i => `<tr><td>${i.item_name}</td></tr>`).join('');
     const select = document.getElementById('editItemSelect');
     select.innerHTML = '<option value="">-- Select --</option>' + data.map(i => `<option value="${i.id}">${i.item_name}</option>`).join('');
 }
 
 async function saveNewItem(e) {
     e.preventDefault();
-    await window.supabaseClient.from('items').insert([{ item_name: document.getElementById('add_itemName').value, category: document.getElementById('add_category').value }]);
+    await window.supabaseClient.from('items').insert([{ item_name: document.getElementById('add_itemName').value }]);
     switchTab('view');
 }
 
