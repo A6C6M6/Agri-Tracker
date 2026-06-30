@@ -17,17 +17,16 @@
     flex-shrink: 0;
 }
 
+/* ഇതാണ് നിർണ്ണായകമായ മാറ്റം */
 .sidebar.collapsed {
-    width: 0;
-    padding: 0;
-    overflow: hidden;
+    display: none !important; 
 }
 
 .main-content {
-    flex: 1; /* ഇത് വളരെ പ്രധാനം: സൈഡ്‌ബാർ മായുമ്പോൾ ബാക്കി സ്ഥലം മുഴുവൻ എടുക്കാൻ സഹായിക്കുന്നു */
+    flex: 1; 
     transition: all 0.3s ease;
     width: 100%;
-    min-width: 0; /* കണ്ടന്റ് വെട്ടിപ്പോകാതിരിക്കാൻ */
+    min-width: 0; 
     background: #f5f7fb;
 }
 
