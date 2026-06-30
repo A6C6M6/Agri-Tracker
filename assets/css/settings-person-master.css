@@ -171,3 +171,20 @@ header .right { display: flex; align-items: center; gap: 20px; }
 .sidebar.collapsed + .main-content {
     margin-left: 0 !important;
 }
+
+
+/* സൈഡ്‌ബാർ അപ്രത്യക്ഷമാകുമ്പോൾ മെയിൻ കണ്ടന്റ് വികസിക്കാൻ */
+.sidebar.collapsed {
+    display: none !important;
+}
+
+.main-content {
+    flex: 1 !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+}
+
+/* സൈഡ്‌ബാർ മായുമ്പോൾ ഉണ്ടാകുന്ന അധിക സ്ഥലം ഒഴിവാക്കാൻ */
+.sidebar.collapsed + .main-content {
+    margin-left: 0 !important;
+}
