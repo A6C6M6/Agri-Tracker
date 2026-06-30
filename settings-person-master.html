@@ -1,303 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Person Master</title>
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <link rel="stylesheet"
-          href="assets/css/settings-person-master.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Master - Agri-Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/settings.css">
+    <link rel="stylesheet" href="assets/css/settings-person-master.css">
 </head>
-
 <body>
+    <div class="wrapper">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-seedling"></i>
+                <span>Agri-Tracker</span>
+            </div>
+            <ul class="menu">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
 
-<div class="person-master-container">
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="left">
+                    <button id="toggleBtn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h2>
+                        <i class="fa-solid fa-user"></i>
+                        Person Master
+                    </h2>
+                </div>
+                <div class="right">
+                    <div class="notification">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>3</span>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </button>
+                </div>
+            </header>
 
-    <!-- Header -->
+            <!-- PERSON MASTER CONTENT -->
+            <div class="person-master-container">
+                <!-- ACTION BUTTONS -->
+                <div class="action-bar">
+                    <button id="addPersonBtn" class="btn-primary">
+                        <i class="fa-solid fa-plus"></i>
+                        Add New Person
+                    </button>
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search by name, email, or mobile...">
+                    </div>
+                </div>
 
-    <div class="page-header">
+                <!-- PERSONS TABLE -->
+                <div class="table-container">
+                    <table id="personsTable" class="persons-table">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Person Type</th>
+                                <th>Status</th>
+                                <th>Created Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="personsTableBody">
+                            <tr class="loading-row">
+                                <td colspan="7" class="loading-message">
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                    Loading persons...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        <div>
-
-            <h2>
-                <i class="fa-solid fa-users"></i>
-                Person Master
-            </h2>
-
-            <p>
-                Manage all persons from one place.
-            </p>
-
-        </div>
-
-        <button
-            class="btn btn-primary"
-            id="btnAddPerson">
-
-            <i class="fa-solid fa-plus"></i>
-
-            Add Person
-
-        </button>
-
+                <!-- EMPTY STATE -->
+                <div id="emptyState" class="empty-state" style="display:none;">
+                    <i class="fa-solid fa-user-slash"></i>
+                    <p>No persons found</p>
+                    <button id="emptyAddBtn" class="btn-primary">
+                        <i class="fa-solid fa-plus"></i>
+                        Add First Person
+                    </button>
+                </div>
+            </div>
+        </main>
     </div>
 
+    <!-- ADD/EDIT MODAL -->
+    <div id="personModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Person</h3>
+                <button class="modal-close" onclick="closePerson Modal()">&times;</button>
+            </div>
+            <form id="personForm" class="person-form">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Enter full name">
+                    <span class="error-message" id="fullNameError"></span>
+                </div>
 
-    <!-- Search -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter email">
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile *</label>
+                        <input type="text" id="mobile" name="mobile" required placeholder="Enter mobile number">
+                        <span class="error-message" id="mobileError"></span>
+                    </div>
+                </div>
 
-    <div class="toolbar">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="personType">Person Type *</label>
+                        <select id="personType" name="personType" required>
+                            <option value="">Select person type</option>
+                            <option value="Farmer">Farmer</option>
+                            <option value="Vendor">Vendor</option>
+                            <option value="Buyer">Buyer</option>
+                            <option value="Agent">Agent</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="error-message" id="personTypeError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" name="status" required>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                        <span class="error-message" id="statusError"></span>
+                    </div>
+                </div>
 
-        <div class="search-box">
-
-            <i class="fa fa-search"></i>
-
-            <input
-                type="text"
-                id="txtSearch"
-                placeholder="Search Person...">
-
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closePersonModal()">Cancel</button>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <span id="submitText">Add Person</span>
+                        <i class="fa-solid fa-spinner fa-spin" id="submitSpinner" style="display:none;"></i>
+                    </button>
+                </div>
+            </form>
         </div>
-
     </div>
 
-
-    <!-- Table -->
-
-    <div class="table-wrapper">
-
-        <table class="person-table">
-
-            <thead>
-
-            <tr>
-
-                <th>#</th>
-
-                <th>Code</th>
-
-                <th>Name</th>
-
-                <th>Mobile</th>
-
-                <th>Email</th>
-
-                <th>Status</th>
-
-                <th width="170">
-                    Action
-                </th>
-
-            </tr>
-
-            </thead>
-
-            <tbody id="personTableBody">
-
-            </tbody>
-
-        </table>
-
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>Confirm Delete</h3>
+            </div>
+            <p>Are you sure you want to delete this person? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn-danger" id="confirmDeleteBtn">
+                    <span id="deleteText">Delete</span>
+                    <i class="fa-solid fa-spinner fa-spin" id="deleteSpinner" style="display:none;"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
-</div>
-
-
-<!-- ===========================
-     ADD / EDIT MODAL
-=========================== -->
-
-<div
-    class="modal"
-    id="personModal">
-
-    <div class="modal-content">
-
-        <div class="modal-header">
-
-            <h3 id="modalTitle">
-
-                Add Person
-
-            </h3>
-
-            <button
-                id="closeModal">
-
-                ×
-
-            </button>
-
-        </div>
-
-        <div class="modal-body">
-
-            <input
-                type="hidden"
-                id="personId">
-
-            <div class="form-group">
-
-                <label>
-
-                    Person Code
-
-                </label>
-
-                <input
-                    id="personCode"
-                    type="text">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Person Name
-
-                </label>
-
-                <input
-                    id="personName"
-                    type="text">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Mobile
-
-                </label>
-
-                <input
-                    id="personMobile"
-                    type="text">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Email
-
-                </label>
-
-                <input
-                    id="personEmail"
-                    type="email">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Address
-
-                </label>
-
-                <textarea
-                    id="personAddress"></textarea>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Status
-
-                </label>
-
-                <select id="personStatus">
-
-                    <option value="Active">
-
-                        Active
-
-                    </option>
-
-                    <option value="Inactive">
-
-                        Inactive
-
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-        <div class="modal-footer">
-
-            <button
-                class="btn btn-secondary"
-                id="btnCancel">
-
-                Cancel
-
-            </button>
-
-            <button
-                class="btn btn-success"
-                id="btnSavePerson">
-
-                Save
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- Loading -->
-
-<div
-    id="loadingOverlay"
-    class="loading-overlay">
-
-    <div class="loader"></div>
-
-    <p>
-
-        Please Wait...
-
-    </p>
-
-</div>
-
-
-<!-- Toast -->
-
-<div
-    id="toastContainer">
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="assets/js/supabase-config.js"></script>
-
-<script src="assets/js/settings-person-master.js"></script>
-
-<script src="assets/js/settings-person-master-ui.js"></script>
-
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast"></div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
+    <script src="assets/js/card-template.js"></script>
+    <script src="assets/js/settings-person-master.js"></script>
+    <script src="assets/js/settings-person-master-ui.js"></script>
 </body>
-
 </html>
