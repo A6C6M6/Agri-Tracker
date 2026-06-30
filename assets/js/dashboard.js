@@ -1,7 +1,10 @@
 /* ==========================================
-   AGRI TRACKER - CENTRALIZED DASHBOARD JS
+   AGRI-TRACKER DASHBOARD JS
+   - Includes: Navigation, Toast, Calendar,
+     Supabase Auth, Logout, Sidebar Toggle
 ========================================== */
 
+/* --- Configuration & Routes --- */
 const moduleRoutes = window.APP_CONFIG?.MODULES || {
     dashboard: "dashboard.html",
     overview: "dashboard.html",
@@ -16,7 +19,7 @@ const moduleRoutes = window.APP_CONFIG?.MODULES || {
     settings: "settings.html"
 };
 
-/* --- Navigation Helpers --- */
+/* --- Navigation & Utilities --- */
 function navigateTo(moduleName) {
     const targetUrl = moduleRoutes[moduleName];
     if (!targetUrl) {
@@ -29,7 +32,10 @@ function navigateTo(moduleName) {
 
 function showToast(message) {
     const container = document.getElementById("toast-container");
-    if (!container) { alert(message); return; }
+    if (!container) {
+        alert(message);
+        return;
+    }
     const toast = document.createElement("div");
     toast.className = "bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg toast";
     toast.textContent = message;
@@ -37,22 +43,22 @@ function showToast(message) {
     setTimeout(() => toast.remove(), 3000);
 }
 
-/* --- Initialization --- */
+/* --- DOM Loaded Operations --- */
 document.addEventListener("DOMContentLoaded", () => {
     
-    /* 1. Build Sidebar */
+    // 1. Build Sidebar Menu
     const navMenu = document.getElementById("nav-menu");
-    if (navMenu) {
-        const navItems = [
-            { name: "📊 Overview", id: "overview", icon: "fa-chart-line" },
-            { name: "🌾 Entry", id: "Entry", icon: "fa-seedling" },
-            { name: "🏡 Farm Management", id: "farmManagement", icon: "fa-calendar" },
-            { name: "📑 Reports", id: "reports", icon: "fa-file-alt" },
-            { name: "🆘 Support", id: "support", icon: "fa-life-ring" },
-            { name: "💳 Payment History", id: "paymentHistory", icon: "fa-credit-card" },
-            { name: "⚙️ Settings", id: "settings", icon: "fa-cog" }
-        ];
+    const navItems = [
+        { name: "📊 Overview", id: "overview", icon: "fa-chart-line" },
+        { name: "🌾 Entry", id: "Entry", icon: "fa-seedling" },
+        { name: "🏡 Farm Management", id: "farmManagement", icon: "fa-calendar" },
+        { name: "📑 Reports", id: "reports", icon: "fa-file-alt" },
+        { name: "🆘 Support", id: "support", icon: "fa-life-ring" },
+        { name: "💳 Payment History", id: "paymentHistory", icon: "fa-credit-card" },
+        { name: "⚙️ Settings", id: "settings", icon: "fa-cog" }
+    ];
 
+    if (navMenu) {
         navItems.forEach(item => {
             const btn = document.createElement("a");
             btn.href = "#";
@@ -61,74 +67,82 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.addEventListener("click", (e) => {
                 e.preventDefault();
                 if (item.id === "print") window.print();
-                else if (item.id === "downloadJson") {
-                    const data = { app: "Agri Tracker", exportedAt: new Date().toISOString() };
-                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = url; a.download = "agri-tracker.json"; a.click();
-                    URL.revokeObjectURL(url);
-                } else {
-                    navigateTo(item.id);
-                }
+                else navigateTo(item.id);
             });
             navMenu.appendChild(btn);
         });
     }
 
-    /* 2. Calendar & Logout Setup */
-    const now = new Date();
-    const dateEl = document.getElementById("current-date");
-    const dayEl = document.getElementById("current-day");
-    if (dateEl) dateEl.textContent = now.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-    if (dayEl) dayEl.textContent = now.toLocaleDateString("en-GB", { weekday: "long" });
-
-    const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) logoutBtn.addEventListener("click", logout);
-
-    /* 3. Auth Check */
-    checkSession();
-});
-
-/* --- Auth & Session Logic --- */
-async function checkSession() {
-    try {
-        const { data: { session } } = await window.supabaseClient.auth.getSession();
-        if (!session) { window.location.replace("logincard.html"); return; }
-
-        const userName = session.user?.user_metadata?.full_name || session.user?.email || "Admin User";
-        const nameEl = document.getElementById("logged-user-name");
-        const avatarEl = document.getElementById("user-avatar");
-        
-        if (nameEl) nameEl.textContent = userName;
-        if (avatarEl) avatarEl.src = session.user?.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}`;
-    } catch {
-        window.location.replace("logincard.html");
+    // 2. Calendar Widget
+    const dateElement = document.getElementById("current-date");
+    const dayElement = document.getElementById("current-day");
+    if (dateElement && dayElement) {
+        const now = new Date();
+        dateElement.textContent = now.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+        dayElement.textContent = now.toLocaleDateString("en-GB", { weekday: "long" });
     }
-}
 
-async function logout() {
-    try { await window.supabaseClient.auth.signOut(); } 
-    catch(e) { console.error("Logout Error:", e); }
-    window.location.replace("logincard.html");
-}
+    // 3. Logout Button Handler
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", logout);
+    }
 
-/* --- Hamburger Menu Toggle --- */
-document.addEventListener("DOMContentLoaded", () => {
-    const hamburger = document.querySelector('.header-left .fa-bars'); // നിങ്ങളുടെ ഹാംബർഗർ ഐക്കൺ
+    // 4. Sidebar Toggle (Hamburger)
+    const headerHamburger = document.querySelector('.header-left i.fa-bars');
     const sidebar = document.querySelector('.sidebar');
     const mainContent = document.querySelector('.main-content');
 
-    if (hamburger && sidebar) {
-        hamburger.style.cursor = "pointer";
-        hamburger.addEventListener('click', () => {
-            // സൈഡ്‌ബാർ ടോഗിൾ ചെയ്യുന്നു
-            sidebar.classList.toggle('active');
-            
-            // മൊബൈലിൽ മെയിൻ കണ്ടന്റ് അഡ്ജസ്റ്റ് ചെയ്യാൻ
-            if (mainContent) {
-                mainContent.classList.toggle('expanded');
+    if (headerHamburger && sidebar && mainContent) {
+        if (!sidebar.dataset.prevMarginLeft) {
+            sidebar.dataset.prevMarginLeft = window.getComputedStyle(mainContent).marginLeft || '280px';
+        }
+        headerHamburger.setAttribute('role', 'button');
+        headerHamburger.style.cursor = 'pointer';
+
+        headerHamburger.addEventListener('click', () => {
+            const isHidden = sidebar.classList.contains('hidden');
+            if (!isHidden) {
+                sidebar.classList.add('hidden');
+                sidebar.style.transition = 'transform 240ms ease';
+                sidebar.style.transform = 'translateX(-110%)';
+                mainContent.style.transition = 'margin-left 240ms ease';
+                mainContent.style.marginLeft = '0px';
+            } else {
+                sidebar.classList.remove('hidden');
+                sidebar.style.transform = '';
+                mainContent.style.marginLeft = sidebar.dataset.prevMarginLeft;
             }
         });
     }
 });
+
+/* --- Authentication Logic --- */
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const { data: { session } } = await window.supabaseClient.auth.getSession();
+        if (!session) {
+            window.location.replace("logincard.html");
+            return;
+        }
+
+        const userName = session.user?.user_metadata?.full_name || session.user?.email || "Admin User";
+        document.getElementById("logged-user-name")?.textContent = userName;
+
+        const avatarElement = document.getElementById("user-avatar");
+        if (avatarElement) {
+            avatarElement.src = session.user?.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}`;
+        }
+    } catch (error) {
+        window.location.replace("logincard.html");
+    }
+});
+
+async function logout() {
+    try {
+        await window.supabaseClient.auth.signOut();
+    } catch (error) {
+        console.error("Logout Error:", error);
+    }
+    window.location.replace("logincard.html");
+}
