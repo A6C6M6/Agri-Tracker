@@ -761,37 +761,3 @@ body{
         grid-template-columns:1fr;
     }
 }
-
-/* നിലവിലുള്ള കോഡുകൾക്കൊപ്പം താഴെ പറയുന്നവ കൂടി ചേർക്കുക */
-
-.sidebar {
-    width: 280px;
-    transition: width 0.3s ease; /* ആനിമേഷന് വേണ്ടി */
-    /* ... മറ്റ് പഴയ സ്റ്റൈലുകൾ ... */
-}
-
-.sidebar.collapsed {
-    width: 70px;
-}
-
-/* കൊളാപ്സ് ആകുമ്പോൾ ടെക്സ്റ്റുകൾ ഹൈഡ് ചെയ്യാൻ */
-.sidebar.collapsed .logo-title,
-.sidebar.collapsed .logo-sub,
-.sidebar.collapsed .sidebar a,
-.sidebar.collapsed .user-info {
-    display: none;
-}
-
-.sidebar.collapsed .sidebar ul {
-    padding: 20px 10px;
-}
-
-/* കൊളാപ്സ് ആകുമ്പോൾ മെയിൻ കണ്ടന്റ് അഡ്ജസ്റ്റ് ചെയ്യാൻ */
-.main-content {
-    margin-left: 280px;
-    transition: margin-left 0.3s ease;
-}
-
-.sidebar.collapsed + .main-content {
-    margin-left: 70px;
-}
