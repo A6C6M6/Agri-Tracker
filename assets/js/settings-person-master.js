@@ -5,12 +5,29 @@
 // പേജ് ലോഡ് ചെയ്യുമ്പോൾ ലിസ്റ്റ് ഡാറ്റ ഫെച്ച് ചെയ്യുക
 document.addEventListener('DOMContentLoaded', () => {
     fetchPersons();
-    
-    // സൈഡ്‌ബാർ ടോഗിൾ ലോജിക് (പേജിലെ ബട്ടൺ ഉപയോഗിച്ച്)
+
+    // സൈഡ്‌ബാർ ടോഗിൾ ലോജിക് (ഒറ്റ listener മാത്രം — collapsed/expanded)
     const toggleBtn = document.getElementById("toggleBtn");
-    if (toggleBtn) {
+    const sidebar = document.querySelector(".sidebar");
+
+    if (toggleBtn && sidebar) {
+
+        // Restore last saved state
+        try {
+            if (localStorage.getItem('sidebarCollapsed') === '1') {
+                sidebar.classList.add('collapsed');
+            }
+        } catch (e) {}
+
         toggleBtn.addEventListener("click", () => {
-            document.querySelector(".sidebar").classList.toggle("collapsed");
+            sidebar.classList.toggle("collapsed");
+
+            try {
+                localStorage.setItem(
+                    'sidebarCollapsed',
+                    sidebar.classList.contains('collapsed') ? '1' : '0'
+                );
+            } catch (e) {}
         });
     }
 });
@@ -33,7 +50,7 @@ async function fetchPersons() {
 // 2. സേവ് അല്ലെങ്കിൽ അപ്‌ഡേറ്റ് ചെയ്യുക (Save/Update)
 async function savePerson(e) {
     e.preventDefault();
-    
+
     const id = document.getElementById('personId').value;
     const personData = {
         full_name: document.getElementById('fullName').value,
@@ -87,19 +104,30 @@ async function editPerson(id) {
 // 5. ടേബിൾ റെൻഡർ ചെയ്യുക (Render Table Rows)
 function renderTable(data) {
     const tbody = document.getElementById('personTableBody');
-    tbody.innerHTML = data.map(p => `
+    tbody.innerHTML = data.map(p => {
+        const isActive = (p.status || '').toLowerCase() === 'active';
+        const pillClass = isActive ? 'active' : 'inactive';
+        const dotColor = isActive ? '#16a34a' : '#94a3b8';
+
+        return `
         <tr>
-            <td>${p.full_name}</td>
-            <td>${p.mobile}</td>
-            <td>${p.email}</td>
-            <td>${p.person_type}</td>
-            <td>${p.status}</td>
+            <td>${p.full_name || ''}</td>
+            <td>${p.mobile || ''}</td>
+            <td>${p.email || ''}</td>
+            <td>${p.person_type || ''}</td>
             <td>
-                <button class="action-btn btn-edit" onclick="editPerson('${p.id}')">Edit</button>
-                <button class="action-btn btn-delete" onclick="deletePerson('${p.id}')">Delete</button>
+                <span class="status-pill ${pillClass}">
+                    <i class="fa-solid fa-circle" style="font-size:7px; color:${dotColor};"></i>
+                    ${p.status || ''}
+                </span>
+            </td>
+            <td>
+                <button class="action-btn btn-edit" title="Edit" onclick="editPerson('${p.id}')"><i class="fa-solid fa-pen"></i></button>
+                <button class="action-btn btn-delete" title="Delete" onclick="deletePerson('${p.id}')"><i class="fa-solid fa-trash"></i></button>
             </td>
         </tr>
-    `).join('');
+    `;
+    }).join('');
 }
 
 // 6. മോഡൽ കൺട്രോൾ
