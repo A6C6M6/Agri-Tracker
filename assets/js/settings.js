@@ -212,3 +212,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
+
+/* ==========================
+   Person Master Actions
+========================= */
+
+// 'Add Person' ബട്ടൺ അമർത്തുമ്പോൾ
+function addPerson() {
+    // settings-person-master-ui.js-ലെ ഫംഗ്‌ഷൻ വിളിക്കുന്നു
+    if (typeof openPersonModal === 'function') {
+        openPersonModal(false); 
+    }
+}
+
+// 'Edit Person' ബട്ടൺ അമർത്തുമ്പോൾ
+function editPerson() {
+    // ഇവിടെ നിങ്ങൾക്ക് ഒരു ID സെലക്ട് ചെയ്യാനുള്ള ലോജിക് നൽകാം
+    // തൽക്കാലം മോഡൽ തുറക്കുന്നു
+    if (typeof openPersonModal === 'function') {
+        openPersonModal(true); 
+    }
+}
+
+// 'View List' ബട്ടൺ അമർത്തുമ്പോൾ
+function viewPersonList() {
+    // Person Master പേജിലേക്ക് റീഡയറക്ട് ചെയ്യുന്നു
+    window.location.href = "settings-person-master.html";
+}
