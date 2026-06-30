@@ -68,7 +68,7 @@
                 <div class="form-group"><label>Status</label>
                     <select id="status"><option value="Active">Active</option><option value="Inactive">Inactive</option></select>
                 </div>
-                <div class="form-actions" style="display:flex; justify-content: flex-end; gap:10px;">
+                <div class="form-actions" style="display:flex; justify-content: flex-end; gap:10px; padding:0 25px 25px 25px;">
                     <button type="button" class="btn" onclick="closePersonModal()">Cancel</button>
                     <button type="submit" class="btn green-btn">Save</button>
                 </div>
@@ -79,7 +79,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/settings-person-master.js"></script>
-    <script src="assets/js/settings-person-master-ui.js"></script>
     <script>
         // Sidebar Toggle Logic
         document.getElementById("toggleBtn").addEventListener("click", () => {
@@ -88,7 +87,9 @@
         
         // Logout Logic
         async function logout() {
-            await window.supabaseClient.auth.signOut();
+            try {
+                if (window.supabaseClient) await window.supabaseClient.auth.signOut();
+            } catch(e) { console.error(e); }
             window.location.replace("logincard.html");
         }
     </script>
