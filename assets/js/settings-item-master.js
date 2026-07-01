@@ -16,7 +16,8 @@ function switchTab(tab) {
 }
 
 async function fetchItems() {
-    const { data } = await window.supabaseClient.from('item_master').select('*');
+    const { data, error } = await window.supabaseClient.from('item_master').select('*');
+    if (error || !data) return;
     const tbody = document.getElementById('itemTableBody');
     tbody.innerHTML = data.map(i => `<tr><td>${i.item_name}</td></tr>`).join('');
     const select = document.getElementById('editItemSelect');
@@ -25,9 +26,18 @@ async function fetchItems() {
 
 async function saveNewItem(e) {
     e.preventDefault();
-    await window.supabaseClient.from('item_master').insert([{ item_name: document.getElementById('add_itemName').value }]);
+    const itemName = document.getElementById('add_itemName').value.trim();
+    if (!itemName) return;
+    const { error } = await window.supabaseClient
+        .from('item_master')
+        .insert([{ item_name: itemName }]);
+    if (error) {
+        showToast('Error: ' + error.message, 'danger');
+        return;
+    }
+    showToast('Item saved successfully!', 'success');
     document.getElementById('addItemForm').reset();
-    window.location.href = 'settings-item-master.html?tab=view';
+    setTimeout(() => { window.location.href = 'settings-item-master.html?tab=view'; }, 900);
 }
 
 async function loadItemForEdit(id) {
@@ -41,8 +51,35 @@ async function loadItemForEdit(id) {
 
 async function updateExistingItem(e) {
     e.preventDefault();
-    await window.supabaseClient.from('item_master').update({ item_name: document.getElementById('edit_itemName').value }).eq('id', document.getElementById('edit_itemId').value);
-    window.location.href = 'settings-item-master.html?tab=view';
+    const itemName = document.getElementById('edit_itemName').value.trim();
+    const itemId = document.getElementById('edit_itemId').value;
+    const { error } = await window.supabaseClient
+        .from('item_master')
+        .update({ item_name: itemName })
+        .eq('id', itemId);
+    if (error) {
+        showToast('Error: ' + error.message, 'danger');
+        return;
+    }
+    showToast('Item updated!', 'success');
+    setTimeout(() => { window.location.href = 'settings-item-master.html?tab=view'; }, 900);
+}
+
+function showToast(msg, type) {
+    const existing = document.getElementById('itemToast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.id = 'itemToast';
+    toast.textContent = msg;
+    toast.style.cssText = `
+        position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+        background:${type === 'success' ? '#16a34a' : '#dc2626'};
+        color:#fff;padding:13px 28px;border-radius:12px;
+        font-size:15px;font-weight:600;z-index:9999;
+        box-shadow:0 4px 18px rgba(0,0,0,.18);
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
 }
 
 async function logout() {
