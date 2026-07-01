@@ -417,13 +417,14 @@ header .right{
     border-radius:12px;
 }
 
-#personTable{
+#personTable, #itemTable{
     width:100%;
     border-collapse:collapse;
     background:#fff;
 }
 
-#personTable th, #personTable td{
+#personTable th, #personTable td,
+#itemTable th, #itemTable td{
     padding:13px 18px;
     border-bottom:1px solid var(--border);
     text-align:left;
@@ -431,15 +432,17 @@ header .right{
     font-size:14.5px;
 }
 
-#personTable tbody tr:last-child td{
+#personTable tbody tr:last-child td,
+#itemTable tbody tr:last-child td{
     border-bottom:none;
 }
 
-#personTable tbody tr:hover{
+#personTable tbody tr:hover,
+#itemTable tbody tr:hover{
     background:#f8fafc;
 }
 
-#personTable th{
+#personTable th, #itemTable th{
     background:#f8fafc;
     font-weight:700;
     color:var(--muted);
