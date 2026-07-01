@@ -26,7 +26,8 @@ async function fetchItems() {
 async function saveNewItem(e) {
     e.preventDefault();
     await window.supabaseClient.from('item_master').insert([{ item_name: document.getElementById('add_itemName').value }]);
-    switchTab('view');
+    document.getElementById('addItemForm').reset();
+    window.location.href = 'settings-item-master.html?tab=view';
 }
 
 async function loadItemForEdit(id) {
@@ -41,7 +42,7 @@ async function loadItemForEdit(id) {
 async function updateExistingItem(e) {
     e.preventDefault();
     await window.supabaseClient.from('item_master').update({ item_name: document.getElementById('edit_itemName').value }).eq('id', document.getElementById('edit_itemId').value);
-    switchTab('view');
+    window.location.href = 'settings-item-master.html?tab=view';
 }
 
 async function logout() {
